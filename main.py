@@ -1,6 +1,9 @@
 import sys
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication
 
+#ICT Modules
+import modules.hata
+
 class ICT(QWidget):
     def __init__(self):
         super().__init__()
