@@ -3,7 +3,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import * 
 import sys
 from PyQt5 import QtCore
-import modules
+
+#Modules
+import modules.hata
   
 class Window(QMainWindow):
     def __init__(self):
@@ -38,6 +40,6 @@ App = QApplication(sys.argv)
   
 # create the instance of our Window
 window = Window()
-  
+
 # start the app
 sys.exit(App.exec())
