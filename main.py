@@ -22,7 +22,7 @@ class Window(QMainWindow):
         self.label_1.resize(140, 40)
         self.label_1.setAlignment(QtCore.Qt.AlignCenter)
         self.label_1.setFont(QFont('Arial', 20))
-        self.label_1.move(150, 100)
+        self.label_1.move(170, 100)
         # moving position
        
   
