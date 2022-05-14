@@ -1,28 +1,43 @@
+from turtle import position
+from PyQt5.QtWidgets import * 
+from PyQt5.QtGui import * 
 import sys
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication
-
-#ICT Modules
-import modules.hata
-
-class ICT(QWidget):
+from PyQt5 import QtCore
+import modules
+  
+class Window(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.init_ui()
-
-    def init_ui(self):
-        self.resize(800, 600)
-        self.center()
-        self.setWindowTitle('ICalcThis')
+  
+        # set the title
+        self.setWindowTitle("Label")
+  
+        # setting  the geometry of window
+        self.setGeometry(0, 0, 400, 300)
+  
+        # creating a label widget
+        # by default label will display at top left corner
+        self.label_1 = QLabel("Arial font", self)
+        self.label_1.setStyleSheet("border: 1px solid black;")
+        self.label_1.resize(140, 40)
+        self.label_1.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_1.setFont(QFont('Arial', 20))
+        self.label_1.move(100, 100)
+        # moving position
+       
+  
+        # setting font and size
+       
+  
         self.show()
-
-    def center(self):
-        qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    ex = ICT()
-    sys.exit(app.exec_())
+  
+  
+  
+# create pyqt5 app
+App = QApplication(sys.argv)
+  
+# create the instance of our Window
+window = Window()
+  
+# start the app
+sys.exit(App.exec())
