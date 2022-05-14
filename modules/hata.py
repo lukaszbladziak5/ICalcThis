@@ -1,5 +1,9 @@
 import math
 
+#1 - urban
+#2 - suburban
+#3 - open
+
 def get_a(f, mob, mode):
 
         if(mode == 1):
