@@ -6,8 +6,10 @@ import sys
 from PyQt5 import QtCore
 
 #Modules
-import modules.hata
 import modules.binary
+import modules.dB
+import modules.hata
+
   
 class Window(QMainWindow):
     def __init__(self):
