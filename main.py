@@ -1,3 +1,4 @@
+from operator import mod
 from turtle import position
 from PyQt5.QtWidgets import * 
 from PyQt5.QtGui import * 
@@ -6,6 +7,7 @@ from PyQt5 import QtCore
 
 #Modules
 import modules.hata
+import modules.binary
   
 class Window(QMainWindow):
     def __init__(self):
