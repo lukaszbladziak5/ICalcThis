@@ -94,6 +94,7 @@ def exec(mt, dc):
     #dc = [1, 7]
     #[ 1 x 1 1 ]
     #[ 0 0 x 1 ]
+    #Gives: a! + b
 
     #mt = [int(i) for i in input("Enter the minterms: ").strip().split()]
     #dc = [int(i) for i in input("Enter the don't cares(If any): ").strip().split()]
@@ -188,4 +189,4 @@ def exec(mt, dc):
         final_result.extend(findVariables(i) for i in EPI) # Adding the EPIs to final solution
     print('\n\nSolution: F = '+' + '.join(''.join(i) for i in final_result))
 
-    return 0
+    return final_result
