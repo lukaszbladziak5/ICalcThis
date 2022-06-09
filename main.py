@@ -10,7 +10,7 @@ import modules.binary
 import modules.friis
 import modules.dB
 import modules.hata
-
+import modules.mccluskey
   
 class Window(QMainWindow):
     def __init__(self):
