@@ -7,8 +7,9 @@ from PyQt5 import QtCore
 
 #Modules
 import modules.binary
-import modules.friis
+import modules.circuits
 import modules.dB
+import modules.friis
 import modules.hata
 import modules.mccluskey
   

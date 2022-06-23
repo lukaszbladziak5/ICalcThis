@@ -87,7 +87,6 @@ def removeTerms(_chart,terms): # Removes minterms which are already covered from
                 pass
 
 def exec(mt, dc): 
-    #NOT TESTED FOR ARGUMENTS YET!!!
     #Arrays of minterms and don't cares
     #Example:
     #mt = [0, 2, 3, 6]
