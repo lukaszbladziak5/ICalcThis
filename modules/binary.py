@@ -23,8 +23,26 @@ def decToZM(value, bitLength):
 def decToU1(value, bitLength):
     if(not(isinstance(value, int))):
          raise ValueError("Binary calculator: value is not valid integer")
-    #TD
-    return -1
+    if(value == 0):
+        result = ''
+        for i in range(0, bitLength): result += '0'
+        return result
+    if(value > 0):
+        value = exec(value)
+        sign = '0'
+        if(1 + len(value) == bitLength): return sign + value
+        else:
+            result = ''
+            result += sign
+            for i in range(1, bitLength - len(value)): result += '0'
+            result += value
+            return result
+    #Subzero
+    result = "1"
+    temp = str(exec(~value))
+    for i in range(1, bitLength - len(temp)): result += "0"
+    result += temp
+    return result
 
 def decToU2(value, bitLength):
     if(not(isinstance(value, int))):
