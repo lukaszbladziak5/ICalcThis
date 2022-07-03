@@ -12,6 +12,7 @@ import modules.dB
 import modules.friis
 import modules.hata
 import modules.mccluskey
+import modules.radio
   
 class Window(QMainWindow):
     def __init__(self):
