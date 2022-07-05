@@ -13,7 +13,8 @@ import modules.friis
 import modules.hata
 import modules.mccluskey
 import modules.radio
-  
+import modules.rpn
+
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
