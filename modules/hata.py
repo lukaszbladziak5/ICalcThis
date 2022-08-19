@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QMainWindow, QWidget
 class WelcomeScreen(QMainWindow):
     def __init__(self):
         super(WelcomeScreen, self).__init__()
-        loadUi("C:/Users/Lukasz/PycharmProjects/testing/venv/model_haty.ui", self)
+        loadUi("modules/model_haty.ui", self)
         self.reset_button.clicked.connect(self.go_to_clear_data)
         # self.f = self.v_input.getDouble()
         # self.d = self.d_input.getText()
