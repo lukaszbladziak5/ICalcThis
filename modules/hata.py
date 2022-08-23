@@ -1,7 +1,7 @@
 import math
 
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QMainWindow, QWidget
+from PyQt5.QtWidgets import *
 
 
 
@@ -10,12 +10,7 @@ class WelcomeScreen(QMainWindow):
         super(WelcomeScreen, self).__init__()
         loadUi("modules/model_haty.ui", self)
         self.reset_button.clicked.connect(self.go_to_clear_data)
-        # self.f = self.v_input.getDouble()
-        # self.d = self.d_input.getText()
-        # self.base = self.hB_input.getText()
-        # self.mob = self.hM_input.getText()
-        # if self.f != 0:
-        #     print(self.f)
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
 
         if self.urban_button.isChecked():
             self.mode = 1
@@ -24,6 +19,10 @@ class WelcomeScreen(QMainWindow):
         if self.open_button.isChecked():
             self.mode = 3
 
+        self.f = self.v_input.text()
+        self.d = self.d_input.text()
+        self.base = self.hB_input.text()
+        self.mob = self.hM_input.text()
 
 
     def go_to_clear_data(self):
@@ -31,6 +30,14 @@ class WelcomeScreen(QMainWindow):
         self.d_input.setText('')
         self.hB_input.setText('')
         self.hM_input.setText('')
+
+
+    def go_to_save_data(self):
+        self.f = self.v_input.text()
+        self.d = self.d_input.text()
+        self.base = self.hB_input.text()
+        self.mob = self.hM_input.text()
+        print(self.f, self.d, self.base, self.mob)
 
 
     def exec(self, f, d, base, mob, mode):

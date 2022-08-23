@@ -207,7 +207,7 @@ gridline-color: rgb(255, 0, 4);</string>
       </rect>
      </property>
      <property name="text">
-      <string>Podaj częstotliwość nośną (V):</string>
+      <string>Podaj częstotliwość nośną (f):</string>
      </property>
     </widget>
     <widget class="QLabel" name="MHz_tekst">
