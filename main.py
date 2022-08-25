@@ -4,7 +4,11 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QWidget
 from PyQt5.QtGui import QPixmap
 import sqlite3
+from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import *
+import math
 
+import modules.hata
 
 class Ekran_poczatkowy(QDialog):
     def __init__(self):
@@ -84,11 +88,11 @@ class Menu(QDialog):
     def __init__(self):
         super(Menu, self).__init__()
         loadUi("Menu.ui", self)
-        self.Operacja_1_przycisk.clicked.connect(self.Operacja1)                                   # menu główne, przycisk 1
+        self.Operacja_1_przycisk.clicked.connect(self.WelcomeScreen)                                   # menu główne, przycisk 1
         self.Operacja_2_przycisk.clicked.connect(self.Operacja2)                                    # menu główne, przycisk 2ss222
         self.Operacja_3_przycisk.clicked.connect(self.Operacja3)
-    def Operacja1(self):
-        Operacja_1_przycisk = Operacja1()
+    def WelcomeScreen(self):
+        Operacja_1_przycisk = WelcomeScreen()
         widget.addWidget(Operacja_1_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
@@ -112,6 +116,42 @@ class Operacja1(QDialog):
         super(Operacja1, self).__init__()
         loadUi("Operacja1.ui", self)
         self.cofanie_przycisk.clicked.connect(self.cofanie)
+
+class WelcomeScreen(QMainWindow):
+
+
+    def __init__(self):
+        super(WelcomeScreen, self).__init__()
+        loadUi("model_haty.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
+
+        self.f = self.v_input.text()
+        self.d = self.d_input.text()
+        self.base = self.hB_input.text()
+        self.mob = self.hM_input.text()
+
+    def go_to_clear_data(self):
+        self.v_input.setText('')
+        self.d_input.setText('')
+        self.hB_input.setText('')
+        self.hM_input.setText('')
+
+    def go_to_save_data(self):
+        if self.urban_button.isChecked():
+            self.mode = 1
+        if self.suburban_button.isChecked():
+            self.mode = 2
+        if self.open_button.isChecked():
+            self.mode = 3
+        self.f = self.v_input.text()
+        self.d = self.d_input.text()
+        self.base = self.hB_input.text()
+        self.mob = self.hM_input.text()
+        print(self.f, self.d, self.base, self.mob, self.mode)
+        wynik = modules.hata.exec(int(self.f), int(self.d), int(self.base), int(self.mob), int(self.mode))
+        self.wynik_hata.setText(str(wynik))
 
     def cofanie(self):
         cofanie_przycisk = Menu()
