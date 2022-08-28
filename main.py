@@ -88,11 +88,11 @@ class Menu(QDialog):
     def __init__(self):
         super(Menu, self).__init__()
         loadUi("Menu.ui", self)
-        self.Operacja_1_przycisk.clicked.connect(self.WelcomeScreen)                                   # menu główne, przycisk 1
+        self.Operacja_1_przycisk.clicked.connect(self.Model_Haty)                                   # menu główne, przycisk 1
         self.Operacja_2_przycisk.clicked.connect(self.Operacja2)                                    # menu główne, przycisk 2ss222
         self.Operacja_3_przycisk.clicked.connect(self.Operacja3)
-    def WelcomeScreen(self):
-        Operacja_1_przycisk = WelcomeScreen()
+    def Model_Haty(self):
+        Operacja_1_przycisk = Model_Haty()
         widget.addWidget(Operacja_1_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
@@ -111,18 +111,13 @@ class Menu(QDialog):
 
 
 
-class Operacja1(QDialog):
-    def __init__(self):
-        super(Operacja1, self).__init__()
-        loadUi("Operacja1.ui", self)
-        self.cofanie_przycisk.clicked.connect(self.cofanie)
 
-class WelcomeScreen(QMainWindow):
+class Model_Haty(QDialog):
 
 
     def __init__(self):
-        super(WelcomeScreen, self).__init__()
-        loadUi("model_haty.ui", self)
+        super(Model_Haty, self).__init__()
+        loadUi("model_haty2.ui", self)
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.reset_button.clicked.connect(self.go_to_clear_data)
         self.oblicz_button.clicked.connect(self.go_to_save_data)
