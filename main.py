@@ -1,15 +1,16 @@
-import sys
 from PyQt5 import QtWidgets, QtGui
-import sqlite3
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
-
+import sys
+import sqlite3
 import modules.hata
 
+
 class Ekran_poczatkowy(QDialog):
+
     def __init__(self):
         super(Ekran_poczatkowy, self).__init__()
-        loadUi("Wielki_poczatek.ui",self)
+        loadUi("UI/Wielki_poczatek.ui",self)
         self.Przycisk_logowania.clicked.connect(self.logowanie)
         self.Przycisk_nowe_konto.clicked.connect(self.Rejestracja)
 
@@ -23,12 +24,13 @@ class Ekran_poczatkowy(QDialog):
         widget.addWidget(Przycisk_logowania)
         widget.setCurrentIndex(widget.currentIndex()+1)
 
+
 class ekran_logowania(QDialog):
+
     def __init__(self):
         super(ekran_logowania,self).__init__()
-        loadUi("Logowanie.ui",self)
+        loadUi("UI/Logowanie.ui",self)
         self.pole_haslo.setEchoMode(QtWidgets.QLineEdit.Password) #kropeczki wpisujac haslo
-
         self.login.clicked.connect(self.funkcja_logowania)
 
     def funkcja_logowania(self):
@@ -51,10 +53,12 @@ class ekran_logowania(QDialog):
             else:
                 self.blad.setText("Nieprawodłowa nazwa użytkownika bądz hasło")
 
+
 class Ekran_rejestracji(QDialog):
+
     def __init__(self):
         super(Ekran_rejestracji, self).__init__()
-        loadUi("Rejestracja.ui", self)
+        loadUi("UI/Rejestracja.ui", self)
         self.pole_haslo2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.pole_haslo2_podtwierdzenie.setEchoMode(QtWidgets.QLineEdit.Password)
         self.przycisk_zarejestruj.clicked.connect(self.funkcja_rejestracji)
@@ -80,20 +84,20 @@ class Ekran_rejestracji(QDialog):
             widget.addWidget(profil)
             widget.setCurrentIndex(widget.currentIndex() + 1)
 
+
 class Menu(QDialog):
+
     def __init__(self):
         super(Menu, self).__init__()
-        loadUi("Menu.ui", self)
+        loadUi("UI/Menu.ui", self)
         self.modelHaty_przycisk.clicked.connect(self.Model_Haty)                                   # menu główne, przycisk 1
         self.Operacja_2_przycisk.clicked.connect(self.Operacja2)                                    # menu główne, przycisk 2ss222
         self.Operacja_3_przycisk.clicked.connect(self.Operacja3)
-
 
     def Model_Haty(self):
         Operacja_1_przycisk = Model_Haty()
         widget.addWidget(Operacja_1_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
-
 
     def Operacja2(self):
         Operacja_2_przycisk = Operacja2()
@@ -106,16 +110,11 @@ class Menu(QDialog):
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
-
-
-
-
 class Model_Haty(QDialog):
-
 
     def __init__(self):
         super(Model_Haty, self).__init__()
-        loadUi("model_haty2.ui", self)
+        loadUi("UI/model_haty2.ui", self)
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.reset_button.clicked.connect(self.go_to_clear_data)
         self.oblicz_button.clicked.connect(self.go_to_save_data)
@@ -152,28 +151,31 @@ class Model_Haty(QDialog):
         widget.setCurrentIndex(widget.currentIndex() - 1)
 
 
-
 class Operacja2(QDialog):
+
     def __init__(self):
         super(Operacja2, self).__init__()
-        loadUi("Operacja2.ui", self)
+        loadUi("UI/Operacja2.ui", self)
         self.cofanie_przycisk.clicked.connect(self.cofanie)
 
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
         widget.setCurrentIndex(widget.currentIndex() - 1)
+
 
 class Operacja3(QDialog):
+
     def __init__(self):
         super(Operacja3, self).__init__()
-        loadUi("Operacja3.ui", self)
+        loadUi("UI/Operacja3.ui", self)
         self.cofanie_przycisk.clicked.connect(self.cofanie)
 
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
         widget.setCurrentIndex(widget.currentIndex() - 1)
+
 
 app = QApplication(sys.argv)
 welcome = Ekran_poczatkowy()
