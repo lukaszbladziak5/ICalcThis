@@ -1,12 +1,8 @@
 import sys
-from PyQt5.uic import loadUi
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QDialog, QApplication, QWidget
-from PyQt5.QtGui import QPixmap
+from PyQt5 import QtWidgets, QtGui
 import sqlite3
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
-import math
 
 import modules.hata
 
@@ -88,9 +84,11 @@ class Menu(QDialog):
     def __init__(self):
         super(Menu, self).__init__()
         loadUi("Menu.ui", self)
-        self.Operacja_1_przycisk.clicked.connect(self.Model_Haty)                                   # menu główne, przycisk 1
+        self.modelHaty_przycisk.clicked.connect(self.Model_Haty)                                   # menu główne, przycisk 1
         self.Operacja_2_przycisk.clicked.connect(self.Operacja2)                                    # menu główne, przycisk 2ss222
         self.Operacja_3_przycisk.clicked.connect(self.Operacja3)
+
+
     def Model_Haty(self):
         Operacja_1_przycisk = Model_Haty()
         widget.addWidget(Operacja_1_przycisk)
@@ -183,6 +181,8 @@ widget = QtWidgets.QStackedWidget()
 widget.addWidget(welcome)
 widget.setFixedHeight(800)
 widget.setFixedWidth(1200)
+widget.setWindowTitle('ICalcThis')
+widget.setWindowIcon(QtGui.QIcon('images/calculator_image.png'))
 widget.show()
 try:
     sys.exit(app.exec_())
