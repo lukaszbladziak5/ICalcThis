@@ -119,30 +119,34 @@ class Model_Haty(QDialog):
         self.reset_button.clicked.connect(self.go_to_clear_data)
         self.oblicz_button.clicked.connect(self.go_to_save_data)
 
-        self.f = self.v_input.text()
-        self.d = self.d_input.text()
-        self.base = self.hB_input.text()
-        self.mob = self.hM_input.text()
+        self.f = self.v_input_2.text()
+        self.d = self.d_input_2.text()
+        self.base = self.hB_input_2.text()
+        self.mob = self.hM_input_2.text()
 
     def go_to_clear_data(self):
-        self.v_input.setText('')
-        self.d_input.setText('')
-        self.hB_input.setText('')
-        self.hM_input.setText('')
+        self.v_input_2.setText('')
+        self.d_input_2.setText('')
+        self.hB_input_2.setText('')
+        self.hM_input_2.setText('')
+        self.wynik_hata.setText('')
+        self.wynikA.setText('')
 
     def go_to_save_data(self):
-        if self.urban_button.isChecked():
+        if self.urban_button_2.isChecked():
             self.mode = 1
-        if self.suburban_button.isChecked():
+        if self.suburban_button_2.isChecked():
             self.mode = 2
-        if self.open_button.isChecked():
+        if self.open_button_2.isChecked():
             self.mode = 3
-        self.f = self.v_input.text()
-        self.d = self.d_input.text()
-        self.base = self.hB_input.text()
-        self.mob = self.hM_input.text()
+        self.f = self.v_input_2.text()
+        self.d = self.d_input_2.text()
+        self.base = self.hB_input_2.text()
+        self.mob = self.hM_input_2.text()
         print(self.f, self.d, self.base, self.mob, self.mode)
+        wynikAhms = modules.hata.get_a(int(self.f), int(self.mob), int(self.mode))
         wynik = modules.hata.exec(int(self.f), int(self.d), int(self.base), int(self.mob), int(self.mode))
+        self.wynikA.setText(str(wynikAhms))
         self.wynik_hata.setText(str(wynik))
 
     def cofanie(self):
