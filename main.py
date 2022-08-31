@@ -125,10 +125,10 @@ class Model_Haty(QDialog):
         self.mob = self.hM_input_2.text()
 
     def go_to_clear_data(self):
-        self.v_input_2.setText('')
-        self.d_input_2.setText('')
-        self.hB_input_2.setText('')
-        self.hM_input_2.setText('')
+        self.v_input_2.setValue(0)
+        self.d_input_2.setValue(0)
+        self.hB_input_2.setValue(0)
+        self.hM_input_2.setValue(0)
         self.wynik_hata.setText('')
         self.wynikA.setText('')
 
@@ -139,13 +139,13 @@ class Model_Haty(QDialog):
             self.mode = 2
         if self.open_button_2.isChecked():
             self.mode = 3
-        self.f = self.v_input_2.text()
-        self.d = self.d_input_2.text()
-        self.base = self.hB_input_2.text()
-        self.mob = self.hM_input_2.text()
+        self.f = self.v_input_2.value()
+        self.d = self.d_input_2.value()
+        self.base = self.hB_input_2.value()
+        self.mob = self.hM_input_2.value()
         print(self.f, self.d, self.base, self.mob, self.mode)
-        wynikAhms = modules.hata.get_a(int(self.f), int(self.mob), int(self.mode))
-        wynik = modules.hata.exec(int(self.f), int(self.d), int(self.base), int(self.mob), int(self.mode))
+        wynikAhms = modules.hata.get_a(self.f, self.mob, self.mode)
+        wynik = modules.hata.exec(self.f, self.d, self.base, self.mob, self.mode)
         self.wynikA.setText(str(wynikAhms))
         self.wynik_hata.setText(str(wynik))
 
