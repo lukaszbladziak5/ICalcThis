@@ -91,7 +91,7 @@ class Menu(QDialog):
         super(Menu, self).__init__()
         loadUi("UI/Menu.ui", self)
         self.modelHaty_przycisk.clicked.connect(self.model_Haty)  # menu główne, przycisk 1
-        self.operacja_2_przycisk.clicked.connect(self.operacja2)  # menu główne, przycisk 2ss222
+        self.rachunek_db_przycisk.clicked.connect(self.rachunek_db)  # menu główne, przycisk 2
         self.operacja_3_przycisk.clicked.connect(self.operacja3)
 
     def model_Haty(self):
@@ -99,9 +99,9 @@ class Menu(QDialog):
         widget.addWidget(modelHaty_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-    def operacja2(self):
-        operacja_2_przycisk = Operacja2()
-        widget.addWidget(operacja_2_przycisk)
+    def rachunek_db(self):
+        rachunek_db_przycisk = Rachunek_decybelowy()
+        widget.addWidget(rachunek_db_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def operacja3(self):
@@ -143,7 +143,6 @@ class Model_Haty(QDialog):
         self.d = self.d_input_2.value()
         self.base = self.hB_input_2.value()
         self.mob = self.hM_input_2.value()
-        print(self.f, self.d, self.base, self.mob, self.mode)
         wynikAhms = modules.hata.get_a(self.f, self.mob, self.mode)
         wynik = modules.hata.exec(self.f, self.d, self.base, self.mob, self.mode)
         self.wynikA.setText(str(wynikAhms))
@@ -155,12 +154,32 @@ class Model_Haty(QDialog):
         widget.setCurrentIndex(widget.currentIndex() - 1)
 
 
-class Operacja2(QDialog):
+class Rachunek_decybelowy(QDialog):
 
     def __init__(self):
-        super(Operacja2, self).__init__()
-        loadUi("UI/Operacja2.ui", self)
-        self.cofanie_przycisk.clicked.connect(self.cofanie)
+        super(Rachunek_decybelowy, self).__init__()
+        loadUi("UI/Rachunek_db.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
+
+        self.first_value = self.pierwsza_dana.value()
+        self.second_value = self.druga_dana.value()
+        # self.result = self.wynik.value()
+
+    def go_to_clear_data(self):
+        self.wynik.setText('')
+        self.pierwsza_dana.setValue(0)
+        self.druga_dana.setValue(0)
+
+    def _choose_mode(self):
+        if self.wybor_konwersji.currentIndex() == 0:
+            return modules.dB.dBWTodBm(self.first_value)
+
+    def go_to_save_data(self):
+
+        # wynik_obliczen = self._choose_mode()
+        # self.wynik.setText(str(self.result))
 
     def cofanie(self):
         cofanie_przycisk = Menu()

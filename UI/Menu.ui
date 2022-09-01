@@ -77,7 +77,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      <string>Model Haty</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="operacja_2_przycisk">
+   <widget class="QPushButton" name="rachunek_db_przycisk">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -87,7 +87,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>Operacja2</string>
+     <string>Rachunek decybelowy</string>
     </property>
    </widget>
    <widget class="QPushButton" name="operacja_3_przycisk">
