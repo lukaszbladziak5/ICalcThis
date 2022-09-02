@@ -5,6 +5,21 @@ import sys
 import sqlite3
 import modules.hata
 
+class ErrorDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("ERROR")
+
+        QBtn = QDialogButtonBox.Ok
+
+        self.buttonBox = QDialogButtonBox(QBtn)
+        self.buttonBox.accepted.connect(self.accept)
+        self.layout = QVBoxLayout()
+        message = QLabel("Sorry, something went wrong")
+        self.layout.addWidget(message)
+        self.layout.addWidget(self.buttonBox)
+        self.setLayout(self.layout)
 
 class Ekran_poczatkowy(QDialog):
 
@@ -73,16 +88,20 @@ class Ekran_rejestracji(QDialog):
         elif haslo_rejestracja != haslo2_rejestacja:
             self.blad2.setText("Hasła są różne.")
         else:
-            polaczenie2 = sqlite3.connect("baza_danych_uzytkownikow.db")
-            cur2 = polaczenie2.cursor()
-            informacja_o_uzytkowniku = [nazwa_uzytkownika_rejestracja, haslo_rejestracja]
-            cur2.execute('INSERT INTO login_info (username,password) VALUES (?,?)', informacja_o_uzytkowniku)
+            try:
+                polaczenie2 = sqlite3.connect("baza_danych_uzytkownikow.db")
+                cur2 = polaczenie2.cursor()
+                informacja_o_uzytkowniku = [nazwa_uzytkownika_rejestracja, haslo_rejestracja]
+                cur2.execute('INSERT INTO login_info (username,password) VALUES (?,?)', informacja_o_uzytkowniku)
 
-            polaczenie2.commit()
-            polaczenie2.close()
-            profil = Menu()
-            widget.addWidget(profil)
-            widget.setCurrentIndex(widget.currentIndex() + 1)
+                polaczenie2.commit()
+                polaczenie2.close()
+                profil = Menu()
+                widget.addWidget(profil)
+                widget.setCurrentIndex(widget.currentIndex() + 1)
+            except:
+                dlg = ErrorDialog()
+                if dlg.exec(): print("Error dialog prompted")
 
 
 class Menu(QDialog):
@@ -123,6 +142,7 @@ class Model_Haty(QDialog):
         self.d = self.d_input_2.text()
         self.base = self.hB_input_2.text()
         self.mob = self.hM_input_2.text()
+        self.urban_button_2.setChecked(True)
 
     def go_to_clear_data(self):
         self.v_input_2.setValue(0)
@@ -143,8 +163,16 @@ class Model_Haty(QDialog):
         self.d = self.d_input_2.value()
         self.base = self.hB_input_2.value()
         self.mob = self.hM_input_2.value()
-        wynikAhms = modules.hata.get_a(self.f, self.mob, self.mode)
-        wynik = modules.hata.exec(self.f, self.d, self.base, self.mob, self.mode)
+        wynikAhms = -1
+        wynik = -1
+        try:
+            wynikAhms = modules.hata.get_a(self.f, self.mob, self.mode)
+            wynik = modules.hata.exec(self.f, self.d, self.base, self.mob, self.mode)
+        except:
+            dlg = ErrorDialog()
+            if dlg.exec(): print("Error dialog prompted")
+            wynikAhms = "NaN"
+            wynik = "NaN"
         self.wynikA.setText(str(wynikAhms))
         self.wynik_hata.setText(str(wynik))
 
@@ -176,7 +204,7 @@ class Rachunek_decybelowy(QDialog):
         if self.wybor_konwersji.currentIndex() == 0:
             return modules.dB.dBWTodBm(self.first_value)
 
-    def go_to_save_data(self): #Jak zakomentujesz tę linię to przestanie walić błędem w mainie ale dB się wywali
+    #def go_to_save_data(self): #Jak zakomentujesz tę linię to przestanie walić błędem w mainie ale dB się wywali
 
         # wynik_obliczen = self._choose_mode()
         # self.wynik.setText(str(self.result))
