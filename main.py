@@ -176,7 +176,7 @@ class Rachunek_decybelowy(QDialog):
         if self.wybor_konwersji.currentIndex() == 0:
             return modules.dB.dBWTodBm(self.first_value)
 
-    def go_to_save_data(self):
+    def go_to_save_data(self): #Jak zakomentujesz tę linię to przestanie walić błędem w mainie ale dB się wywali
 
         # wynik_obliczen = self._choose_mode()
         # self.wynik.setText(str(self.result))
