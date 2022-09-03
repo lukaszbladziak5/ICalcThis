@@ -6,7 +6,7 @@ import sqlite3
 import modules.hata
 
 class ErrorDialog(QDialog):
-    def __init__(self):
+    def __init__(self, msg = "Sorry, something went wrong"):
         super().__init__()
 
         self.setWindowTitle("ERROR")
@@ -16,7 +16,7 @@ class ErrorDialog(QDialog):
         self.buttonBox = QDialogButtonBox(QBtn)
         self.buttonBox.accepted.connect(self.accept)
         self.layout = QVBoxLayout()
-        message = QLabel("Sorry, something went wrong")
+        message = QLabel(msg)
         self.layout.addWidget(message)
         self.layout.addWidget(self.buttonBox)
         self.setLayout(self.layout)
@@ -100,7 +100,7 @@ class Ekran_rejestracji(QDialog):
                 widget.addWidget(profil)
                 widget.setCurrentIndex(widget.currentIndex() + 1)
             except:
-                dlg = ErrorDialog()
+                dlg = ErrorDialog("Błąd - prawdopodobnie taki uzytkownik juz istnieje")
                 if dlg.exec(): print("Error dialog prompted")
 
 
@@ -169,7 +169,7 @@ class Model_Haty(QDialog):
             wynikAhms = modules.hata.get_a(self.f, self.mob, self.mode)
             wynik = modules.hata.exec(self.f, self.d, self.base, self.mob, self.mode)
         except:
-            dlg = ErrorDialog()
+            dlg = ErrorDialog("Wprowadzono błędne dane")
             if dlg.exec(): print("Error dialog prompted")
             wynikAhms = "NaN"
             wynik = "NaN"
