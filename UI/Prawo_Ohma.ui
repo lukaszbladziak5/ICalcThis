@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1200</width>
-    <height>758</height>
+    <height>761</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -53,8 +53,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QPushButton" name="oblicz_button">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>580</y>
+      <x>410</x>
+      <y>590</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -66,7 +66,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="tekst_wyniki">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>400</x>
       <y>650</y>
       <width>121</width>
       <height>41</height>
@@ -112,8 +112,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QPushButton" name="reset_button">
     <property name="geometry">
      <rect>
-      <x>710</x>
-      <y>580</y>
+      <x>670</x>
+      <y>590</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -125,8 +125,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="tekst_podaj_dane">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>240</y>
+      <x>360</x>
+      <y>210</y>
       <width>361</width>
       <height>51</height>
      </rect>
@@ -141,24 +141,24 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="tekst_wybierz_rodzaj">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>120</y>
-      <width>371</width>
-      <height>41</height>
+      <x>280</x>
+      <y>30</y>
+      <width>561</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">font: 700 15pt &quot;Segoe Script&quot;;</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;WYBIERZ RODZAJ POŁĄCZENIA&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;WYBIERZ RODZAJ POŁĄCZENIA&lt;/p&gt;&lt;p align=&quot;center&quot;&gt; REZYSTORÓW/KONDENSATORÓW&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QComboBox" name="wybor_polaczenia">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>170</y>
+      <x>500</x>
+      <y>160</y>
       <width>141</width>
       <height>41</height>
      </rect>
@@ -177,8 +177,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QDoubleSpinBox" name="R1">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>480</y>
+      <x>290</x>
+      <y>460</y>
       <width>62</width>
       <height>22</height>
      </rect>
@@ -187,8 +187,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QDoubleSpinBox" name="R2">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>520</y>
+      <x>290</x>
+      <y>510</y>
       <width>62</width>
       <height>22</height>
      </rect>
@@ -200,8 +200,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="jednostka_danych1">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>480</y>
+      <x>130</x>
+      <y>470</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -213,8 +213,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="jednostka_danych2">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>520</y>
+      <x>130</x>
+      <y>510</y>
       <width>101</width>
       <height>16</height>
      </rect>
@@ -226,7 +226,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="jednostka_wyniku">
     <property name="geometry">
      <rect>
-      <x>750</x>
+      <x>710</x>
       <y>660</y>
       <width>49</width>
       <height>16</height>
@@ -239,7 +239,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="wynik">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>570</x>
       <y>660</y>
       <width>121</width>
       <height>20</height>
@@ -249,12 +249,122 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QLabel" name="obrazek_rownolegle">
+   <widget class="QLabel" name="jednostka_danych1_2">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>330</y>
+      <x>40</x>
+      <y>270</y>
+      <width>191</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Połączenie równoległe rezystorów</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="jednostka_danych1_3">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>270</y>
+      <width>191</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Połączenie szeregowe rezystorów</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="jednostka_danych1_4">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>460</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pojemność C1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="jednostka_danych2_2">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>510</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pojemnośc C2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="jednostka_danych1_5">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>270</y>
+      <width>211</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Połączenie równoległe kondensatorów</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="jednostka_danych1_6">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>270</y>
+      <width>211</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Połączenie szeregowe kondensatorów</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>320</y>
+      <width>211</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../images/szeregowe1.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>310</y>
       <width>181</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../images/szeregowe_kondensator.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>300</y>
+      <width>141</width>
       <height>121</height>
      </rect>
     </property>
@@ -262,49 +372,46 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../images/szeregowe.png</pixmap>
+     <pixmap>../images/rownolegle1.png</pixmap>
     </property>
    </widget>
-   <widget class="QLabel" name="jednostka_danych1_2">
+   <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>290</y>
-      <width>121</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Połączenie równoległe</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="jednostka_danych1_3">
-    <property name="geometry">
-     <rect>
-      <x>680</x>
-      <y>290</y>
-      <width>121</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Połączenie szeregowe</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>320</y>
-      <width>121</width>
-      <height>141</height>
+      <x>550</x>
+      <y>300</y>
+      <width>221</width>
+      <height>151</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../images/rownoelgle.png</pixmap>
+     <pixmap>../images/rownolegle_kondensator.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="C1">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>450</y>
+      <width>62</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="C2">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>510</y>
+      <width>62</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>
