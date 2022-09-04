@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets, QtGui
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
 import sys
-import sqlite3
+import sql
 import modules.hata
 
 class ErrorDialog(QDialog):
@@ -55,12 +55,7 @@ class Ekran_logowania(QDialog):
         if (len(nazwa_uzytkownika) == 0 or len(haslo) == 0):
             self.blad.setText("Nieprawidłowa nazwa użytkownika lub hasło!")
         else:
-            polaczenie = sqlite3.connect("baza_danych_uzytkownikow.db")
-            cur = polaczenie.cursor()
-            wiersz = 'SELECT password FROM login_info WHERE username =\'' + nazwa_uzytkownika + "\'"
-            cur.execute(wiersz)
-            rezultat = cur.fetchone()[0]
-            if rezultat == haslo:
+            if sql.login(nazwa_uzytkownika, haslo):
                 print("Logowanie powiodło się!")
                 profil = Menu()
                 widget.addWidget(profil)
@@ -79,9 +74,9 @@ class Ekran_rejestracji(QDialog):
         self.przycisk_zarejestruj.clicked.connect(self.funkcja_rejestracji)
 
     def funkcja_rejestracji(self):
-        nazwa_uzytkownika_rejestracja = self.pole_nazwa_uzytkownika2.text()
-        haslo_rejestracja = self.pole_haslo2.text()
-        haslo2_rejestacja = self.pole_haslo2_podtwierdzenie.text()
+        nazwa_uzytkownika_rejestracja = str(self.pole_nazwa_uzytkownika2.text())
+        haslo_rejestracja = str(self.pole_haslo2.text())
+        haslo2_rejestacja = str(self.pole_haslo2_podtwierdzenie.text())
 
         if (len(nazwa_uzytkownika_rejestracja) == 0 or len(haslo_rejestracja) == 0 or len(haslo2_rejestacja) == 0):
             self.blad2.setText("Proszę wypełnij puste pola.")
@@ -89,13 +84,7 @@ class Ekran_rejestracji(QDialog):
             self.blad2.setText("Hasła są różne.")
         else:
             try:
-                polaczenie2 = sqlite3.connect("baza_danych_uzytkownikow.db")
-                cur2 = polaczenie2.cursor()
-                informacja_o_uzytkowniku = [nazwa_uzytkownika_rejestracja, haslo_rejestracja]
-                cur2.execute('INSERT INTO login_info (username,password) VALUES (?,?)', informacja_o_uzytkowniku)
-
-                polaczenie2.commit()
-                polaczenie2.close()
+                sql.register(nazwa_uzytkownika_rejestracja, haslo_rejestracja)
                 profil = Menu()
                 widget.addWidget(profil)
                 widget.setCurrentIndex(widget.currentIndex() + 1)
