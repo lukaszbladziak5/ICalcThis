@@ -111,7 +111,7 @@ class Menu(QDialog):
         loadUi("UI/Menu.ui", self)
         self.modelHaty_przycisk.clicked.connect(self.model_Haty)  # menu główne, przycisk 1
         self.rachunek_db_przycisk.clicked.connect(self.rachunek_db)  # menu główne, przycisk 2
-        self.operacja_3_przycisk.clicked.connect(self.operacja3)
+        self.przycisk3_PrawoOhma.clicked.connect(self.Prawo_Ohma)
 
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
@@ -123,9 +123,9 @@ class Menu(QDialog):
         widget.addWidget(rachunek_db_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-    def operacja3(self):
-        operacja_3_przycisk = Operacja3()
-        widget.addWidget(operacja_3_przycisk)
+    def Prawo_Ohma(self):
+        przycisk3_PrawoOhma = Prawo_Ohma()
+        widget.addWidget(przycisk3_PrawoOhma)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
@@ -215,12 +215,12 @@ class Rachunek_decybelowy(QDialog):
         widget.setCurrentIndex(widget.currentIndex() - 1)
 
 
-class Operacja3(QDialog):
+class Prawo_Ohma(QDialog):
 
     def __init__(self):
-        super(Operacja3, self).__init__()
-        loadUi("UI/Operacja3.ui", self)
-        self.cofanie_przycisk.clicked.connect(self.cofanie)
+        super(Prawo_Ohma, self).__init__()
+        loadUi("UI/Prawo_Ohma.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
 
     def cofanie(self):
         cofanie_przycisk = Menu()
