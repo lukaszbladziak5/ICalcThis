@@ -5,6 +5,11 @@ from PyQt5.QtWidgets import *
 
 
 def exec(f, d, base, mob, mode):
+    if(f < 150 or f > 1500): raise ValueError("Hata model: frequency out of bounds")
+    if(d <= 0): raise ValueError("Hata model: distance cannot be subzero")
+    if(base < 2 or base > 30): raise ValueError("Hata model: BS height out of bounds")
+    if(mob <= 0): raise ValueError("Hata model: terminal height cannot be subzero")
+
     if mode == 1: return get_urban(f, d, base, mob, 1)
     if mode == 2: return get_suburban(f, d, base, mob)
     if mode == 3: return get_open(f, d, base, mob)
