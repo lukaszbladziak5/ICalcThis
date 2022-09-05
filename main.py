@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 import sys
 import sqlite3
 import modules.hata
+import modules.dB
 
 
 class Ekran_poczatkowy(QDialog):
@@ -162,24 +163,76 @@ class Rachunek_decybelowy(QDialog):
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.reset_button.clicked.connect(self.go_to_clear_data)
         self.oblicz_button.clicked.connect(self.go_to_save_data)
+        self.wybor_konwersji.currentIndexChanged.connect(self._update_conversion_method)
 
         self.first_value = self.pierwsza_dana.value()
         self.second_value = self.druga_dana.value()
-        # self.result = self.wynik.value()
+        self.jednostka_danych1.setText('dBW')
+        self.druga_dana.hide()
+        self.jednostka_danych2.hide()
+
+    def _update_conversion_method(self):
+        if self.wybor_konwersji.currentIndex() == 0:
+            self.druga_dana.hide()
+            self.jednostka_danych2.hide()
+            self.jednostka_danych1.setText('dBW')
+        elif self.wybor_konwersji.currentIndex() == 1:
+            self.druga_dana.hide()
+            self.jednostka_danych2.hide()
+            self.jednostka_danych1.setText('dBm')
+        elif self.wybor_konwersji.currentIndex() == 2:
+            self.druga_dana.hide()
+            self.jednostka_danych2.hide()
+            self.jednostka_danych1.setText('dBW')
+        elif self.wybor_konwersji.currentIndex() == 3:
+            self.druga_dana.hide()
+            self.jednostka_danych2.hide()
+            self.jednostka_danych1.setText('dBm')
+        elif self.wybor_konwersji.currentIndex() == 4:
+            self.druga_dana.hide()
+            self.jednostka_danych2.hide()
+            self.jednostka_danych1.setText('W')
+        elif self.wybor_konwersji.currentIndex() == 5:
+            self.druga_dana.hide()
+            self.jednostka_danych2.hide()
+            self.jednostka_danych1.setText('dB')
+        elif self.wybor_konwersji.currentIndex() == 6:
+            self.druga_dana.show()
+            self.jednostka_danych2.show()
+            self.jednostka_danych1.setText('W')
+            self.jednostka_danych2.setText('W')
+        elif self.wybor_konwersji.currentIndex() == 7:
+            self.druga_dana.hide()
+            self.jednostka_danych2.hide()
+            self.jednostka_danych1.setText('W')
+        elif self.wybor_konwersji.currentIndex() == 8:
+            self.druga_dana.show()
+            self.jednostka_danych2.show()
+            self.jednostka_danych1.setText('V')
+            self.jednostka_danych2.setText('V')
 
     def go_to_clear_data(self):
         self.wynik.setText('')
         self.pierwsza_dana.setValue(0)
         self.druga_dana.setValue(0)
 
-    def _choose_mode(self):
-        if self.wybor_konwersji.currentIndex() == 0:
-            return modules.dB.dBWTodBm(self.first_value)
+    def _choose_mode(self):                             # przepraszam za składnię poniżej
+        if self.wybor_konwersji.currentIndex() == 0: return modules.dB.dBWTodBm(self.first_value), "dBm"
+        elif self.wybor_konwersji.currentIndex() == 1: return modules.dB.dBmTodBW(self.first_value), "dBW"
+        elif self.wybor_konwersji.currentIndex() == 2: return modules.dB.dBWToW(self.first_value), "W"
+        elif self.wybor_konwersji.currentIndex() == 3: return modules.dB.dBmToW(self.first_value), "W"
+        elif self.wybor_konwersji.currentIndex() == 4: return modules.dB.WTodBm(self.first_value), "dBW"
+        elif self.wybor_konwersji.currentIndex() == 5: return modules.dB.dBToRatio(self.first_value), "(ratio)"
+        elif self.wybor_konwersji.currentIndex() == 6: return modules.dB.ratioTodB(self.first_value, self.second_value), "dB"
+        elif self.wybor_konwersji.currentIndex() == 7: return modules.dB.lossTodB(self.first_value), "dB"
+        elif self.wybor_konwersji.currentIndex() == 8: return modules.dB.voltageTodB(self.first_value, self.second_value), "dB"
 
     def go_to_save_data(self):
-
-        # wynik_obliczen = self._choose_mode()
-        # self.wynik.setText(str(self.result))
+        self.first_value = self.pierwsza_dana.value()
+        self.second_value = self.druga_dana.value()
+        self.result, self.result_unit = self._choose_mode()
+        self.wynik.setText(str(self.result))
+        self.jednostka_wyniku.setText(str(self.result_unit))
 
     def cofanie(self):
         cofanie_przycisk = Menu()
