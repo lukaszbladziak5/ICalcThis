@@ -179,7 +179,7 @@ class Model_Haty(QDialog):
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
 class Rachunek_decybelowy(QDialog):
@@ -229,8 +229,11 @@ class Prawo_Ohma(QDialog):
 
 
 app = QApplication(sys.argv)
-welcome = Ekran_poczatkowy()
+
+
 widget = QtWidgets.QStackedWidget()
+welcome = Ekran_poczatkowy()
+
 widget.addWidget(welcome)
 widget.setFixedHeight(800)
 widget.setFixedWidth(1200)
