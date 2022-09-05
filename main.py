@@ -6,6 +6,21 @@ import sqlite3
 import modules.hata
 import modules.dB
 
+class ErrorDialog(QDialog):
+    def __init__(self, msg = "Sorry, something went wrong"):
+        super().__init__()
+
+        self.setWindowTitle("ERROR")
+
+        QBtn = QDialogButtonBox.Ok
+
+        self.buttonBox = QDialogButtonBox(QBtn)
+        self.buttonBox.accepted.connect(self.accept)
+        self.layout = QVBoxLayout()
+        message = QLabel(msg)
+        self.layout.addWidget(message)
+        self.layout.addWidget(self.buttonBox)
+        self.setLayout(self.layout)
 
 class Ekran_poczatkowy(QDialog):
 
@@ -74,16 +89,20 @@ class Ekran_rejestracji(QDialog):
         elif haslo_rejestracja != haslo2_rejestacja:
             self.blad2.setText("Hasła są różne.")
         else:
-            polaczenie2 = sqlite3.connect("baza_danych_uzytkownikow.db")
-            cur2 = polaczenie2.cursor()
-            informacja_o_uzytkowniku = [nazwa_uzytkownika_rejestracja, haslo_rejestracja]
-            cur2.execute('INSERT INTO login_info (username,password) VALUES (?,?)', informacja_o_uzytkowniku)
+            try:
+                polaczenie2 = sqlite3.connect("baza_danych_uzytkownikow.db")
+                cur2 = polaczenie2.cursor()
+                informacja_o_uzytkowniku = [nazwa_uzytkownika_rejestracja, haslo_rejestracja]
+                cur2.execute('INSERT INTO login_info (username,password) VALUES (?,?)', informacja_o_uzytkowniku)
 
-            polaczenie2.commit()
-            polaczenie2.close()
-            profil = Menu()
-            widget.addWidget(profil)
-            widget.setCurrentIndex(widget.currentIndex() + 1)
+                polaczenie2.commit()
+                polaczenie2.close()
+                profil = Menu()
+                widget.addWidget(profil)
+                widget.setCurrentIndex(widget.currentIndex() + 1)
+            except:
+                dlg = ErrorDialog("Błąd - prawdopodobnie taki uzytkownik juz istnieje")
+                if dlg.exec(): print("Error dialog prompted")
 
 
 class Menu(QDialog):
@@ -93,7 +112,8 @@ class Menu(QDialog):
         loadUi("UI/Menu.ui", self)
         self.modelHaty_przycisk.clicked.connect(self.model_Haty)  # menu główne, przycisk 1
         self.rachunek_db_przycisk.clicked.connect(self.rachunek_db)  # menu główne, przycisk 2
-        self.operacja_3_przycisk.clicked.connect(self.operacja3)
+        self.przycisk3_PrawoOhma.clicked.connect(self.Prawo_Ohma)
+        self.operacja4_ONP.clicked.connect(self.ONP)
 
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
@@ -105,9 +125,14 @@ class Menu(QDialog):
         widget.addWidget(rachunek_db_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-    def operacja3(self):
-        operacja_3_przycisk = Operacja3()
-        widget.addWidget(operacja_3_przycisk)
+    def Prawo_Ohma(self):
+        przycisk3_PrawoOhma = Prawo_Ohma()
+        widget.addWidget(przycisk3_PrawoOhma)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def ONP(self):
+        operacja4_ONP = Notacja_Polska()
+        widget.addWidget(operacja4_ONP)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
@@ -124,6 +149,7 @@ class Model_Haty(QDialog):
         self.d = self.d_input_2.text()
         self.base = self.hB_input_2.text()
         self.mob = self.hM_input_2.text()
+        self.urban_button_2.setChecked(True)
 
     def go_to_clear_data(self):
         self.v_input_2.setValue(0)
@@ -144,15 +170,23 @@ class Model_Haty(QDialog):
         self.d = self.d_input_2.value()
         self.base = self.hB_input_2.value()
         self.mob = self.hM_input_2.value()
-        wynikAhms = modules.hata.get_a(self.f, self.mob, self.mode)
-        wynik = modules.hata.exec(self.f, self.d, self.base, self.mob, self.mode)
+        wynikAhms = -1
+        wynik = -1
+        try:
+            wynikAhms = modules.hata.get_a(self.f, self.mob, self.mode)
+            wynik = modules.hata.exec(self.f, self.d, self.base, self.mob, self.mode)
+        except:
+            dlg = ErrorDialog("Wprowadzono błędne dane")
+            if dlg.exec(): print("Error dialog prompted")
+            wynikAhms = "NaN"
+            wynik = "NaN"
         self.wynikA.setText(str(wynikAhms))
         self.wynik_hata.setText(str(wynik))
 
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
 class Rachunek_decybelowy(QDialog):
@@ -237,25 +271,37 @@ class Rachunek_decybelowy(QDialog):
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
-class Operacja3(QDialog):
+class Prawo_Ohma(QDialog):
 
     def __init__(self):
-        super(Operacja3, self).__init__()
-        loadUi("UI/Operacja3.ui", self)
-        self.cofanie_przycisk.clicked.connect(self.cofanie)
+        super(Prawo_Ohma, self).__init__()
+        loadUi("UI/Prawo_Ohma.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
 
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
+
+class Notacja_Polska(QDialog):
+
+    def __init__(self):
+        super(Notacja_Polska, self).__init__()
+        loadUi("UI/Notacja_Polska.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 app = QApplication(sys.argv)
-welcome = Ekran_poczatkowy()
 widget = QtWidgets.QStackedWidget()
+welcome = Ekran_poczatkowy()
 widget.addWidget(welcome)
 widget.setFixedHeight(800)
 widget.setFixedWidth(1200)
