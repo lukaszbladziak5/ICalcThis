@@ -11,7 +11,6 @@ def connect():
   )
 
 def login(user, password):
-  #admin = fc8252c8dc55839967c58b9ad755a59b61b67c13227ddae4bd3f78a38bf394f7
   try:
     mydb = mysql.connector.connect(
       host="vps1.jaskula.net.pl",
