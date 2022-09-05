@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1196</width>
-    <height>791</height>
+    <width>1200</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,9 +29,9 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="tekst_glowny">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>370</x>
       <y>40</y>
-      <width>381</width>
+      <width>491</width>
       <height>51</height>
      </rect>
     </property>
@@ -66,7 +66,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="tekst_wyniki">
     <property name="geometry">
      <rect>
-      <x>560</x>
+      <x>550</x>
       <y>440</y>
       <width>121</width>
       <height>41</height>
@@ -112,7 +112,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QPushButton" name="reset_button">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>610</x>
       <y>620</y>
       <width>75</width>
       <height>24</height>
@@ -125,7 +125,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="tekst_podaj_dane">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>410</x>
       <y>290</y>
       <width>361</width>
       <height>51</height>
@@ -141,9 +141,9 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="tekst_wybierz_rodzaj">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>380</x>
       <y>150</y>
-      <width>371</width>
+      <width>471</width>
       <height>41</height>
      </rect>
     </property>
@@ -157,7 +157,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QComboBox" name="wybor_konwersji">
     <property name="geometry">
      <rect>
-      <x>540</x>
+      <x>510</x>
       <y>220</y>
       <width>141</width>
       <height>41</height>
@@ -212,17 +212,26 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QDoubleSpinBox" name="pierwsza_dana">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>510</x>
       <y>360</y>
       <width>62</width>
       <height>22</height>
      </rect>
     </property>
+    <property name="decimals">
+     <number>3</number>
+    </property>
+    <property name="minimum">
+     <double>-999999.998999999952503</double>
+    </property>
+    <property name="maximum">
+     <double>999999.998999999952503</double>
+    </property>
    </widget>
    <widget class="QDoubleSpinBox" name="druga_dana">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>510</x>
       <y>400</y>
       <width>62</width>
       <height>22</height>
@@ -231,31 +240,43 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
     <property name="readOnly">
      <bool>false</bool>
     </property>
+    <property name="decimals">
+     <number>3</number>
+    </property>
+    <property name="minimum">
+     <double>-999999.998999999952503</double>
+    </property>
+    <property name="maximum">
+     <double>999999.998999999952503</double>
+    </property>
+    <property name="stepType">
+     <enum>QAbstractSpinBox::DefaultStepType</enum>
+    </property>
    </widget>
    <widget class="QLabel" name="jednostka_danych1">
     <property name="geometry">
      <rect>
-      <x>620</x>
+      <x>610</x>
       <y>360</y>
       <width>49</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="jednostka_danych2">
     <property name="geometry">
      <rect>
-      <x>620</x>
+      <x>610</x>
       <y>400</y>
       <width>49</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="jednostka_wyniku">
@@ -268,7 +289,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="wynik">
@@ -281,7 +302,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
   </widget>
