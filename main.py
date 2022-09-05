@@ -244,7 +244,7 @@ class Rachunek_decybelowy(QDialog):
             self.jednostka_danych2.show()
             self.jednostka_danych1.setText('V')
             self.jednostka_danych2.setText('V')
-
+#hhhhhhhhhhhhhhhhhhhh
     def go_to_clear_data(self):
         self.wynik.setText('')
         self.pierwsza_dana.setValue(0)
