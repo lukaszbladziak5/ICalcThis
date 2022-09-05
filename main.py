@@ -112,7 +112,7 @@ class Menu(QDialog):
         self.modelHaty_przycisk.clicked.connect(self.model_Haty)  # menu główne, przycisk 1
         self.rachunek_db_przycisk.clicked.connect(self.rachunek_db)  # menu główne, przycisk 2
         self.przycisk3_PrawoOhma.clicked.connect(self.Prawo_Ohma)
-
+        self.operacja4_ONP.clicked.connect(self.ONP)
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
         widget.addWidget(modelHaty_przycisk)
@@ -126,6 +126,11 @@ class Menu(QDialog):
     def Prawo_Ohma(self):
         przycisk3_PrawoOhma = Prawo_Ohma()
         widget.addWidget(przycisk3_PrawoOhma)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def ONP(self):
+        operacja4_ONP = Notacja_Polska()
+        widget.addWidget(operacja4_ONP)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
@@ -228,12 +233,21 @@ class Prawo_Ohma(QDialog):
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
+class Notacja_Polska(QDialog):
+
+    def __init__(self):
+        super(Notacja_Polska, self).__init__()
+        loadUi("UI/Notacja_Polska.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
 app = QApplication(sys.argv)
-
-
 widget = QtWidgets.QStackedWidget()
 welcome = Ekran_poczatkowy()
-
 widget.addWidget(welcome)
 widget.setFixedHeight(800)
 widget.setFixedWidth(1200)
