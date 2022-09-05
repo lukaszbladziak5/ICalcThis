@@ -1,6 +1,6 @@
 #Friss formula in friss.py
 
-from numpy import sqrt, pi
+import numpy
 
 def waveToFreq(waveLength):
     return 300000 / waveLength #in kHz
@@ -17,7 +17,7 @@ def eirp(power, loss, gain):
 def fresnal(distance, freq):
     #distance in km, freq in GHz
     #Returns radius in meters
-    return 17.31 * numpy.sqrt(D / (4 * freq))
+    return 17.31 * numpy.sqrt(distance / (4 * freq))
 
 def dipoleLength(freq):
     #
