@@ -1,7 +1,6 @@
 import mysql.connector
-
-import mysql.connector
 from hashlib import sha256
+
 def connect():
   mydb = mysql.connector.connect(
     host="vps1.jaskula.net.pl",
@@ -14,8 +13,8 @@ def login(user, password):
   try:
     mydb = mysql.connector.connect(
       host="vps1.jaskula.net.pl",
-      user="root",
-      password="EGgFRJKPY7I3h9eU1Uyivmli0c89DwD1",
+      user="gutold",
+      password="12345",
       database="ict"
     )
     mycursor = mydb.cursor()
