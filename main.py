@@ -212,7 +212,7 @@ class Rachunek_decybelowy(QDialog):
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
 class Prawo_Ohma(QDialog):
@@ -225,7 +225,7 @@ class Prawo_Ohma(QDialog):
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
 app = QApplication(sys.argv)
