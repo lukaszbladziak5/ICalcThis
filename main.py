@@ -199,7 +199,7 @@ class Rachunek_decybelowy(QDialog):
         self.first_value = self.pierwsza_dana.value()
         self.second_value = self.druga_dana.value()
         # self.result = self.wynik.value()
-#ggggggggggggggggggggggggggggggggggg
+#ggggggggggggggggggggggggggggggggggggg
     def go_to_clear_data(self):
         self.wynik.setText('')
         self.pierwsza_dana.setValue(0)
