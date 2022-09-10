@@ -1,4 +1,3 @@
-import math
 import numpy
 
 def exec(Gt, Gr, wavelength, d): #Pr/Pt
