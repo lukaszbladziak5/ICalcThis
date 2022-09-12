@@ -251,23 +251,27 @@ class Rachunek_decybelowy(QDialog):
         self.pierwsza_dana.setValue(0)
         self.druga_dana.setValue(0)
 
-    def _choose_mode(self):                             # przepraszam za składnię poniżej
+    def _choose_mode(self):                             # przepraszam za składnię poniżej # wybaczam
         if self.wybor_konwersji.currentIndex() == 0: return modules.dB.dBWTodBm(self.first_value), "dBm"
         elif self.wybor_konwersji.currentIndex() == 1: return modules.dB.dBmTodBW(self.first_value), "dBW"
         elif self.wybor_konwersji.currentIndex() == 2: return modules.dB.dBWToW(self.first_value), "W"
         elif self.wybor_konwersji.currentIndex() == 3: return modules.dB.dBmToW(self.first_value), "W"
-        elif self.wybor_konwersji.currentIndex() == 4: return modules.dB.WTodBm(self.first_value), "dBW"
+        elif self.wybor_konwersji.currentIndex() == 4: return modules.dB.WTodBm(self.first_value), "dBm"
         elif self.wybor_konwersji.currentIndex() == 5: return modules.dB.dBToRatio(self.first_value), "(ratio)"
         elif self.wybor_konwersji.currentIndex() == 6: return modules.dB.ratioTodB(self.first_value, self.second_value), "dB"
         elif self.wybor_konwersji.currentIndex() == 7: return modules.dB.lossTodB(self.first_value), "dB"
         elif self.wybor_konwersji.currentIndex() == 8: return modules.dB.voltageTodB(self.first_value, self.second_value), "dB"
 
     def go_to_save_data(self):
-        self.first_value = self.pierwsza_dana.value()
-        self.second_value = self.druga_dana.value()
-        self.result, self.result_unit = self._choose_mode()
-        self.wynik.setText(str(self.result))
-        self.jednostka_wyniku.setText(str(self.result_unit))
+        try:
+            self.first_value = self.pierwsza_dana.value()
+            self.second_value = self.druga_dana.value()
+            self.result, self.result_unit = self._choose_mode()
+            self.wynik.setText(str(self.result))
+            self.jednostka_wyniku.setText(str(self.result_unit))
+        except:
+            dlg = ErrorDialog()
+            if dlg.exec(): print("Error dialog prompted")
 
     def cofanie(self):
         cofanie_przycisk = Menu()
