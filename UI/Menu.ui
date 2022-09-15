@@ -6,131 +6,134 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1216</width>
-    <height>829</height>
+    <width>1200</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="widget" native="true">
+  <widget class="QWidget" name="MainMenuWidget" native="true">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>0</x>
      <y>0</y>
      <width>1200</width>
      <height>800</height>
     </rect>
    </property>
-   <widget class="QLabel" name="label">
+   <property name="styleSheet">
+    <string notr="true">QWidget#MainMenuWidget{
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(179, 204, 117, 255), stop:1 rgba(255, 255, 255, 255))};</string>
+   </property>
+   <widget class="QLabel" name="menuGlowneTekst">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>370</x>
       <y>20</y>
       <width>451</width>
       <height>81</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Candara</family>
+      <pointsize>14</pointsize>
+      <italic>true</italic>
+     </font>
+    </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; font-weight:700;&quot;&gt;Menu&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; font-weight:700;&quot;&gt;Menu główne&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="wyborOperacjiTekst">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>470</x>
       <y>110</y>
       <width>251</width>
       <height>31</height>
      </rect>
     </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Wybiesz operacje!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="blad">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>490</y>
-      <width>261</width>
-      <height>31</height>
-     </rect>
+    <property name="font">
+     <font>
+      <family>Segoe UI Light</family>
+     </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; color:#ff0000;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Wybierz operację!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="Operacja_1_przycisk">
+   <widget class="QPushButton" name="modelHaty_przycisk">
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>230</y>
+      <y>190</y>
       <width>161</width>
       <height>81</height>
      </rect>
     </property>
     <property name="text">
-     <string>Operacja1</string>
+     <string>Model Haty</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="Operacja_2_przycisk">
+   <widget class="QPushButton" name="rachunek_db_przycisk">
     <property name="geometry">
      <rect>
       <x>510</x>
-      <y>230</y>
+      <y>190</y>
       <width>161</width>
       <height>81</height>
      </rect>
     </property>
     <property name="text">
-     <string>Operacja2</string>
+     <string>Rachunek decybelowy</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="Operacja_3_przycisk">
-    <property name="geometry">
-     <rect>
-      <x>820</x>
-      <y>230</y>
-      <width>161</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Operacja3</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="Operacja_4">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>430</y>
-      <width>161</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Operacja4</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="Operacja_5">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>430</y>
-      <width>161</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Operacja5</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="Operacja_6">
+   <widget class="QPushButton" name="przycisk3_PrawoOhma">
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>430</y>
+      <y>190</y>
+      <width>161</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Obwody elektryczne</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="operacja4_ONP">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>390</y>
+      <width>161</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Notacja Polska</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="rownanie_friisa_przycisk">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>390</y>
+      <width>161</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Równanie Friisa</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="operacja_6">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>390</y>
       <width>161</width>
       <height>81</height>
      </rect>
@@ -139,11 +142,11 @@
      <string>Operacja6</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="Operacja_7">
+   <widget class="QPushButton" name="operacja_7">
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>610</y>
+      <y>570</y>
       <width>161</width>
       <height>81</height>
      </rect>
@@ -152,11 +155,11 @@
      <string>Operacja7</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="Operacja_8">
+   <widget class="QPushButton" name="operacja_8">
     <property name="geometry">
      <rect>
       <x>510</x>
-      <y>610</y>
+      <y>570</y>
       <width>161</width>
       <height>81</height>
      </rect>
@@ -165,11 +168,11 @@
      <string>Operacja8</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="Operacja_9">
+   <widget class="QPushButton" name="operacja_9">
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>610</y>
+      <y>570</y>
       <width>161</width>
       <height>81</height>
      </rect>
