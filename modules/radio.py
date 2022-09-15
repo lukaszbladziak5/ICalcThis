@@ -1,5 +1,10 @@
 #Friss formula in friss.py
+
+
+from numpy import sqrt, pi, log2
+
 import numpy
+
 
 def waveToFreq(waveLength):
     return 300000 / waveLength #in kHz
@@ -55,5 +60,11 @@ def SAR(E, m, c):
     #C - conductivity of material in S/m
     #m - mass density in Kg/m^3
     return (E ** 2 * c ) / m
+
+def bitsQAM(valency): #Number of bits in N-QAM modulation
+    return numpy.log2(valency)
+
+def bitrate(V, n = 2): #V is generation speed in bods
+    return V * log2(n)
 
 #TD
