@@ -5,6 +5,7 @@ import sys
 import sql
 import modules.hata
 import modules.dB
+import modules.friis
 
 class ErrorDialog(QDialog):
     def __init__(self, msg = "Sorry, something went wrong"):
@@ -103,6 +104,7 @@ class Menu(QDialog):
         self.rachunek_db_przycisk.clicked.connect(self.rachunek_db)  # menu główne, przycisk 2
         self.przycisk3_PrawoOhma.clicked.connect(self.Prawo_Ohma)
         self.operacja4_ONP.clicked.connect(self.ONP)
+        self.rownanie_friisa_przycisk.clicked.connect(self.rownanie_friisa)
 
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
@@ -124,6 +126,11 @@ class Menu(QDialog):
         widget.addWidget(operacja4_ONP)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+    def rownanie_friisa(self):
+        r_friisa = Rownanie_Friisa()
+        widget.addWidget(r_friisa)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
 
 class Model_Haty(QDialog):
 
@@ -133,12 +140,6 @@ class Model_Haty(QDialog):
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.reset_button.clicked.connect(self.go_to_clear_data)
         self.oblicz_button.clicked.connect(self.go_to_save_data)
-
-        self.f = self.v_input_2.text()
-        self.d = self.d_input_2.text()
-        self.base = self.hB_input_2.text()
-        self.mob = self.hM_input_2.text()
-        self.urban_button_2.setChecked(True)
 
     def go_to_clear_data(self):
         self.v_input_2.setValue(0)
@@ -165,7 +166,7 @@ class Model_Haty(QDialog):
             wynikAhms = modules.hata.get_a(self.f, self.mob, self.mode)
             wynik = modules.hata.exec(self.f, self.d, self.base, self.mob, self.mode)
         except:
-            dlg = ErrorDialog("Wprowadzono błędne dane")
+            dlg = ErrorDialog("Wprowadzono błędne dane!")
             if dlg.exec(): print("Error dialog prompted")
             wynikAhms = "NaN"
             wynik = "NaN"
@@ -239,23 +240,27 @@ class Rachunek_decybelowy(QDialog):
         self.pierwsza_dana.setValue(0)
         self.druga_dana.setValue(0)
 
-    def _choose_mode(self):                             # przepraszam za składnię poniżej
+    def _choose_mode(self):                             # przepraszam za składnię poniżej # wybaczam
         if self.wybor_konwersji.currentIndex() == 0: return modules.dB.dBWTodBm(self.first_value), "dBm"
         elif self.wybor_konwersji.currentIndex() == 1: return modules.dB.dBmTodBW(self.first_value), "dBW"
         elif self.wybor_konwersji.currentIndex() == 2: return modules.dB.dBWToW(self.first_value), "W"
         elif self.wybor_konwersji.currentIndex() == 3: return modules.dB.dBmToW(self.first_value), "W"
-        elif self.wybor_konwersji.currentIndex() == 4: return modules.dB.WTodBm(self.first_value), "dBW"
+        elif self.wybor_konwersji.currentIndex() == 4: return modules.dB.WTodBm(self.first_value), "dBm"
         elif self.wybor_konwersji.currentIndex() == 5: return modules.dB.dBToRatio(self.first_value), "(ratio)"
         elif self.wybor_konwersji.currentIndex() == 6: return modules.dB.ratioTodB(self.first_value, self.second_value), "dB"
         elif self.wybor_konwersji.currentIndex() == 7: return modules.dB.lossTodB(self.first_value), "dB"
         elif self.wybor_konwersji.currentIndex() == 8: return modules.dB.voltageTodB(self.first_value, self.second_value), "dB"
 
     def go_to_save_data(self):
-        self.first_value = self.pierwsza_dana.value()
-        self.second_value = self.druga_dana.value()
-        self.result, self.result_unit = self._choose_mode()
-        self.wynik.setText(str(self.result))
-        self.jednostka_wyniku.setText(str(self.result_unit))
+        try:
+            self.first_value = self.pierwsza_dana.value()
+            self.second_value = self.druga_dana.value()
+            self.result, self.result_unit = self._choose_mode()
+            self.wynik.setText(str(self.result))
+            self.jednostka_wyniku.setText(str(self.result_unit))
+        except:
+            dlg = ErrorDialog()
+            if dlg.exec(): print("Error dialog prompted")
 
     def cofanie(self):
         cofanie_przycisk = Menu()
@@ -282,6 +287,98 @@ class Notacja_Polska(QDialog):
         super(Notacja_Polska, self).__init__()
         loadUi("UI/Notacja_Polska.ui", self)
         self.commandLinkButton.clicked.connect(self.cofanie)
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+class Rownanie_Friisa(QDialog):
+
+    def __init__(self):
+        super(Rownanie_Friisa, self).__init__()
+        loadUi("UI/Rownanie_frissa.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
+        self.stosunek_button.clicked.connect(self._button1Clicked)
+        self.pr_button.clicked.connect(self._button2Clicked)
+        self.pt_button.clicked.connect(self._button3Clicked)
+        self.stosunek_button.setChecked(True)
+        self._button1Clicked()
+
+    def _button1Clicked(self):
+        self.pr_tekst.hide()
+        self.pr_input.hide()
+        self.dBm_tekst.hide()
+        self.pt_tekst.hide()
+        self.pt_input.hide()
+        self.dBm_tekst_2.hide()
+
+    def _button2Clicked(self):
+        self.pr_tekst.hide()
+        self.pr_input.hide()
+        self.dBm_tekst.hide()
+        self.pt_tekst.show()
+        self.pt_input.show()
+        self.dBm_tekst_2.show()
+
+    def _button3Clicked(self):
+        self.pr_tekst.show()
+        self.pr_input.show()
+        self.dBm_tekst.show()
+        self.pt_tekst.hide()
+        self.pt_input.hide()
+        self.dBm_tekst_2.hide()
+
+
+    def go_to_clear_data(self):
+        self.gt_input.setValue(0)
+        self.gr_input.setValue(0)
+        self.lambda_input.setValue(0)
+        self.d_input.setValue(0)
+        self.pr_input.setValue(0)
+        self.pt_input.setValue(0)
+        self.rownanie_tekst.setText('')
+        self.wynik.setText('')
+        self.jednostka_tekst.setText('')
+
+    def go_to_save_data(self):
+        self.Gt = self.gt_input.value()
+        self.Gr = self.gr_input.value()
+        self.wavelength = self.lambda_input.value()
+        self.d = self.d_input.value()
+        result = -1
+
+        if self.stosunek_button.isChecked():
+            self.rownanie_tekst.setText('Pr/Pt =')
+            try:
+                result = modules.friis.exec(self.Gt, self.Gr, self.wavelength, self.d)
+            except:
+                dlg = ErrorDialog("Wprowadzono błędne dane!")
+                if dlg.exec(): print("Error dialog prompted")
+                result = "NaN"
+        if self.pr_button.isChecked():
+            self.rownanie_tekst.setText('Pr =')
+            self.jednostka_tekst.setText('[dBm]')
+            self.Pt = self.pt_input.value()
+            try:
+                result = modules.friis.execPr(self.Gt, self.Gr, self.wavelength, self.d, self.Pt)
+            except:
+                dlg = ErrorDialog("Wprowadzono błędne dane!")
+                if dlg.exec(): print("Error dialog prompted")
+                result = "NaN"
+        if self.pt_button.isChecked():
+            self.rownanie_tekst.setText('Pt =')
+            self.jednostka_tekst.setText('[dBm]')
+            self.Pr = self.pr_input.value()
+            try:
+                result = modules.friis.execPt(self.Gt, self.Gr, self.wavelength, self.d, self.Pr)
+            except:
+                dlg = ErrorDialog("Wprowadzono błędne dane!")
+                if dlg.exec(): print("Error dialog prompted")
+                result = "NaN"
+        self.wynik.setText(str(result))
 
     def cofanie(self):
         cofanie_przycisk = Menu()

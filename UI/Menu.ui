@@ -100,7 +100,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>Operacja3</string>
+     <string>Obwody elektryczne</string>
     </property>
    </widget>
    <widget class="QPushButton" name="operacja4_ONP">
@@ -113,10 +113,10 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>Operacja4</string>
+     <string>Notacja Polska</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="operacja_5">
+   <widget class="QPushButton" name="rownanie_friisa_przycisk">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -126,7 +126,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>Operacja5</string>
+     <string>Równanie Friisa</string>
     </property>
    </widget>
    <widget class="QPushButton" name="operacja_6">
