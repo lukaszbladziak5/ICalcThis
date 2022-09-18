@@ -90,7 +90,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      <string>Rachunek decybelowy</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="przycisk3_PrawoOhma">
+   <widget class="QPushButton" name="obwodyElektryczne_przycisk">
     <property name="geometry">
      <rect>
       <x>830</x>

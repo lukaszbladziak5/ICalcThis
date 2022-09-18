@@ -13,13 +13,19 @@ def resistorParallel(R1, R2):
     # [R1]    [R2]
     # [  ]    [  ]
     #--|-------|
-    return (R1 * R2) / (R1 + R2)
+    try:
+        return (R1 * R2) / (R1 + R2)
+    except:
+        return ("NaN")
 
 def capacitorSeries(C1, C2):
     #
     # --[C1]--[C2]--
     #
-    return (C1 * C2) / (C1 + C2)
+    try:
+        return (C1 * C2) / (C1 + C2)
+    except:
+        return ("NaN")
 
 def capacitorParallel(C1, C2):
     #--|-------|

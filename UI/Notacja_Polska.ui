@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="Rachunek_dec" native="true">
+  <widget class="QWidget" name="Notacja_polska" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QWidget#Rachunek_dec{
+    <string notr="true">QWidget#Notacja_polska{
 background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(179, 204, 117, 255), stop:1 rgba(255, 255, 255, 255))};</string>
    </property>
    <widget class="QLabel" name="tekst_glowny">
@@ -42,7 +42,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </font>
     </property>
     <property name="mouseTracking">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="styleSheet">
      <string notr="true"/>

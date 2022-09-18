@@ -6,9 +6,11 @@ import sql
 import modules.hata
 import modules.dB
 import modules.friis
+import modules.circuits
+
 
 class ErrorDialog(QDialog):
-    def __init__(self, msg = "Sorry, something went wrong"):
+    def __init__(self, msg="Sorry, something went wrong"):
         super().__init__()
 
         self.setWindowTitle("ERROR")
@@ -22,6 +24,7 @@ class ErrorDialog(QDialog):
         self.layout.addWidget(message)
         self.layout.addWidget(self.buttonBox)
         self.setLayout(self.layout)
+
 
 class Ekran_poczatkowy(QDialog):
 
@@ -102,7 +105,7 @@ class Menu(QDialog):
         loadUi("UI/Menu.ui", self)
         self.modelHaty_przycisk.clicked.connect(self.model_Haty)  # menu główne, przycisk 1
         self.rachunek_db_przycisk.clicked.connect(self.rachunek_db)  # menu główne, przycisk 2
-        self.przycisk3_PrawoOhma.clicked.connect(self.Prawo_Ohma)
+        self.obwodyElektryczne_przycisk.clicked.connect(self.obwody_elektryczne)
         self.operacja4_ONP.clicked.connect(self.ONP)
         self.rownanie_friisa_przycisk.clicked.connect(self.rownanie_friisa)
 
@@ -116,9 +119,9 @@ class Menu(QDialog):
         widget.addWidget(rachunek_db_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-    def Prawo_Ohma(self):
-        przycisk3_PrawoOhma = Prawo_Ohma()
-        widget.addWidget(przycisk3_PrawoOhma)
+    def obwody_elektryczne(self):
+        obwodyElektryczne_przycisk = Obwody_elektryczne()
+        widget.addWidget(obwodyElektryczne_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def ONP(self):
@@ -234,22 +237,31 @@ class Rachunek_decybelowy(QDialog):
             self.jednostka_danych2.show()
             self.jednostka_danych1.setText('V')
             self.jednostka_danych2.setText('V')
-#hhhhhhhhhhhhhhhhhhhhaaaaaaaaaaaaaaaaaaaaa
+
     def go_to_clear_data(self):
         self.wynik.setText('')
         self.pierwsza_dana.setValue(0)
         self.druga_dana.setValue(0)
 
-    def _choose_mode(self):                             # przepraszam za składnię poniżej # wybaczam
-        if self.wybor_konwersji.currentIndex() == 0: return modules.dB.dBWTodBm(self.first_value), "dBm"
-        elif self.wybor_konwersji.currentIndex() == 1: return modules.dB.dBmTodBW(self.first_value), "dBW"
-        elif self.wybor_konwersji.currentIndex() == 2: return modules.dB.dBWToW(self.first_value), "W"
-        elif self.wybor_konwersji.currentIndex() == 3: return modules.dB.dBmToW(self.first_value), "W"
-        elif self.wybor_konwersji.currentIndex() == 4: return modules.dB.WTodBm(self.first_value), "dBm"
-        elif self.wybor_konwersji.currentIndex() == 5: return modules.dB.dBToRatio(self.first_value), "(ratio)"
-        elif self.wybor_konwersji.currentIndex() == 6: return modules.dB.ratioTodB(self.first_value, self.second_value), "dB"
-        elif self.wybor_konwersji.currentIndex() == 7: return modules.dB.lossTodB(self.first_value), "dB"
-        elif self.wybor_konwersji.currentIndex() == 8: return modules.dB.voltageTodB(self.first_value, self.second_value), "dB"
+    def _choose_mode(self):  # przepraszam za składnię poniżej # wybaczam
+        if self.wybor_konwersji.currentIndex() == 0:
+            return modules.dB.dBWTodBm(self.first_value), "dBm"
+        elif self.wybor_konwersji.currentIndex() == 1:
+            return modules.dB.dBmTodBW(self.first_value), "dBW"
+        elif self.wybor_konwersji.currentIndex() == 2:
+            return modules.dB.dBWToW(self.first_value), "W"
+        elif self.wybor_konwersji.currentIndex() == 3:
+            return modules.dB.dBmToW(self.first_value), "W"
+        elif self.wybor_konwersji.currentIndex() == 4:
+            return modules.dB.WTodBm(self.first_value), "dBm"
+        elif self.wybor_konwersji.currentIndex() == 5:
+            return modules.dB.dBToRatio(self.first_value), "(ratio)"
+        elif self.wybor_konwersji.currentIndex() == 6:
+            return modules.dB.ratioTodB(self.first_value, self.second_value), "dB"
+        elif self.wybor_konwersji.currentIndex() == 7:
+            return modules.dB.lossTodB(self.first_value), "dB"
+        elif self.wybor_konwersji.currentIndex() == 8:
+            return modules.dB.voltageTodB(self.first_value, self.second_value), "dB"
 
     def go_to_save_data(self):
         try:
@@ -268,12 +280,68 @@ class Rachunek_decybelowy(QDialog):
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
-class Prawo_Ohma(QDialog):
+class Obwody_elektryczne(QDialog):
 
     def __init__(self):
-        super(Prawo_Ohma, self).__init__()
+        super(Obwody_elektryczne, self).__init__()
         loadUi("UI/Prawo_Ohma.ui", self)
         self.commandLinkButton.clicked.connect(self.cofanie)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
+        self.wybor_polaczenia.currentIndexChanged.connect(self._update_conversion_method)
+
+        self.rezystory.setGeometry(290, 300, 201, 82)
+        self.kondensatory.setGeometry(620, 300, 179, 100)
+        self.rezystory.setStyleSheet("background-image : url(images/szeregowe1.png)")
+        self.kondensatory.setStyleSheet("background-image : url(images/szeregowe_kondensator.png)")
+
+    def _update_conversion_method(self):
+        if self.wybor_polaczenia.currentIndex() == 0:
+            self.rezystory.setGeometry(290, 300, 201, 82)
+            self.kondensatory.setGeometry(620, 300, 179, 100)
+            self.rezystory.setStyleSheet("background-image : url(images/szeregowe1.png)")
+            self.rezystory_tekst.setText("Połączenie szeregowe rezystorów")
+            self.kondensatory.setStyleSheet("background-image : url(images/szeregowe_kondensator.png)")
+            self.kondensatory_tekst.setText("Połączenie szeregowe kondensatorów")
+        elif self.wybor_polaczenia.currentIndex() == 1:
+            self.rezystory.setGeometry(290, 300, 138, 112)
+            self.kondensatory.setGeometry(620, 300, 211, 150)
+            self.rezystory.setStyleSheet("background-image : url(images/rownolegle1.png)")
+            self.rezystory_tekst.setText("Połączenie równoległe rezystorów")
+            self.kondensatory.setStyleSheet("background-image : url(images/rownolegle_kondensator.png)")
+            self.kondensatory_tekst.setText("Połączenie równoległe kondensatorów")
+
+    def go_to_clear_data(self):
+        self.wynik.setText('')
+        self.jednostka_wyniku.setText('')
+        self.wynik_2.setText('')
+        self.jednostka_wyniku_2.setText('')
+        self.r1_input.setValue(0)
+        self.r2_input.setValue(0)
+        self.c1_input.setValue(0)
+        self.c2_input.setValue(0)
+
+    def _choose_mode(self):
+        if self.wybor_polaczenia.currentIndex() == 0:
+            return modules.circuits.resistorSeries(self.r_first_value, self.r_second_value), "Ω", modules.circuits.capacitorSeries(self.c_first_value, self.c_second_value), "F"
+        elif self.wybor_polaczenia.currentIndex() == 1:
+            return modules.circuits.resistorParallel(self.r_first_value, self.r_second_value), "Ω", modules.circuits.capacitorParallel(self.c_first_value, self.c_second_value), "F"
+
+    def go_to_save_data(self):
+        # try:
+        self.r_first_value = self.r1_input.value()
+        self.r_second_value = self.r2_input.value()
+        self.c_first_value = self.c1_input.value()
+        self.c_second_value = self.c2_input.value()
+        self.r_result, self.r_result_unit, self.c_result, self.c_result_unit = self._choose_mode()
+        self.wynik.setText(str(self.r_result))
+        self.jednostka_wyniku.setText(str(self.r_result_unit))
+        self.wynik_2.setText(str(self.c_result))
+        self.jednostka_wyniku_2.setText(str(self.c_result_unit))
+
+    # except:
+    #     dlg = ErrorDialog()
+    #     if dlg.exec(): print("Error dialog prompted")
 
     def cofanie(self):
         cofanie_przycisk = Menu()
@@ -292,6 +360,7 @@ class Notacja_Polska(QDialog):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
 
 class Rownanie_Friisa(QDialog):
 
@@ -330,7 +399,6 @@ class Rownanie_Friisa(QDialog):
         self.pt_tekst.hide()
         self.pt_input.hide()
         self.dBm_tekst_2.hide()
-
 
     def go_to_clear_data(self):
         self.gt_input.setValue(0)
@@ -384,6 +452,7 @@ class Rownanie_Friisa(QDialog):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
 
 app = QApplication(sys.argv)
 widget = QtWidgets.QStackedWidget()
