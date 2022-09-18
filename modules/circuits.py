@@ -52,7 +52,7 @@ def powerUI(U, I):
     return U * I
 
 def powerIR(I, R):
-    return I ** 2 * R
+    return (I ** 2) * R
 
 #Root mean square (voltage and current)
 def RMS(MAX):

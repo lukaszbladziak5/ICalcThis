@@ -287,29 +287,65 @@ class Obwody_elektryczne(QDialog):
         loadUi("UI/Prawo_Ohma.ui", self)
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.reset_button_2.clicked.connect(self.go_to_clear_data2)
         self.oblicz_button.clicked.connect(self.go_to_save_data)
+        self.oblicz_button_2.clicked.connect(self.go_to_save_data2)
         self.wybor_polaczenia.currentIndexChanged.connect(self._update_conversion_method)
+        self.wybor_polaczenia_2.currentIndexChanged.connect(self._update_conversion_method2)
 
-        self.rezystory.setGeometry(290, 300, 201, 82)
-        self.kondensatory.setGeometry(620, 300, 179, 100)
+        self.rezystory.setGeometry(30, 300, 201, 82)
+        self.kondensatory.setGeometry(360, 300, 179, 100)
         self.rezystory.setStyleSheet("background-image : url(images/szeregowe1.png)")
         self.kondensatory.setStyleSheet("background-image : url(images/szeregowe_kondensator.png)")
+        self.o1_tekst.setText('U =')
+        self.o2_tekst.setText('I =')
 
     def _update_conversion_method(self):
         if self.wybor_polaczenia.currentIndex() == 0:
-            self.rezystory.setGeometry(290, 300, 201, 82)
-            self.kondensatory.setGeometry(620, 300, 179, 100)
+            self.rezystory.setGeometry(30, 300, 201, 82)
+            self.kondensatory.setGeometry(360, 300, 179, 100)
             self.rezystory.setStyleSheet("background-image : url(images/szeregowe1.png)")
             self.rezystory_tekst.setText("Połączenie szeregowe rezystorów")
             self.kondensatory.setStyleSheet("background-image : url(images/szeregowe_kondensator.png)")
             self.kondensatory_tekst.setText("Połączenie szeregowe kondensatorów")
         elif self.wybor_polaczenia.currentIndex() == 1:
-            self.rezystory.setGeometry(290, 300, 138, 112)
-            self.kondensatory.setGeometry(620, 300, 211, 150)
+            self.rezystory.setGeometry(30, 300, 138, 112)
+            self.kondensatory.setGeometry(360, 300, 211, 150)
             self.rezystory.setStyleSheet("background-image : url(images/rownolegle1.png)")
             self.rezystory_tekst.setText("Połączenie równoległe rezystorów")
             self.kondensatory.setStyleSheet("background-image : url(images/rownolegle_kondensator.png)")
             self.kondensatory_tekst.setText("Połączenie równoległe kondensatorów")
+
+    def _update_conversion_method2(self):
+        if self.wybor_polaczenia_2.currentIndex() == 0:
+            self.o2_tekst.show()
+            self.o2_input.show()
+            self.o1_tekst.setText('U =')
+            self.o2_tekst.setText('I =')
+        elif self.wybor_polaczenia_2.currentIndex() == 1:
+            self.o2_tekst.show()
+            self.o2_input.show()
+            self.o1_tekst.setText('R =')
+            self.o2_tekst.setText('I =')
+        elif self.wybor_polaczenia_2.currentIndex() == 2:
+            self.o2_tekst.show()
+            self.o2_input.show()
+            self.o1_tekst.setText('R =')
+            self.o2_tekst.setText('U =')
+        elif self.wybor_polaczenia_2.currentIndex() == 3:
+            self.o2_tekst.show()
+            self.o2_input.show()
+            self.o1_tekst.setText('U =')
+            self.o2_tekst.setText('I =')
+        elif self.wybor_polaczenia_2.currentIndex() == 4:
+            self.o2_tekst.show()
+            self.o2_input.show()
+            self.o1_tekst.setText('I =')
+            self.o2_tekst.setText('R =')
+        elif self.wybor_polaczenia_2.currentIndex() == 5:
+            self.o2_tekst.hide()
+            self.o2_input.hide()
+            self.o1_tekst.setText('MAX =')
 
     def go_to_clear_data(self):
         self.wynik.setText('')
@@ -321,27 +357,57 @@ class Obwody_elektryczne(QDialog):
         self.c1_input.setValue(0)
         self.c2_input.setValue(0)
 
+    def go_to_clear_data2(self):
+        self.wynik_3.setText('')
+        self.jednostka_wyniku_3.setText('')
+        self.o1_input.setValue(0)
+        self.o2_input.setValue(0)
+
     def _choose_mode(self):
         if self.wybor_polaczenia.currentIndex() == 0:
             return modules.circuits.resistorSeries(self.r_first_value, self.r_second_value), "Ω", modules.circuits.capacitorSeries(self.c_first_value, self.c_second_value), "F"
         elif self.wybor_polaczenia.currentIndex() == 1:
             return modules.circuits.resistorParallel(self.r_first_value, self.r_second_value), "Ω", modules.circuits.capacitorParallel(self.c_first_value, self.c_second_value), "F"
 
-    def go_to_save_data(self):
-        # try:
-        self.r_first_value = self.r1_input.value()
-        self.r_second_value = self.r2_input.value()
-        self.c_first_value = self.c1_input.value()
-        self.c_second_value = self.c2_input.value()
-        self.r_result, self.r_result_unit, self.c_result, self.c_result_unit = self._choose_mode()
-        self.wynik.setText(str(self.r_result))
-        self.jednostka_wyniku.setText(str(self.r_result_unit))
-        self.wynik_2.setText(str(self.c_result))
-        self.jednostka_wyniku_2.setText(str(self.c_result_unit))
+    def _choose_mode2(self):
+        if self.wybor_polaczenia_2.currentIndex() == 0:
+            return modules.circuits.ohmLawR(self.o_first_value, self.o_second_value), "Ω"
+        elif self.wybor_polaczenia_2.currentIndex() == 1:
+            return modules.circuits.ohmLawU(self.o_first_value, self.o_second_value), "V"
+        elif self.wybor_polaczenia_2.currentIndex() == 2:
+            return modules.circuits.ohmLawI(self.o_first_value, self.o_second_value), "A"
+        elif self.wybor_polaczenia_2.currentIndex() == 3:
+            return modules.circuits.powerUI(self.o_first_value, self.o_second_value), "W"
+        elif self.wybor_polaczenia_2.currentIndex() == 4:
+            return modules.circuits.powerIR(self.o_first_value, self.o_second_value), "W"
+        elif self.wybor_polaczenia_2.currentIndex() == 5:
+            return modules.circuits.RMS(self.o_first_value), "(RMS)"
 
-    # except:
-    #     dlg = ErrorDialog()
-    #     if dlg.exec(): print("Error dialog prompted")
+    def go_to_save_data(self):
+        try:
+            self.r_first_value = self.r1_input.value()
+            self.r_second_value = self.r2_input.value()
+            self.c_first_value = self.c1_input.value()
+            self.c_second_value = self.c2_input.value()
+            self.r_result, self.r_result_unit, self.c_result, self.c_result_unit = self._choose_mode()
+            self.wynik.setText("R = " + str(self.r_result))
+            self.jednostka_wyniku.setText(str(self.r_result_unit))
+            self.wynik_2.setText("C = " + str(self.c_result))
+            self.jednostka_wyniku_2.setText(str(self.c_result_unit))
+        except:
+            dlg = ErrorDialog()
+            if dlg.exec(): print("Error dialog prompted")
+
+    def go_to_save_data2(self):
+        try:
+            self.o_first_value = self.o1_input.value()
+            self.o_second_value = self.o2_input.value()
+            self.o_result, self.o_result_unit = self._choose_mode2()
+            self.wynik_3.setText(str(self.o_result))
+            self.jednostka_wyniku_3.setText(str(self.o_result_unit))
+        except:
+            dlg = ErrorDialog()
+            if dlg.exec(): print("Error dialog prompted")
 
     def cofanie(self):
         cofanie_przycisk = Menu()
