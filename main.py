@@ -3,6 +3,9 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
 import sys
 import sql
+import random
+import quotes
+
 import modules.hata
 import modules.dB
 import modules.friis
@@ -105,6 +108,12 @@ class Menu(QDialog):
         self.przycisk3_PrawoOhma.clicked.connect(self.Prawo_Ohma)
         self.operacja4_ONP.clicked.connect(self.ONP)
         self.rownanie_friisa_przycisk.clicked.connect(self.rownanie_friisa)
+
+        quoteID = random.randint(0, quotes.ammount - 1)
+        #quoteID = 17
+        quote = quotes.quote[quoteID]
+        self.menuQuote.setText("\"" + quote[0] + "\"")
+        self.menuQuoteAuthor.setText("- " + quote[1])
 
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
