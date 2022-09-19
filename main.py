@@ -1,6 +1,10 @@
-from PyQt5 import QtWidgets, QtGui
+import msvcrt
+from doctest import master
+import keyboard
+from PyQt5 import QtCore,QtWidgets, QtGui
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import QCoreApplication, Qt
 import sys
 import sqlite3
 import modules.hata
@@ -22,6 +26,8 @@ class ErrorDialog(QDialog):
         self.layout.addWidget(self.buttonBox)
         self.setLayout(self.layout)
 
+
+
 class Ekran_poczatkowy(QDialog):
 
     def __init__(self):
@@ -39,6 +45,9 @@ class Ekran_poczatkowy(QDialog):
         przycisk_logowania = Ekran_logowania()
         widget.addWidget(przycisk_logowania)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
 
 
 class Ekran_logowania(QDialog):
@@ -68,7 +77,9 @@ class Ekran_logowania(QDialog):
                 widget.setCurrentIndex(widget.currentIndex() + 1)
             else:
                 self.blad.setText("Nieprawidłowa nazwa użytkownika lub hasło!")
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
 
 class Ekran_rejestracji(QDialog):
 
@@ -78,7 +89,9 @@ class Ekran_rejestracji(QDialog):
         self.pole_haslo2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.pole_haslo2_podtwierdzenie.setEchoMode(QtWidgets.QLineEdit.Password)
         self.przycisk_zarejestruj.clicked.connect(self.funkcja_rejestracji)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def funkcja_rejestracji(self):
         nazwa_uzytkownika_rejestracja = self.pole_nazwa_uzytkownika2.text()
         haslo_rejestracja = self.pole_haslo2.text()
@@ -114,7 +127,9 @@ class Menu(QDialog):
         self.rachunek_db_przycisk.clicked.connect(self.rachunek_db)  # menu główne, przycisk 2
         self.przycisk3_PrawoOhma.clicked.connect(self.Prawo_Ohma)
         self.operacja4_ONP.clicked.connect(self.ONP)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
         widget.addWidget(modelHaty_przycisk)
@@ -158,7 +173,9 @@ class Model_Haty(QDialog):
         self.hM_input_2.setValue(0)
         self.wynik_hata.setText('')
         self.wynikA.setText('')
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def go_to_save_data(self):
         if self.urban_button_2.isChecked():
             self.mode = 1
@@ -204,7 +221,9 @@ class Rachunek_decybelowy(QDialog):
         self.jednostka_danych1.setText('dBW')
         self.druga_dana.hide()
         self.jednostka_danych2.hide()
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def _update_conversion_method(self):
         if self.wybor_konwersji.currentIndex() == 0:
             self.druga_dana.hide()
@@ -280,6 +299,9 @@ class Prawo_Ohma(QDialog):
         super(Prawo_Ohma, self).__init__()
         loadUi("UI/Prawo_Ohma.ui", self)
         self.commandLinkButton.clicked.connect(self.cofanie)
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
 
     def cofanie(self):
         cofanie_przycisk = Menu()
@@ -293,7 +315,9 @@ class Notacja_Polska(QDialog):
         super(Notacja_Polska, self).__init__()
         loadUi("UI/Notacja_Polska.ui", self)
         self.commandLinkButton.clicked.connect(self.cofanie)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
@@ -308,7 +332,14 @@ widget.setFixedWidth(1200)
 widget.setWindowTitle('ICalcThis')
 widget.setWindowIcon(QtGui.QIcon('images/calculator_image.png'))
 widget.show()
+
+
+
 try:
+
     sys.exit(app.exec_())
+
 except:
     print("Exiting")
+
+
