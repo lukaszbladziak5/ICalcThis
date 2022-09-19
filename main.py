@@ -6,6 +6,8 @@ import sql
 import modules.hata
 import modules.dB
 import modules.friis
+from PyQt5.QtGui import QIcon, QPixmap
+
 
 class ErrorDialog(QDialog):
     def __init__(self, msg = "Sorry, something went wrong"):
@@ -78,6 +80,7 @@ class Ekran_rejestracji(QDialog):
         self.pole_haslo2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.pole_haslo2_podtwierdzenie.setEchoMode(QtWidgets.QLineEdit.Password)
         self.przycisk_zarejestruj.clicked.connect(self.funkcja_rejestracji)
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
@@ -93,12 +96,39 @@ class Ekran_rejestracji(QDialog):
         else:
             try:
                 sql.register(nazwa_uzytkownika_rejestracja, haslo_rejestracja)
-                profil = Menu()
+                profil = Profil()
                 widget.addWidget(profil)
                 widget.setCurrentIndex(widget.currentIndex() + 1)
             except:
                 dlg = ErrorDialog("Błąd - prawdopodobnie taki uzytkownik juz istnieje")
                 if dlg.exec(): print("Error dialog prompted")
+
+class Profil(QDialog):
+    def __init__(self):
+        super(Profil, self).__init__()
+        loadUi("UI/Profil.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.przycisk_zaladuj.clicked.connect(self.on_click)
+        self.przycisk_kontynuuj.clicked.connect(self.ZapisProfilu)
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def on_click(self):
+        print('PyQt5 button click')
+        image = QFileDialog.getOpenFileName(None, 'OpenFile', '', "Image file(*.jpg)")
+        imagePath = image[0]
+        pixmap = QPixmap(imagePath)
+        self.label.setPixmap(pixmap)
+    def ZapisProfilu(self):
+        profil = Menu()
+        widget.addWidget(profil)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
 class Menu(QDialog):
