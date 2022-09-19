@@ -53,7 +53,7 @@ def plainWaveImpedance(freq, e, u):
 def powerBudget(PTx, LTx, LRx, LFS, LM = 0, GTx = 0, GRx = 0):
     #LM for misc. losses
     #All in dB
-    return PTx + GTx - LTx - LFS - LM+ GRx - LRx
+    return PTx + GTx - LTx - LFS - LM + GRx - LRx
 
 def SAR(E, m, c):
     #E - electric field (RMS) in V/m
