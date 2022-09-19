@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets, QtGui
+from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
 import sys
@@ -40,7 +40,9 @@ class Ekran_poczatkowy(QDialog):
         przycisk_logowania = Ekran_logowania()
         widget.addWidget(przycisk_logowania)
         widget.setCurrentIndex(widget.currentIndex() + 1)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
 
 class Ekran_logowania(QDialog):
 
@@ -49,7 +51,9 @@ class Ekran_logowania(QDialog):
         loadUi("UI/Logowanie.ui", self)
         self.pole_haslo.setEchoMode(QtWidgets.QLineEdit.Password)  # kropeczki wpisujac haslo
         self.login.clicked.connect(self.funkcja_logowania)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def funkcja_logowania(self):
         nazwa_uzytkownika = self.pole_nazwa_uzytkownika.text()
         haslo = self.pole_haslo.text()
@@ -74,7 +78,9 @@ class Ekran_rejestracji(QDialog):
         self.pole_haslo2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.pole_haslo2_podtwierdzenie.setEchoMode(QtWidgets.QLineEdit.Password)
         self.przycisk_zarejestruj.clicked.connect(self.funkcja_rejestracji)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def funkcja_rejestracji(self):
         nazwa_uzytkownika_rejestracja = str(self.pole_nazwa_uzytkownika2.text())
         haslo_rejestracja = str(self.pole_haslo2.text())
@@ -105,7 +111,9 @@ class Menu(QDialog):
         self.przycisk3_PrawoOhma.clicked.connect(self.Prawo_Ohma)
         self.operacja4_ONP.clicked.connect(self.ONP)
         self.rownanie_friisa_przycisk.clicked.connect(self.rownanie_friisa)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
         widget.addWidget(modelHaty_przycisk)
@@ -140,7 +148,9 @@ class Model_Haty(QDialog):
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.reset_button.clicked.connect(self.go_to_clear_data)
         self.oblicz_button.clicked.connect(self.go_to_save_data)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def go_to_clear_data(self):
         self.v_input_2.setValue(0)
         self.d_input_2.setValue(0)
@@ -194,7 +204,9 @@ class Rachunek_decybelowy(QDialog):
         self.jednostka_danych1.setText('dBW')
         self.druga_dana.hide()
         self.jednostka_danych2.hide()
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def _update_conversion_method(self):
         if self.wybor_konwersji.currentIndex() == 0:
             self.druga_dana.hide()
@@ -274,7 +286,9 @@ class Prawo_Ohma(QDialog):
         super(Prawo_Ohma, self).__init__()
         loadUi("UI/Prawo_Ohma.ui", self)
         self.commandLinkButton.clicked.connect(self.cofanie)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
@@ -287,7 +301,9 @@ class Notacja_Polska(QDialog):
         super(Notacja_Polska, self).__init__()
         loadUi("UI/Notacja_Polska.ui", self)
         self.commandLinkButton.clicked.connect(self.cofanie)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
@@ -306,7 +322,9 @@ class Rownanie_Friisa(QDialog):
         self.pt_button.clicked.connect(self._button3Clicked)
         self.stosunek_button.setChecked(True)
         self._button1Clicked()
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def _button1Clicked(self):
         self.pr_tekst.hide()
         self.pr_input.hide()
