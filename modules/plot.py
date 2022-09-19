@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 
 import random
 
-class Window(QDialog):
+class PlotterWindow(QDialog):
     def __init__(self, parent=None):
-        super(Window, self).__init__(parent)
+        super(PlotterWindow, self).__init__(parent)
 
         # a figure instance to plot on
         self.figure = plt.figure()
@@ -56,7 +56,7 @@ class Window(QDialog):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    main = Window()
+    main = PlotterWindow()
     main.show()
     main.plot([-5,-4,-3,-2,-1,0,1,2,3,4,5])
 
