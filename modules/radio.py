@@ -1,8 +1,5 @@
 #Friss formula in friss.py
-
-
-from numpy import sqrt, pi, log2
-
+from numpy import log2
 import numpy
 
 
@@ -18,7 +15,7 @@ def eirp(power, loss, gain):
     #O - cable and connector losses dB
     return power - loss + gain
 
-def fresnal(distance, freq):
+def fresnel(distance, freq):
     #distance in km, freq in GHz
     #Returns radius in meters
     return 17.31 * numpy.sqrt(distance / (4 * freq))
@@ -43,11 +40,11 @@ def effectiveAperture(waveLength, gain):
 #Plain wave
 #e - relative permittivity
 #u - relative permeability
-def plainWaveVelocity(freq, e, u):
+def plainWaveVelocity(e, u):
     #Phase velocity in m/s
     return 300000/ numpy.sqrt(u * e)
 
-def plainWaveImpedance(freq, e, u):
+def plainWaveImpedance(e, u):
     return 377 * numpy.sqrt(u / e)
 
 def powerBudget(PTx, LTx, LRx, LFS, LM = 0, GTx = 0, GRx = 0):
@@ -59,7 +56,7 @@ def SAR(E, m, c):
     #E - electric field (RMS) in V/m
     #C - conductivity of material in S/m
     #m - mass density in Kg/m^3
-    return (E ** 2 * c ) / m
+    return (E ** 2 * c) / m
 
 def bitsQAM(valency): #Number of bits in N-QAM modulation
     return numpy.log2(valency)

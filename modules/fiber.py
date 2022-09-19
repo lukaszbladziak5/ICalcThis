@@ -1,4 +1,4 @@
-from numpy import pi, sqrt, log, tan, arccos
+import numpy
 
 def numericAperture(n0, n1, n2):
 #       _______________________
@@ -52,7 +52,7 @@ def NALoss(NA1, NA2):
     if(NA2 >= NA1): return 0
     return 10 * numpy.log( (NA1/NA2)**2 )
 
-def profileLoss(g, g2):
+def profileLoss(g1, g2):
     if(g1 > g2): return 0
     return 10 * numpy.log( (g1*(g2+2)) / (g2*(g1+2)) )
 
