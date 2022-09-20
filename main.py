@@ -141,6 +141,14 @@ class Menu(QDialog):
         self.przycisk3_PrawoOhma.clicked.connect(self.Prawo_Ohma)
         self.operacja4_ONP.clicked.connect(self.ONP)
         self.rownanie_friisa_przycisk.clicked.connect(self.rownanie_friisa)
+        self.profil_menu.setIcon(QtGui.QIcon('images/profilowe.jpg'))
+        self.profil_menu.setIconSize(QtCore.QSize(140, 80))
+        self.profil_menu.clicked.connect(self.Profil_edycja)
+
+
+    def handleButton(self):
+
+        pass
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
@@ -168,8 +176,37 @@ class Menu(QDialog):
         r_friisa = Rownanie_Friisa()
         widget.addWidget(r_friisa)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+    def Profil_edycja(self):
+        profil_ed = Profil_edycja()
+        widget.addWidget(profil_ed)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+class Profil_edycja(QDialog):
 
+    def __init__(self):
+        super(Profil_edycja, self).__init__()
+        loadUi("UI/Edycja_profilu.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.przycisk_zaladuj.clicked.connect(self.on_click)
+        self.przycisk_kontynuuj.clicked.connect(self.ZapisProfilu)
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
 
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def on_click(self):
+        print('PyQt5 button click')
+        image = QFileDialog.getOpenFileName(None, 'OpenFile', '', "Image file(*.jpg)")
+        imagePath = image[0]
+        pixmap = QPixmap(imagePath)
+        self.label.setPixmap(pixmap)
+    def ZapisProfilu(self):
+        profil = Menu()
+        widget.addWidget(profil)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 class Model_Haty(QDialog):
 
     def __init__(self):
