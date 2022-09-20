@@ -60,7 +60,7 @@ def register(user, password):
   return True
 
 
-def register_dane(user, nickname, name, surname):
+def updateUserData(user, nickname, name, surname):
   try:
     mydb = mysql.connector.connect(
       host="vps1.jaskula.net.pl",
@@ -71,7 +71,7 @@ def register_dane(user, nickname, name, surname):
     mycursor = mydb.cursor()
 
 
-    sql = "update user SET nickname =(%(nickname)s,name =(%(name)s, surname=  (%(surname)s WHERE login = (%(login)s  "
+    sql = "UPDATE user SET nickname =%(nickname)s,name =%(name)s, surname= %(surname)s WHERE login = %(login)s "
     mycursor.execute(sql, {'login': user,'nickname' : nickname, 'name' : name, 'surname' : surname})
 
     mydb.commit()

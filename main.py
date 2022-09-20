@@ -8,6 +8,11 @@ import modules.dB
 import modules.friis
 from PyQt5.QtGui import QIcon, QPixmap
 
+login = ""
+def setLogin(user):
+    global login
+    login = user
+def getLogin(): return login
 
 class ErrorDialog(QDialog):
     def __init__(self, msg = "Sorry, something went wrong"):
@@ -59,6 +64,7 @@ class Ekran_logowania(QDialog):
     def funkcja_logowania(self):
         nazwa_uzytkownika = self.pole_nazwa_uzytkownika.text()
         haslo = self.pole_haslo.text()
+        setLogin(nazwa_uzytkownika)
 
         if (len(nazwa_uzytkownika) == 0 or len(haslo) == 0):
             self.blad.setText("Nieprawidłowa nazwa użytkownika lub hasło!")
@@ -88,6 +94,7 @@ class Ekran_rejestracji(QDialog):
         nazwa_uzytkownika_rejestracja = str(self.pole_nazwa_uzytkownika2.text())
         haslo_rejestracja = str(self.pole_haslo2.text())
         haslo2_rejestacja = str(self.pole_haslo2_podtwierdzenie.text())
+        setLogin(nazwa_uzytkownika_rejestracja)
 
         if (len(nazwa_uzytkownika_rejestracja) == 0 or len(haslo_rejestracja) == 0 or len(haslo2_rejestacja) == 0):
             self.blad2.setText("Proszę wypełnij puste pola.")
@@ -136,6 +143,7 @@ class Menu(QDialog):
     def __init__(self):
         super(Menu, self).__init__()
         loadUi("UI/Menu.ui", self)
+        self.wyborOperacjiTekst.setText( "Siemanko " + getLogin() + ", wybierz operację" )
         self.modelHaty_przycisk.clicked.connect(self.model_Haty)  # menu główne, przycisk 1
         self.rachunek_db_przycisk.clicked.connect(self.rachunek_db)  # menu główne, przycisk 2
         self.przycisk3_PrawoOhma.clicked.connect(self.Prawo_Ohma)
@@ -208,7 +216,7 @@ class Profil_edycja(QDialog):
         if (len(Pseudonim) == 0 or len(Imie) == 0 or len(Nazwisko) == 0):
             self.blad2.setText("Proszę wypełnij puste pola.")
         else:
-        sql.register_dane(Pseudonim,Imie,Nazwisko)
+            sql.updateUserData(login,Pseudonim,Imie,Nazwisko)
 
 
 
