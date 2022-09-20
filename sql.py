@@ -48,7 +48,7 @@ def register(user, password):
     if(mycursor.rowcount != 0): return False
     
     mycursor.reset()
-    sql = "INSERT INTO user VALUES (%(login)s, %(pass)s, 0)"
+    sql = "INSERT INTO user(login, password, license_type) VALUES (%(login)s, %(pass)s, 0)"
     hash = sha256(password.encode("utf-8")).hexdigest()
     mycursor.execute(sql, { 'login': user , 'pass': hash})
 
