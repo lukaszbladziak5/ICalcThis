@@ -7,6 +7,7 @@ import modules.hata
 import modules.dB
 import modules.friis
 import modules.circuits
+import modules.mccluskey
 
 
 class ErrorDialog(QDialog):
@@ -108,6 +109,7 @@ class Menu(QDialog):
         self.obwodyElektryczne_przycisk.clicked.connect(self.obwody_elektryczne)
         self.operacja4_ONP.clicked.connect(self.ONP)
         self.rownanie_friisa_przycisk.clicked.connect(self.rownanie_friisa)
+        self.mccluskey_przycisk.clicked.connect(self.mccluskey) # button 9
 
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
@@ -132,6 +134,11 @@ class Menu(QDialog):
     def rownanie_friisa(self):
         r_friisa = Rownanie_Friisa()
         widget.addWidget(r_friisa)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def mccluskey(self):
+        mccluskey = McCluskey()
+        widget.addWidget(mccluskey)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
@@ -519,6 +526,68 @@ class Rownanie_Friisa(QDialog):
         widget.addWidget(cofanie_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+class McCluskey(QDialog):
+
+    def __init__(self):
+        super(McCluskey, self).__init__()
+        loadUi("UI/mccluskey.ui", self)
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+
+    def go_to_clear_data(self):
+        self.karnough0.setCurrentIndex(0)
+        self.karnough1.setCurrentIndex(0)
+        self.karnough2.setCurrentIndex(0)
+        self.karnough3.setCurrentIndex(0)
+        self.karnough4.setCurrentIndex(0)
+        self.karnough5.setCurrentIndex(0)
+        self.karnough6.setCurrentIndex(0)
+        self.karnough7.setCurrentIndex(0)
+        self.karnough8.setCurrentIndex(0)
+        self.karnough9.setCurrentIndex(0)
+        self.karnough10.setCurrentIndex(0)
+        self.karnough11.setCurrentIndex(0)
+        self.karnough12.setCurrentIndex(0)
+        self.karnough13.setCurrentIndex(0)
+        self.karnough14.setCurrentIndex(0)
+        self.karnough15.setCurrentIndex(0)
+        self.wynik.setText("")
+
+    def go_to_save_data(self):
+        karnough = []
+        karnough.append( self.karnough0.currentIndex() )
+        karnough.append( self.karnough1.currentIndex() )
+        karnough.append( self.karnough2.currentIndex() )
+        karnough.append( self.karnough3.currentIndex() )
+        karnough.append( self.karnough4.currentIndex() )
+        karnough.append( self.karnough5.currentIndex() )
+        karnough.append( self.karnough6.currentIndex() )
+        karnough.append( self.karnough7.currentIndex() )
+        karnough.append( self.karnough8.currentIndex() )
+        karnough.append( self.karnough9.currentIndex() )
+        karnough.append( self.karnough10.currentIndex() )
+        karnough.append( self.karnough11.currentIndex() )
+        karnough.append( self.karnough12.currentIndex() )
+        karnough.append( self.karnough13.currentIndex() )
+        karnough.append( self.karnough14.currentIndex() )
+        karnough.append( self.karnough15.currentIndex() )
+        print(karnough)
+
+        minterns = []
+        dontcares = []
+        for i in range(0, 15):
+            if(karnough[i] == 1): minterns.append(i)
+            if(karnough[i] == 2): dontcares.append(i)
+        if(minterns.__len__() == 0 and dontcares.__len__() == 0): result = "F = 0"
+        else: result = modules.mccluskey.exec(minterns, dontcares)
+        print(result)
+        self.wynik.setText(result)
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 app = QApplication(sys.argv)
 widget = QtWidgets.QStackedWidget()
