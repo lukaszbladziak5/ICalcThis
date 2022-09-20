@@ -146,9 +146,7 @@ class Menu(QDialog):
         self.profil_menu.clicked.connect(self.Profil_edycja)
 
 
-    def handleButton(self):
 
-        pass
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
@@ -204,6 +202,17 @@ class Profil_edycja(QDialog):
         pixmap = QPixmap(imagePath)
         self.label.setPixmap(pixmap)
     def ZapisProfilu(self):
+        Pseudonim = str(self.pole_pseudonim.text())
+        Imie = str(self.pole_imie.text())
+        Nazwisko = str(self.pole_naziwsko.text())
+        if (len(Pseudonim) == 0 or len(Imie) == 0 or len(Nazwisko) == 0):
+            self.blad2.setText("Proszę wypełnij puste pola.")
+        else:
+        sql.register_dane(Pseudonim,Imie,Nazwisko)
+
+
+
+
         profil = Menu()
         widget.addWidget(profil)
         widget.setCurrentIndex(widget.currentIndex() + 1)

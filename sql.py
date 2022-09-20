@@ -59,5 +59,26 @@ def register(user, password):
     print("Failed {}".format(error))
   return True
 
+
+def register_dane(user, nickname, name, surname):
+  try:
+    mydb = mysql.connector.connect(
+      host="vps1.jaskula.net.pl",
+      user="gutold",
+      password="12345",
+      database="ict"
+    )
+    mycursor = mydb.cursor()
+
+
+    sql = "update user SET nickname =(%(nickname)s,name =(%(name)s, surname=  (%(surname)s WHERE login = (%(login)s  "
+    mycursor.execute(sql, {'login': user,'nickname' : nickname, 'name' : name, 'surname' : surname})
+
+    mydb.commit()
+    mydb.close()
+    mycursor.close()
+  except mysql.connector.Error as error:
+    print("Failed {}".format(error))
+  return True
 #print(login( 'admin', "admin" ))
 #register('tester', '1234')
