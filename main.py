@@ -8,6 +8,7 @@ import modules.dB
 import modules.friis
 import modules.circuits
 import modules.radio
+import modules.fiber
 
 
 class ErrorDialog(QDialog):
@@ -110,6 +111,7 @@ class Menu(QDialog):
         self.operacja4_ONP.clicked.connect(self.ONP)
         self.rownanie_friisa_przycisk.clicked.connect(self.rownanie_friisa)
         self.radio_przycisk.clicked.connect(self.radio)
+        self.fiber_przycisk.clicked.connect(self.fiber)
 
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
@@ -139,6 +141,11 @@ class Menu(QDialog):
     def radio(self):
         radio = Radio()
         widget.addWidget(radio)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def fiber(self):
+        fiber = Fiber()
+        widget.addWidget(fiber)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
@@ -696,7 +703,7 @@ class Radio(QDialog):
 
     def go_to_clear_data(self):
         self.wynik.setText('')
-        self.jednostka_wyniku.set('')
+        self.jednostka_wyniku.setText('')
         self.pierwsza_dana.setValue(0)
         self.druga_dana.setValue(0)
         self.trzecia_dana.setValue(0)
@@ -740,6 +747,182 @@ class Radio(QDialog):
             self.fifth_value = self.piata_dana.value()
             self.sixth_value = self.szosta_dana.value()
             self.seventh_value = self.siodma_dana.value()
+            self.result, self.result_unit = self._choose_mode()
+            self.wynik.setText(str(self.result))
+            self.jednostka_wyniku.setText(str(self.result_unit))
+        except:
+            dlg = ErrorDialog()
+            if dlg.exec(): print("Error dialog prompted")
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+class Fiber(QDialog):
+
+    def __init__(self):
+        super(Fiber, self).__init__()
+        loadUi("UI/Fiber.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
+        self.wybor_konwersji.currentIndexChanged.connect(self._update_conversion_method)
+
+        self.first_value = self.pierwsza_dana.value()
+        self.second_value = self.druga_dana.value()
+        self.third_value = self.trzecia_dana.value()
+
+        self.dana1.setText('n0 =')
+        self.jednostka_danych1.setText('')
+        self.dana2.setText('n1 =')
+        self.jednostka_danych2.setText('')
+        self.dana3.setText('n2 =')
+        self.jednostka_danych3.setText('')
+
+    def _show_buttons(self):
+
+        self.dana2.show()
+        self.druga_dana.show()
+        self.jednostka_danych2.show()
+        self.dana3.show()
+        self.trzecia_dana.show()
+        self.jednostka_danych3.show()
+
+    def _update_conversion_method(self):
+        if self.wybor_konwersji.currentIndex() == 0:
+            self._show_buttons()
+            self.dana1.setText('n0 =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('n1 =')
+            self.jednostka_danych2.setText('')
+            self.dana3.setText('n2 =')
+            self.jednostka_danych3.setText('')
+        elif self.wybor_konwersji.currentIndex() == 1:
+            self._show_buttons()
+            self.dana1.setText('NA =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('n =')
+            self.jednostka_danych2.setText('')
+            self.dana3.setText('L =')
+            self.jednostka_danych3.setText('km')
+        elif self.wybor_konwersji.currentIndex() == 2:
+            self._show_buttons()
+            self.dana1.setText('a =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('λ =')
+            self.jednostka_danych2.setText('')
+            self.dana3.setText('NA =')
+            self.jednostka_danych3.setText('')
+        elif self.wybor_konwersji.currentIndex() == 3:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('P0 =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('P1 =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 4:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('Pr =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('Pi =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 5:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('D1 =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('D2 =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 6:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('NA1 =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('NA2 =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 7:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('g1 =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('g2 =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 8:
+            self._show_buttons()
+            self.dana1.setText('R =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('x =')
+            self.jednostka_danych2.setText('')
+            self.dana3.setText('a =')
+            self.jednostka_danych3.setText('')
+        elif self.wybor_konwersji.currentIndex() == 9:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('R =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('y =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 10:
+            self._show_buttons()
+            self.dana2.hide()
+            self.druga_dana.hide()
+            self.jednostka_danych2.hide()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('R =')
+            self.jednostka_danych1.setText('')
+
+    def go_to_clear_data(self):
+        self.wynik.setText('')
+        self.jednostka_wyniku.setText('')
+        self.pierwsza_dana.setValue(0)
+        self.druga_dana.setValue(0)
+        self.trzecia_dana.setValue(0)
+
+    def _choose_mode(self):
+        if self.wybor_konwersji.currentIndex() == 0:
+            return modules.fiber.numericAperture(self.first_value, self.second_value, self.third_value), ""
+        elif self.wybor_konwersji.currentIndex() == 1:
+            return modules.fiber.opticalBandwidth(self.first_value, self.second_value, self.third_value), ""
+        elif self.wybor_konwersji.currentIndex() == 2:
+            return modules.fiber.modLatency(self.first_value, self.second_value, self.third_value), ""
+        elif self.wybor_konwersji.currentIndex() == 3:
+            return modules.fiber.insertionLoss(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 4:
+            return modules.fiber.reflectionLoss(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 5:
+            return modules.fiber.diameterLoss(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 6:
+            return modules.fiber.NALoss(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 7:
+            return modules.fiber.profileLoss(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 8:
+            return modules.fiber.axisShift(self.first_value, self.second_value, self.third_value), ""
+        elif self.wybor_konwersji.currentIndex() == 9:
+            return modules.fiber.radialShift(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 10:
+            return modules.fiber.fresnelReflection(self.first_value), ""
+
+    def go_to_save_data(self):
+        try:
+            self.first_value = self.pierwsza_dana.value()
+            self.second_value = self.druga_dana.value()
+            self.third_value = self.trzecia_dana.value()
             self.result, self.result_unit = self._choose_mode()
             self.wynik.setText(str(self.result))
             self.jednostka_wyniku.setText(str(self.result_unit))

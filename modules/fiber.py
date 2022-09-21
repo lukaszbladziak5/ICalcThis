@@ -27,7 +27,7 @@ def modLatency(a, Lambda, NA):
 def insertionLoss(P0, P1):
     return -10 * numpy.log(P0 / P1)
 
-def reflectionnLoss(Pr, Pi):
+def reflectionLoss(Pr, Pi):
     return -10 * numpy.log(Pr / Pi)
 
 def diameterLoss(D1, D2):
