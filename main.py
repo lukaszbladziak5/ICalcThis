@@ -7,6 +7,7 @@ import modules.hata
 import modules.dB
 import modules.friis
 import modules.circuits
+import modules.binary
 
 
 class ErrorDialog(QDialog):
@@ -553,16 +554,96 @@ class Binary(QDialog):
         self.bitLength.setText("")
 
     def save_data_bin(self):
-        bin = self.Bin.toPlainText()
+        try:
+            length = self.bitLength.toPlainText()
+            if(length == ""): length = 32
+            else: length = int(length)
+            bin = self.Bin.toPlainText()
+            dec = modules.binary.exec(bin, 2, 10)
+            oct = modules.binary.exec(dec, 10, 8)
+            hex = modules.binary.exec(dec, 10, 16)
+            zm = modules.binary.decToZM(dec, length)
+            u1 = modules.binary.decToU1(dec, length)
+            u2 = modules.binary.decToU2(dec, length)
+
+            self.Oct.setText(oct)
+            self.Dec.setText(str(dec))
+            self.Hex.setText(hex)
+            self.ZM.setText(zm)
+            self.U1.setText(u1)
+            self.U2.setText(u2)
+        except:
+            dlg = ErrorDialog("Błąd danych")
+            if dlg.exec(): print("Error dialog prompted")
 
     def save_data_oct(self):
-        oct = self.Oct.toPlainText()
+        try:
+            length = self.bitLength.toPlainText()
+            if(length == ""): length = 32
+            else: length = int(length)
+            oct = self.Oct.toPlainText()
+            dec = modules.binary.exec(oct, 8, 10)
+            bin = modules.binary.exec(dec, 10, 2)
+            hex = modules.binary.exec(dec, 10, 16)
+            zm = modules.binary.decToZM(dec, length)
+            u1 = modules.binary.decToU1(dec, length)
+            u2 = modules.binary.decToU2(dec, length)
+
+            self.Bin.setText(bin)
+            self.Dec.setText(str(dec))
+            self.Hex.setText(hex)
+            self.ZM.setText(zm)
+            self.U1.setText(u1)
+            self.U2.setText(u2)
+        except:
+            dlg = ErrorDialog("Błąd danych")
+            if dlg.exec(): print("Error dialog prompted")
 
     def save_data_dec(self):
-        dec = self.Dec.toPlainText()
+        try:
+            length = self.bitLength.toPlainText()
+            if(length == ""): length = 32
+            else: length = int(length)
+            dec = int(self.Dec.toPlainText())
+            bin = modules.binary.exec(dec, 10, 2)
+            oct = modules.binary.exec(dec, 10, 8)
+            hex = modules.binary.exec(dec, 10, 16)
+            zm = modules.binary.decToZM(dec, length)
+            u1 = modules.binary.decToU1(dec, length)
+            u2 = modules.binary.decToU2(dec, length)
+
+            self.Oct.setText(oct)
+            self.Bin.setText(bin)
+            self.Hex.setText(hex)
+            self.ZM.setText(zm)
+            self.U1.setText(u1)
+            self.U2.setText(u2)
+        except:
+            dlg = ErrorDialog("Błąd danych")
+            if dlg.exec(): print("Error dialog prompted")
 
     def save_data_hex(self):
-        hex = self.Hex.toPlainText()
+        try:
+            length = self.bitLength.toPlainText()
+            if(length == ""): length = 32
+            else: length = int(length)
+            hex = self.Hex.toPlainText()
+            dec = modules.binary.exec(hex, 16, 10)
+            bin = modules.binary.exec(dec, 10, 2)
+            oct = modules.binary.exec(dec, 10, 8)
+            zm = modules.binary.decToZM(dec, length)
+            u1 = modules.binary.decToU1(dec, length)
+            u2 = modules.binary.decToU2(dec, length)
+
+            self.Oct.setText(oct)
+            self.Bin.setText(bin)
+            self.Dec.setText(str(dec))
+            self.ZM.setText(zm)
+            self.U1.setText(u1)
+            self.U2.setText(u2)
+        except:
+            dlg = ErrorDialog("Błąd danych")
+            if dlg.exec(): print("Error dialog prompted")
         
 
 app = QApplication(sys.argv)
