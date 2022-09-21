@@ -108,6 +108,7 @@ class Menu(QDialog):
         self.obwodyElektryczne_przycisk.clicked.connect(self.obwody_elektryczne)
         self.operacja4_ONP.clicked.connect(self.ONP)
         self.rownanie_friisa_przycisk.clicked.connect(self.rownanie_friisa)
+        self.binary_button.clicked.connect(self.binary)
 
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
@@ -132,6 +133,11 @@ class Menu(QDialog):
     def rownanie_friisa(self):
         r_friisa = Rownanie_Friisa()
         widget.addWidget(r_friisa)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def binary(self):
+        bin = Binary()
+        widget.addWidget(bin)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
@@ -519,6 +525,45 @@ class Rownanie_Friisa(QDialog):
         widget.addWidget(cofanie_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+class Binary(QDialog):
+
+    def __init__(self):
+        super(Binary, self).__init__()
+        loadUi("UI/Binary.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.binButton.clicked.connect(self.save_data_bin)
+        self.octButton.clicked.connect(self.save_data_oct)
+        self.decButton.clicked.connect(self.save_data_dec)
+        self.hexButton.clicked.connect(self.save_data_hex)
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def go_to_clear_data(self):
+        self.Bin.setText("")
+        self.Oct.setText("")
+        self.Dec.setText("")
+        self.Hex.setText("")
+        self.ZM.setText("")
+        self.U1.setText("")
+        self.U2.setText("")
+        self.bitLength.setText("")
+
+    def save_data_bin(self):
+        bin = self.Bin.toPlainText()
+
+    def save_data_oct(self):
+        oct = self.Oct.toPlainText()
+
+    def save_data_dec(self):
+        dec = self.Dec.toPlainText()
+
+    def save_data_hex(self):
+        hex = self.Hex.toPlainText()
+        
 
 app = QApplication(sys.argv)
 widget = QtWidgets.QStackedWidget()
