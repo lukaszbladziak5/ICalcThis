@@ -91,6 +91,7 @@ class Ekran_rejestracji(QDialog):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
     def funkcja_rejestracji(self):
+
         nazwa_uzytkownika_rejestracja = str(self.pole_nazwa_uzytkownika2.text())
         haslo_rejestracja = str(self.pole_haslo2.text())
         haslo2_rejestacja = str(self.pole_haslo2_podtwierdzenie.text())
@@ -114,6 +115,7 @@ class Profil(QDialog):
     def __init__(self):
         super(Profil, self).__init__()
         loadUi("UI/Profil.ui", self)
+
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.przycisk_zaladuj.clicked.connect(self.on_click)
         self.przycisk_kontynuuj.clicked.connect(self.ZapisProfilu)
@@ -133,13 +135,14 @@ class Profil(QDialog):
         pixmap = QPixmap(imagePath)
         self.label.setPixmap(pixmap)
     def ZapisProfilu(self):
+        Specializacja = str(self.wybor_specializacji.text())
         Pseudonim = str(self.pole_pseudonim.text())
         Imie = str(self.pole_imie.text())
         Nazwisko = str(self.pole_naziwsko.text())
         if (len(Pseudonim) == 0 or len(Imie) == 0 or len(Nazwisko) == 0):
             self.blad2.setText("Proszę wypełnij puste pola.")
         else:
-            sql.updateUserData(login,Pseudonim,Imie,Nazwisko)
+            sql.updateUserData(login,Pseudonim,Imie,Nazwisko,Specializacja)
         profil = Menu()
         widget.addWidget(profil)
         widget.setCurrentIndex(widget.currentIndex() + 1)
@@ -217,13 +220,14 @@ class Profil_edycja(QDialog):
         pixmap = QPixmap(imagePath)
         self.label.setPixmap(pixmap)
     def ZapisProfilu(self):
+        Specializacja = str(self.wybor_specializacji.text())
         Pseudonim = str(self.pole_pseudonim.text())
         Imie = str(self.pole_imie.text())
         Nazwisko = str(self.pole_naziwsko.text())
         if (len(Pseudonim) == 0 or len(Imie) == 0 or len(Nazwisko) == 0):
             self.blad2.setText("Proszę wypełnij puste pola.")
         else:
-            sql.updateUserData(login,Pseudonim,Imie,Nazwisko)
+            sql.updateUserData(login,Pseudonim,Imie,Nazwisko, Specializacja)
 
         profil = Menu()
         widget.addWidget(profil)
