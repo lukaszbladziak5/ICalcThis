@@ -107,7 +107,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>390</y>
+      <y>380</y>
       <width>161</width>
       <height>81</height>
      </rect>
@@ -120,7 +120,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
     <property name="geometry">
      <rect>
       <x>510</x>
-      <y>390</y>
+      <y>380</y>
       <width>161</width>
       <height>81</height>
      </rect>
@@ -129,20 +129,20 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      <string>Równanie Friisa</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="operacja_6">
+   <widget class="QPushButton" name="radio_przycisk">
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>390</y>
+      <y>380</y>
       <width>161</width>
       <height>81</height>
      </rect>
     </property>
     <property name="text">
-     <string>Operacja6</string>
+     <string>Zagadnienia radiowe</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="operacja_7">
+   <widget class="QPushButton" name="fiber_przycisk">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -151,8 +151,13 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
       <height>81</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Operacja7</string>
+     <string>Zagadnienia światłowodowe</string>
     </property>
    </widget>
    <widget class="QPushButton" name="binary_button">

@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets, QtGui
+from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
 import sys
@@ -7,6 +7,8 @@ import modules.hata
 import modules.dB
 import modules.friis
 import modules.circuits
+import modules.radio
+import modules.fiber
 import modules.binary
 
 
@@ -109,6 +111,8 @@ class Menu(QDialog):
         self.obwodyElektryczne_przycisk.clicked.connect(self.obwody_elektryczne)
         self.operacja4_ONP.clicked.connect(self.ONP)
         self.rownanie_friisa_przycisk.clicked.connect(self.rownanie_friisa)
+        self.radio_przycisk.clicked.connect(self.radio)
+        self.fiber_przycisk.clicked.connect(self.fiber)
         self.binary_button.clicked.connect(self.binary)
 
     def model_Haty(self):
@@ -136,6 +140,16 @@ class Menu(QDialog):
         widget.addWidget(r_friisa)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+    def radio(self):
+        radio = Radio()
+        widget.addWidget(radio)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def fiber(self):
+        fiber = Fiber()
+        widget.addWidget(fiber)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+        
     def binary(self):
         bin = Binary()
         widget.addWidget(bin)
@@ -646,6 +660,407 @@ class Binary(QDialog):
             if dlg.exec(): print("Error dialog prompted")
         
 
+class Radio(QDialog):
+
+    def __init__(self):
+        super(Radio, self).__init__()
+        loadUi("UI/Radio.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
+        self.wybor_konwersji.currentIndexChanged.connect(self._update_conversion_method)
+        self._hide_buttons()
+
+        self.first_value = self.pierwsza_dana.value()
+        self.second_value = self.druga_dana.value()
+        self.third_value = self.trzecia_dana.value()
+        self.fourth_value = self.czwarta_dana.value()
+        self.fifth_value = self.piata_dana.value()
+        self.sixth_value = self.szosta_dana.value()
+        self.seventh_value = self.siodma_dana.value()
+
+        self.dana1.setText('λ =')
+        self.jednostka_danych1.setText('m')
+
+    def _hide_buttons(self):
+
+        self.dana2.hide()
+        self.druga_dana.hide()
+        self.jednostka_danych2.hide()
+        self.dana3.hide()
+        self.trzecia_dana.hide()
+        self.jednostka_danych3.hide()
+        self.dana4.hide()
+        self.czwarta_dana.hide()
+        self.jednostka_danych4.hide()
+        self.dana5.hide()
+        self.piata_dana.hide()
+        self.jednostka_danych5.hide()
+        self.dana6.hide()
+        self.szosta_dana.hide()
+        self.jednostka_danych6.hide()
+        self.dana7.hide()
+        self.siodma_dana.hide()
+        self.jednostka_danych7.hide()
+
+    def _update_conversion_method(self):
+        if self.wybor_konwersji.currentIndex() == 0:
+            self._hide_buttons()
+            self.dana1.setText('λ =')
+            self.jednostka_danych1.setText('m')
+        elif self.wybor_konwersji.currentIndex() == 1:
+            self._hide_buttons()
+            self.dana1.setText('f =')
+            self.jednostka_danych1.setText('kHz')
+        elif self.wybor_konwersji.currentIndex() == 2:
+            self._hide_buttons()
+            self.dana2.show()
+            self.druga_dana.show()
+            self.jednostka_danych2.show()
+            self.dana3.show()
+            self.trzecia_dana.show()
+            self.jednostka_danych3.show()
+            self.dana1.setText('P =')
+            self.dana2.setText('L =')
+            self.dana3.setText('G =')
+            self.jednostka_danych1.setText('dBm')
+            self.jednostka_danych2.setText('dB')
+            self.jednostka_danych3.setText('dBi')
+        elif self.wybor_konwersji.currentIndex() == 3:
+            self._hide_buttons()
+            self.dana2.show()
+            self.druga_dana.show()
+            self.jednostka_danych2.show()
+            self.dana1.setText('d =')
+            self.dana2.setText('f =')
+            self.jednostka_danych1.setText('km')
+            self.jednostka_danych2.setText('GHz')
+        elif self.wybor_konwersji.currentIndex() == 4:
+            self._hide_buttons()
+            self.dana1.setText('f =')
+            self.jednostka_danych1.setText('kHz')
+        elif self.wybor_konwersji.currentIndex() == 5:
+            self._hide_buttons()
+            self.dana2.show()
+            self.druga_dana.show()
+            self.jednostka_danych2.show()
+            self.dana1.setText('λ =')
+            self.dana2.setText('G =')
+            self.jednostka_danych1.setText('km')
+            self.jednostka_danych2.setText('dBi')
+        elif self.wybor_konwersji.currentIndex() == 6:
+            self._hide_buttons()
+            self.dana2.show()
+            self.druga_dana.show()
+            self.jednostka_danych2.show()
+            self.dana1.setText('e =')
+            self.dana2.setText('u =')
+            self.jednostka_danych1.setText('')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 7:
+            self._hide_buttons()
+            self.dana2.show()
+            self.druga_dana.show()
+            self.jednostka_danych2.show()
+            self.dana1.setText('e =')
+            self.dana2.setText('u =')
+            self.jednostka_danych1.setText('')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 8:
+            self.dana2.show()
+            self.druga_dana.show()
+            self.jednostka_danych2.show()
+            self.dana3.show()
+            self.trzecia_dana.show()
+            self.jednostka_danych3.show()
+            self.dana4.show()
+            self.czwarta_dana.show()
+            self.jednostka_danych4.show()
+            self.dana5.show()
+            self.piata_dana.show()
+            self.jednostka_danych5.show()
+            self.dana6.show()
+            self.szosta_dana.show()
+            self.jednostka_danych6.show()
+            self.dana7.show()
+            self.siodma_dana.show()
+            self.jednostka_danych7.show()
+            self.dana1.setText('Ptx =')
+            self.dana2.setText('LTx =')
+            self.dana3.setText('LRx =')
+            self.dana4.setText('LFS =')
+            self.dana5.setText('LM =')
+            self.dana6.setText('GTx =')
+            self.dana7.setText('GRx =')
+            self.jednostka_danych1.setText('dB')
+            self.jednostka_danych2.setText('dB')
+            self.jednostka_danych3.setText('dB')
+            self.jednostka_danych4.setText('dB')
+            self.jednostka_danych5.setText('dB')
+            self.jednostka_danych6.setText('dB')
+            self.jednostka_danych7.setText('dB')
+        elif self.wybor_konwersji.currentIndex() == 9:
+            self._hide_buttons()
+            self.dana2.show()
+            self.druga_dana.show()
+            self.jednostka_danych2.show()
+            self.dana3.show()
+            self.trzecia_dana.show()
+            self.jednostka_danych3.show()
+            self.dana1.setText('E =')
+            self.dana2.setText('m =')
+            self.dana3.setText('c =')
+            self.jednostka_danych1.setText('V/m')
+            self.jednostka_danych2.setText('Kg/m^3')
+            self.jednostka_danych3.setText('S/m')
+        elif self.wybor_konwersji.currentIndex() == 10:
+            self._hide_buttons()
+            self.dana1.setText('valency =')
+            self.jednostka_danych1.setText('')
+        elif self.wybor_konwersji.currentIndex() == 11:
+            self._hide_buttons()
+            self.dana2.show()
+            self.druga_dana.show()
+            self.jednostka_danych2.show()
+            self.dana1.setText('V =')
+            self.dana2.setText('n =')
+            self.jednostka_danych1.setText('Bd')
+            self.jednostka_danych2.setText('')
+
+    def go_to_clear_data(self):
+        self.wynik.setText('')
+        self.jednostka_wyniku.setText('')
+        self.pierwsza_dana.setValue(0)
+        self.druga_dana.setValue(0)
+        self.trzecia_dana.setValue(0)
+        self.czwarta_dana.setValue(0)
+        self.piata_dana.setValue(0)
+        self.szosta_dana.setValue(0)
+        self.siodma_dana.setValue(0)
+
+    def _choose_mode(self):
+        if self.wybor_konwersji.currentIndex() == 0:
+            return modules.radio.waveToFreq(self.first_value), "kHz"
+        elif self.wybor_konwersji.currentIndex() == 1:
+            return modules.radio.freqToWave(self.first_value), "m"
+        elif self.wybor_konwersji.currentIndex() == 2:
+            return modules.radio.eirp(self.first_value, self.second_value, self.third_value), ""
+        elif self.wybor_konwersji.currentIndex() == 3:
+            return modules.radio.fresnel(self.first_value, self.second_value), "m"
+        elif self.wybor_konwersji.currentIndex() == 4:
+            return modules.radio.dipoleLength(self.first_value), "km"
+        elif self.wybor_konwersji.currentIndex() == 5:
+            return modules.radio.effectiveAperture(self.first_value, self.second_value), "m^2"
+        elif self.wybor_konwersji.currentIndex() == 6:
+            return modules.radio.plainWaveVelocity(self.first_value, self.second_value), "m/s"
+        elif self.wybor_konwersji.currentIndex() == 7:
+            return modules.radio.plainWaveImpedance(self.first_value, self.second_value), "Ω"
+        elif self.wybor_konwersji.currentIndex() == 8:
+            return modules.radio.powerBudget(self.first_value, self.second_value, self.third_value, self.fourth_value, self.fifth_value, self.sixth_value, self.seventh_value), "dB"
+        elif self.wybor_konwersji.currentIndex() == 9:
+            return modules.radio.SAR(self.first_value, self.second_value, self.third_value), ""
+        elif self.wybor_konwersji.currentIndex() == 10:
+            return modules.radio.bitsQAM(self.first_value), ""
+        elif self.wybor_konwersji.currentIndex() == 11:
+            return modules.radio.bitrate(self.first_value, self.second_value), ""
+
+    def go_to_save_data(self):
+        try:
+            self.first_value = self.pierwsza_dana.value()
+            self.second_value = self.druga_dana.value()
+            self.third_value = self.trzecia_dana.value()
+            self.fourth_value = self.czwarta_dana.value()
+            self.fifth_value = self.piata_dana.value()
+            self.sixth_value = self.szosta_dana.value()
+            self.seventh_value = self.siodma_dana.value()
+            self.result, self.result_unit = self._choose_mode()
+            self.wynik.setText(str(self.result))
+            self.jednostka_wyniku.setText(str(self.result_unit))
+        except:
+            dlg = ErrorDialog()
+            if dlg.exec(): print("Error dialog prompted")
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+class Fiber(QDialog):
+
+    def __init__(self):
+        super(Fiber, self).__init__()
+        loadUi("UI/Fiber.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
+        self.wybor_konwersji.currentIndexChanged.connect(self._update_conversion_method)
+
+        self.first_value = self.pierwsza_dana.value()
+        self.second_value = self.druga_dana.value()
+        self.third_value = self.trzecia_dana.value()
+
+        self.dana1.setText('n0 =')
+        self.jednostka_danych1.setText('')
+        self.dana2.setText('n1 =')
+        self.jednostka_danych2.setText('')
+        self.dana3.setText('n2 =')
+        self.jednostka_danych3.setText('')
+
+    def _show_buttons(self):
+
+        self.dana2.show()
+        self.druga_dana.show()
+        self.jednostka_danych2.show()
+        self.dana3.show()
+        self.trzecia_dana.show()
+        self.jednostka_danych3.show()
+
+    def _update_conversion_method(self):
+        if self.wybor_konwersji.currentIndex() == 0:
+            self._show_buttons()
+            self.dana1.setText('n0 =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('n1 =')
+            self.jednostka_danych2.setText('')
+            self.dana3.setText('n2 =')
+            self.jednostka_danych3.setText('')
+        elif self.wybor_konwersji.currentIndex() == 1:
+            self._show_buttons()
+            self.dana1.setText('NA =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('n =')
+            self.jednostka_danych2.setText('')
+            self.dana3.setText('L =')
+            self.jednostka_danych3.setText('km')
+        elif self.wybor_konwersji.currentIndex() == 2:
+            self._show_buttons()
+            self.dana1.setText('a =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('λ =')
+            self.jednostka_danych2.setText('')
+            self.dana3.setText('NA =')
+            self.jednostka_danych3.setText('')
+        elif self.wybor_konwersji.currentIndex() == 3:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('P0 =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('P1 =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 4:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('Pr =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('Pi =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 5:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('D1 =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('D2 =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 6:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('NA1 =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('NA2 =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 7:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('g1 =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('g2 =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 8:
+            self._show_buttons()
+            self.dana1.setText('R =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('x =')
+            self.jednostka_danych2.setText('')
+            self.dana3.setText('a =')
+            self.jednostka_danych3.setText('')
+        elif self.wybor_konwersji.currentIndex() == 9:
+            self._show_buttons()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('R =')
+            self.jednostka_danych1.setText('')
+            self.dana2.setText('y =')
+            self.jednostka_danych2.setText('')
+        elif self.wybor_konwersji.currentIndex() == 10:
+            self._show_buttons()
+            self.dana2.hide()
+            self.druga_dana.hide()
+            self.jednostka_danych2.hide()
+            self.dana3.hide()
+            self.trzecia_dana.hide()
+            self.jednostka_danych3.hide()
+            self.dana1.setText('R =')
+            self.jednostka_danych1.setText('')
+
+    def go_to_clear_data(self):
+        self.wynik.setText('')
+        self.jednostka_wyniku.setText('')
+        self.pierwsza_dana.setValue(0)
+        self.druga_dana.setValue(0)
+        self.trzecia_dana.setValue(0)
+
+    def _choose_mode(self):
+        if self.wybor_konwersji.currentIndex() == 0:
+            return modules.fiber.numericAperture(self.first_value, self.second_value, self.third_value), ""
+        elif self.wybor_konwersji.currentIndex() == 1:
+            return modules.fiber.opticalBandwidth(self.first_value, self.second_value, self.third_value), ""
+        elif self.wybor_konwersji.currentIndex() == 2:
+            return modules.fiber.modLatency(self.first_value, self.second_value, self.third_value), ""
+        elif self.wybor_konwersji.currentIndex() == 3:
+            return modules.fiber.insertionLoss(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 4:
+            return modules.fiber.reflectionLoss(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 5:
+            return modules.fiber.diameterLoss(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 6:
+            return modules.fiber.NALoss(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 7:
+            return modules.fiber.profileLoss(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 8:
+            return modules.fiber.axisShift(self.first_value, self.second_value, self.third_value), ""
+        elif self.wybor_konwersji.currentIndex() == 9:
+            return modules.fiber.radialShift(self.first_value, self.second_value), ""
+        elif self.wybor_konwersji.currentIndex() == 10:
+            return modules.fiber.fresnelReflection(self.first_value), ""
+
+    def go_to_save_data(self):
+        try:
+            self.first_value = self.pierwsza_dana.value()
+            self.second_value = self.druga_dana.value()
+            self.third_value = self.trzecia_dana.value()
+            self.result, self.result_unit = self._choose_mode()
+            self.wynik.setText(str(self.result))
+            self.jednostka_wyniku.setText(str(self.result_unit))
+        except:
+            dlg = ErrorDialog()
+            if dlg.exec(): print("Error dialog prompted")
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
 app = QApplication(sys.argv)
 widget = QtWidgets.QStackedWidget()
 welcome = Ekran_poczatkowy()
@@ -659,3 +1074,23 @@ try:
     sys.exit(app.exec_())
 except:
     print("Exiting")
+
+# Zrobione:
+
+# circuits.py
+# dB.py
+# friis.py
+# hata.py
+# binary.py
+# fiber.py
+# radio.py
+
+# Do zrobienia:
+
+# boolean.py
+# lineCodes.py (można odpuścić)
+# mccluskey.py (może poprawa)
+# media.py
+# plot.py (można odpuścić)
+# rpn.py
+
