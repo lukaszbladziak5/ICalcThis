@@ -1,6 +1,8 @@
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QIcon, QPixmap
+
 import sys
 import sql
 import modules.hata
@@ -12,6 +14,12 @@ import modules.fiber
 import modules.binary
 import modules.rpn
 
+
+login = ""
+def setLogin(user):
+    global login
+    login = user
+def getLogin(): return login
 
 class ErrorDialog(QDialog):
     def __init__(self, msg="Sorry, something went wrong"):
@@ -47,7 +55,9 @@ class Ekran_poczatkowy(QDialog):
         przycisk_logowania = Ekran_logowania()
         widget.addWidget(przycisk_logowania)
         widget.setCurrentIndex(widget.currentIndex() + 1)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
 
 class Ekran_logowania(QDialog):
 
@@ -56,10 +66,13 @@ class Ekran_logowania(QDialog):
         loadUi("UI/Logowanie.ui", self)
         self.pole_haslo.setEchoMode(QtWidgets.QLineEdit.Password)  # kropeczki wpisujac haslo
         self.login.clicked.connect(self.funkcja_logowania)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def funkcja_logowania(self):
         nazwa_uzytkownika = self.pole_nazwa_uzytkownika.text()
         haslo = self.pole_haslo.text()
+        setLogin(nazwa_uzytkownika)
 
         if (len(nazwa_uzytkownika) == 0 or len(haslo) == 0):
             self.blad.setText("Nieprawidłowa nazwa użytkownika lub hasło!")
@@ -82,10 +95,15 @@ class Ekran_rejestracji(QDialog):
         self.pole_haslo2_podtwierdzenie.setEchoMode(QtWidgets.QLineEdit.Password)
         self.przycisk_zarejestruj.clicked.connect(self.funkcja_rejestracji)
 
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def funkcja_rejestracji(self):
+
         nazwa_uzytkownika_rejestracja = str(self.pole_nazwa_uzytkownika2.text())
         haslo_rejestracja = str(self.pole_haslo2.text())
         haslo2_rejestacja = str(self.pole_haslo2_podtwierdzenie.text())
+        setLogin(nazwa_uzytkownika_rejestracja)
 
         if (len(nazwa_uzytkownika_rejestracja) == 0 or len(haslo_rejestracja) == 0 or len(haslo2_rejestacja) == 0):
             self.blad2.setText("Proszę wypełnij puste pola.")
@@ -94,12 +112,48 @@ class Ekran_rejestracji(QDialog):
         else:
             try:
                 sql.register(nazwa_uzytkownika_rejestracja, haslo_rejestracja)
-                profil = Menu()
+                profil = Profil()
                 widget.addWidget(profil)
                 widget.setCurrentIndex(widget.currentIndex() + 1)
             except:
                 dlg = ErrorDialog("Błąd - prawdopodobnie taki uzytkownik juz istnieje")
                 if dlg.exec(): print("Error dialog prompted")
+
+class Profil(QDialog):
+    def __init__(self):
+        super(Profil, self).__init__()
+        loadUi("UI/Profil.ui", self)
+
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.przycisk_zaladuj.clicked.connect(self.on_click)
+        self.przycisk_kontynuuj.clicked.connect(self.ZapisProfilu)
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def on_click(self):
+        print('PyQt5 button click')
+        image = QFileDialog.getOpenFileName(None, 'OpenFile', '', "Image file(*.jpg)")
+        imagePath = image[0]
+        pixmap = QPixmap(imagePath)
+        self.label.setPixmap(pixmap)
+    def ZapisProfilu(self):
+        Specializacja = str(self.wybor_specializacji.text())
+        Pseudonim = str(self.pole_pseudonim.text())
+        Imie = str(self.pole_imie.text())
+        Nazwisko = str(self.pole_naziwsko.text())
+        if (len(Pseudonim) == 0 or len(Imie) == 0 or len(Nazwisko) == 0):
+            self.blad2.setText("Proszę wypełnij puste pola.")
+        else:
+            sql.updateUserData(login,Pseudonim,Imie,Nazwisko,Specializacja)
+        profil = Menu()
+        widget.addWidget(profil)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
 class Menu(QDialog):
@@ -107,6 +161,7 @@ class Menu(QDialog):
     def __init__(self):
         super(Menu, self).__init__()
         loadUi("UI/Menu.ui", self)
+        self.wyborOperacjiTekst.setText( "Siemanko " + getLogin() + ", wybierz operację" )
         self.modelHaty_przycisk.clicked.connect(self.model_Haty)  # menu główne, przycisk 1
         self.rachunek_db_przycisk.clicked.connect(self.rachunek_db)  # menu główne, przycisk 2
         self.obwodyElektryczne_przycisk.clicked.connect(self.obwody_elektryczne)
@@ -116,6 +171,13 @@ class Menu(QDialog):
         self.fiber_przycisk.clicked.connect(self.fiber)
         self.binary_button.clicked.connect(self.binary)
 
+        self.profil_menu.setIcon(QtGui.QIcon('images/profilowe.jpg'))
+        self.profil_menu.setIconSize(QtCore.QSize(140, 80))
+        self.profil_menu.clicked.connect(self.Profil_edycja)
+
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
         widget.addWidget(modelHaty_przycisk)
@@ -140,7 +202,7 @@ class Menu(QDialog):
         r_friisa = Rownanie_Friisa()
         widget.addWidget(r_friisa)
         widget.setCurrentIndex(widget.currentIndex() + 1)
-
+    
     def radio(self):
         radio = Radio()
         widget.addWidget(radio)
@@ -155,8 +217,55 @@ class Menu(QDialog):
         bin = Binary()
         widget.addWidget(bin)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+    
+    def Profil_edycja(self):
+        profil_ed = Profil_edycja()
+        widget.addWidget(profil_ed)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
+class Profil_edycja(QDialog):
 
+    def __init__(self):
+        super(Profil_edycja, self).__init__()
+        loadUi("UI/Edycja_profilu.ui", self)
+        user = sql.getUserData(login)
+        self.wybor_specializacji.setCurrentIndex( (self.wybor_specializacji.findText(user[0])) )
+        self.pole_pseudonim.setText(user[1])
+        self.pole_imie.setText(user[2])
+        self.pole_naziwsko.setText(user[3])
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.przycisk_zaladuj.clicked.connect(self.on_click)
+        self.przycisk_kontynuuj.clicked.connect(self.ZapisProfilu)
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def on_click(self):
+        print('PyQt5 button click')
+        image = QFileDialog.getOpenFileName(None, 'OpenFile', '', "Image file(*.jpg)")
+        imagePath = image[0]
+        pixmap = QPixmap(imagePath)
+        self.label.setPixmap(pixmap)
+    def ZapisProfilu(self):
+        Specjalizacja_index = self.wybor_specializacji.currentIndex()
+        Specializacja = str(self.wybor_specializacji.itemText(Specjalizacja_index))
+        Pseudonim = str(self.pole_pseudonim.text())
+        Imie = str(self.pole_imie.text())
+        Nazwisko = str(self.pole_naziwsko.text())
+        if (len(Pseudonim) == 0 or len(Imie) == 0 or len(Nazwisko) == 0):
+            self.blad2.setText("Proszę wypełnij puste pola.")
+        else:
+            print(Specializacja)
+            sql.updateUserData(login,Pseudonim,Imie,Nazwisko, Specializacja)
+        profil = Menu()
+        widget.addWidget(profil)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+        
 class Model_Haty(QDialog):
 
     def __init__(self):
@@ -165,7 +274,9 @@ class Model_Haty(QDialog):
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.reset_button.clicked.connect(self.go_to_clear_data)
         self.oblicz_button.clicked.connect(self.go_to_save_data)
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def go_to_clear_data(self):
         self.v_input_2.setValue(0)
         self.d_input_2.setValue(0)
@@ -219,7 +330,9 @@ class Rachunek_decybelowy(QDialog):
         self.jednostka_danych1.setText('dBW')
         self.druga_dana.hide()
         self.jednostka_danych2.hide()
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def _update_conversion_method(self):
         if self.wybor_konwersji.currentIndex() == 0:
             self.druga_dana.hide()
@@ -308,6 +421,10 @@ class Obwody_elektryczne(QDialog):
         super(Obwody_elektryczne, self).__init__()
         loadUi("UI/Prawo_Ohma.ui", self)
         self.commandLinkButton.clicked.connect(self.cofanie)
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
+        
         self.reset_button.clicked.connect(self.go_to_clear_data)
         self.reset_button_2.clicked.connect(self.go_to_clear_data2)
         self.oblicz_button.clicked.connect(self.go_to_save_data)
@@ -447,6 +564,10 @@ class Notacja_Polska(QDialog):
         self.wynik.setText("")
         self.wybor_notacji.setCurrentIndex(2)
         self.commandLinkButton.clicked.connect(self.cofanie)
+    
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
         self.oblicz_button.clicked.connect(self.go_to_save_data)
         self.reset_button.clicked.connect(self.go_to_clear_data)
 
@@ -493,7 +614,9 @@ class Rownanie_Friisa(QDialog):
         self.pt_button.clicked.connect(self._button3Clicked)
         self.stosunek_button.setChecked(True)
         self._button1Clicked()
-
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
     def _button1Clicked(self):
         self.pr_tekst.hide()
         self.pr_input.hide()
