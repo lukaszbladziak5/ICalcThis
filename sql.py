@@ -60,6 +60,29 @@ def register(user, password):
   return True
 
 
+def getUserData(user):
+  try:
+    mydb = mysql.connector.connect(
+      host="vps1.jaskula.net.pl",
+      user="gutold",
+      password="12345",
+      database="ict"
+    )
+    mycursor = mydb.cursor()
+
+
+    sql = "SELECT specialization, nickname, name, surname FROM user WHERE login = %(login)s "
+    mycursor.execute(sql, {'login': user})
+    result = mycursor.fetchone()
+
+    mydb.close()
+    mycursor.close()
+
+    return result
+  except mysql.connector.Error as error:
+    print("Failed {}".format(error))
+    return []
+
 def updateUserData(user, nickname, name, surname, specialization):
   try:
     mydb = mysql.connector.connect(

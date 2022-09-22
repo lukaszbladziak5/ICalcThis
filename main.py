@@ -201,6 +201,11 @@ class Profil_edycja(QDialog):
     def __init__(self):
         super(Profil_edycja, self).__init__()
         loadUi("UI/Edycja_profilu.ui", self)
+        user = sql.getUserData(login)
+        self.wybor_specializacji.setCurrentIndex( (self.wybor_specializacji.findText(user[0])) )
+        self.pole_pseudonim.setText(user[1])
+        self.pole_imie.setText(user[2])
+        self.pole_naziwsko.setText(user[3])
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.przycisk_zaladuj.clicked.connect(self.on_click)
         self.przycisk_kontynuuj.clicked.connect(self.ZapisProfilu)
@@ -220,13 +225,15 @@ class Profil_edycja(QDialog):
         pixmap = QPixmap(imagePath)
         self.label.setPixmap(pixmap)
     def ZapisProfilu(self):
-        Specializacja = str(self.wybor_specializacji.text())
+        Specjalizacja_index = self.wybor_specializacji.currentIndex()
+        Specializacja = str(self.wybor_specializacji.itemText(Specjalizacja_index))
         Pseudonim = str(self.pole_pseudonim.text())
         Imie = str(self.pole_imie.text())
         Nazwisko = str(self.pole_naziwsko.text())
         if (len(Pseudonim) == 0 or len(Imie) == 0 or len(Nazwisko) == 0):
             self.blad2.setText("Proszę wypełnij puste pola.")
         else:
+            print(Specializacja)
             sql.updateUserData(login,Pseudonim,Imie,Nazwisko, Specializacja)
 
         profil = Menu()
