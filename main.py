@@ -10,6 +10,7 @@ import modules.circuits
 import modules.radio
 import modules.fiber
 import modules.binary
+import modules.rpn
 
 
 class ErrorDialog(QDialog):
@@ -438,15 +439,45 @@ class Obwody_elektryczne(QDialog):
 
 class Notacja_Polska(QDialog):
 
+    mode = 2
+
     def __init__(self):
         super(Notacja_Polska, self).__init__()
         loadUi("UI/Notacja_Polska.ui", self)
+        self.wynik.setText("")
+        self.wybor_notacji.setCurrentIndex(2)
         self.commandLinkButton.clicked.connect(self.cofanie)
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
 
     def cofanie(self):
         cofanie_przycisk = Menu()
         widget.addWidget(cofanie_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def go_to_save_data(self):
+        input = self.ONP_wejscie.toPlainText()
+        result = ""
+        try:
+            mode = self.wybor_notacji.currentIndex()
+            if(mode == 0):
+                #Zwykła
+                echo(mode)
+            elif(mode == 1):
+                #NP
+                echo(mode)
+            elif(mode == 2):
+                #ONP
+                result = modules.rpn.evaluate(input)
+            else: raise ValueError("RPN: invalid operation mode")
+            self.wynik.setText(str(result))
+        except:
+            dlg = ErrorDialog("Błąd danych")
+            if dlg.exec(): print("Error dialog prompted")
+
+    def go_to_clear_data(self):
+        self.ONP_wejscie.setText("")
+        self.wynik.setText("")
 
 
 class Rownanie_Friisa(QDialog):
