@@ -554,7 +554,7 @@ class Radio(QDialog):
         self.seventh_value = self.siodma_dana.value()
 
         self.dana1.setText('λ =')
-        self.jednostka_danych1.setText('kHZ')
+        self.jednostka_danych1.setText('m')
 
     def _hide_buttons(self):
 
@@ -581,7 +581,7 @@ class Radio(QDialog):
         if self.wybor_konwersji.currentIndex() == 0:
             self._hide_buttons()
             self.dana1.setText('λ =')
-            self.jednostka_danych1.setText('kHz')
+            self.jednostka_danych1.setText('m')
         elif self.wybor_konwersji.currentIndex() == 1:
             self._hide_buttons()
             self.dana1.setText('f =')
@@ -716,7 +716,7 @@ class Radio(QDialog):
         if self.wybor_konwersji.currentIndex() == 0:
             return modules.radio.waveToFreq(self.first_value), "kHz"
         elif self.wybor_konwersji.currentIndex() == 1:
-            return modules.radio.freqToWave(self.first_value), "kHz"
+            return modules.radio.freqToWave(self.first_value), "m"
         elif self.wybor_konwersji.currentIndex() == 2:
             return modules.radio.eirp(self.first_value, self.second_value, self.third_value), ""
         elif self.wybor_konwersji.currentIndex() == 3:
