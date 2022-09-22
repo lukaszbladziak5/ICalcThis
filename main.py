@@ -9,6 +9,7 @@ import modules.friis
 import modules.circuits
 import modules.radio
 import modules.fiber
+import modules.binary
 
 
 class ErrorDialog(QDialog):
@@ -112,6 +113,7 @@ class Menu(QDialog):
         self.rownanie_friisa_przycisk.clicked.connect(self.rownanie_friisa)
         self.radio_przycisk.clicked.connect(self.radio)
         self.fiber_przycisk.clicked.connect(self.fiber)
+        self.binary_button.clicked.connect(self.binary)
 
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
@@ -146,6 +148,11 @@ class Menu(QDialog):
     def fiber(self):
         fiber = Fiber()
         widget.addWidget(fiber)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+        
+    def binary(self):
+        bin = Binary()
+        widget.addWidget(bin)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
@@ -533,6 +540,125 @@ class Rownanie_Friisa(QDialog):
         widget.addWidget(cofanie_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+class Binary(QDialog):
+
+    def __init__(self):
+        super(Binary, self).__init__()
+        loadUi("UI/Binary.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.binButton.clicked.connect(self.save_data_bin)
+        self.octButton.clicked.connect(self.save_data_oct)
+        self.decButton.clicked.connect(self.save_data_dec)
+        self.hexButton.clicked.connect(self.save_data_hex)
+
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def go_to_clear_data(self):
+        self.Bin.setText("")
+        self.Oct.setText("")
+        self.Dec.setText("")
+        self.Hex.setText("")
+        self.ZM.setText("")
+        self.U1.setText("")
+        self.U2.setText("")
+        self.bitLength.setText("")
+
+    def save_data_bin(self):
+        try:
+            length = self.bitLength.toPlainText()
+            if(length == ""): length = 32
+            else: length = int(length)
+            bin = self.Bin.toPlainText()
+            dec = modules.binary.exec(bin, 2, 10)
+            oct = modules.binary.exec(dec, 10, 8)
+            hex = modules.binary.exec(dec, 10, 16)
+            zm = modules.binary.decToZM(dec, length)
+            u1 = modules.binary.decToU1(dec, length)
+            u2 = modules.binary.decToU2(dec, length)
+
+            self.Oct.setText(oct)
+            self.Dec.setText(str(dec))
+            self.Hex.setText(hex)
+            self.ZM.setText(zm)
+            self.U1.setText(u1)
+            self.U2.setText(u2)
+        except:
+            dlg = ErrorDialog("Błąd danych")
+            if dlg.exec(): print("Error dialog prompted")
+
+    def save_data_oct(self):
+        try:
+            length = self.bitLength.toPlainText()
+            if(length == ""): length = 32
+            else: length = int(length)
+            oct = self.Oct.toPlainText()
+            dec = modules.binary.exec(oct, 8, 10)
+            bin = modules.binary.exec(dec, 10, 2)
+            hex = modules.binary.exec(dec, 10, 16)
+            zm = modules.binary.decToZM(dec, length)
+            u1 = modules.binary.decToU1(dec, length)
+            u2 = modules.binary.decToU2(dec, length)
+
+            self.Bin.setText(bin)
+            self.Dec.setText(str(dec))
+            self.Hex.setText(hex)
+            self.ZM.setText(zm)
+            self.U1.setText(u1)
+            self.U2.setText(u2)
+        except:
+            dlg = ErrorDialog("Błąd danych")
+            if dlg.exec(): print("Error dialog prompted")
+
+    def save_data_dec(self):
+        try:
+            length = self.bitLength.toPlainText()
+            if(length == ""): length = 32
+            else: length = int(length)
+            dec = int(self.Dec.toPlainText())
+            bin = modules.binary.exec(dec, 10, 2)
+            oct = modules.binary.exec(dec, 10, 8)
+            hex = modules.binary.exec(dec, 10, 16)
+            zm = modules.binary.decToZM(dec, length)
+            u1 = modules.binary.decToU1(dec, length)
+            u2 = modules.binary.decToU2(dec, length)
+
+            self.Oct.setText(oct)
+            self.Bin.setText(bin)
+            self.Hex.setText(hex)
+            self.ZM.setText(zm)
+            self.U1.setText(u1)
+            self.U2.setText(u2)
+        except:
+            dlg = ErrorDialog("Błąd danych")
+            if dlg.exec(): print("Error dialog prompted")
+
+    def save_data_hex(self):
+        try:
+            length = self.bitLength.toPlainText()
+            if(length == ""): length = 32
+            else: length = int(length)
+            hex = self.Hex.toPlainText()
+            dec = modules.binary.exec(hex, 16, 10)
+            bin = modules.binary.exec(dec, 10, 2)
+            oct = modules.binary.exec(dec, 10, 8)
+            zm = modules.binary.decToZM(dec, length)
+            u1 = modules.binary.decToU1(dec, length)
+            u2 = modules.binary.decToU2(dec, length)
+
+            self.Oct.setText(oct)
+            self.Bin.setText(bin)
+            self.Dec.setText(str(dec))
+            self.ZM.setText(zm)
+            self.U1.setText(u1)
+            self.U2.setText(u2)
+        except:
+            dlg = ErrorDialog("Błąd danych")
+            if dlg.exec(): print("Error dialog prompted")
+        
 
 class Radio(QDialog):
 
@@ -955,16 +1081,16 @@ except:
 # dB.py
 # friis.py
 # hata.py
+# binary.py
+# fiber.py
+# radio.py
 
 # Do zrobienia:
 
-# binary.py
 # boolean.py
-# fiber.py
-# lineCodes.py
-# mccluskey.py
+# lineCodes.py (można odpuścić)
+# mccluskey.py (może poprawa)
 # media.py
-# plot.py
-# radio.py
+# plot.py (można odpuścić)
 # rpn.py
 

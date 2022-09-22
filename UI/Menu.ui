@@ -160,7 +160,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      <string>Zagadnienia światłowodowe</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="operacja_8">
+   <widget class="QPushButton" name="binary_button">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -170,7 +170,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>Operacja8</string>
+     <string>Kalkulator binarny</string>
     </property>
    </widget>
    <widget class="QPushButton" name="operacja_9">
