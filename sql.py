@@ -71,7 +71,7 @@ def updateUserData(user, nickname, name, surname, specialization):
     mycursor = mydb.cursor()
 
 
-    sql = "UPDATE user SET nickname =%(nickname)s,name =%(name)s, surname= %(surname)s, specialization =$(specialization)s WHERE login = %(login)s "
+    sql = "UPDATE user SET nickname =%(nickname)s,name =%(name)s, surname= %(surname)s, specialization = %(specialization)s WHERE login = %(login)s "
     mycursor.execute(sql, {'login': user,'nickname' : nickname, 'name' : name, 'surname' : surname, 'specialization' : specialization})
 
     mydb.commit()
