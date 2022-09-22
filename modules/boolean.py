@@ -1,4 +1,5 @@
 def truthTable(expression,inputs=2):
+  array = []
   result = ""
   #print("Boolean Expression:")
   #print("  X = " + expression.upper())
@@ -21,6 +22,7 @@ def truthTable(expression,inputs=2):
     for a in range(0,2):
       for b in range(0,2):
         x = eval(expression)
+        array.append(x)
         #print("  | " + str(a) + " | " + str(b) + " | " + str(x) + " |" )
         #print("  -------------")
         result += "  | " + str(a) + " | " + str(b) + " | " + str(x) + " |\n"
@@ -38,6 +40,7 @@ def truthTable(expression,inputs=2):
       for b in range(0,2):
         for c in range(0,2):
           x = eval(expression)
+          array.append(x)
           #print("  | " + str(a) + " | " + str(b) + " | " + str(c) + " | " + str(x) + " |" )
           #print("  -----------------")
           result += "  | " + str(a) + " | " + str(b) + " | " + str(c) + " | " + str(x) + " |\n"
@@ -56,9 +59,10 @@ def truthTable(expression,inputs=2):
         for c in range(0,2):
           for d in range(0,2):
             x = eval(expression)
+            array.append(x)
             #print("  | " + str(a) + " | " + str(b) + " | " + str(c) + " | " + str(d) + " | " + str(x) + " |" )
             #print("  ---------------------")
             result += "  | " + str(a) + " | " + str(b) + " | " + str(c) + " | " + str(d) + " | " + str(x) + " |\n" 
             result += "  ---------------------\n"
-  return result
-
+  #return result
+  return array
