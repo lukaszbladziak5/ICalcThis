@@ -1,4 +1,4 @@
-from numpy import pi, sqrt, log, tan, arccos
+import numpy
 
 def numericAperture(n0, n1, n2):
 #       _______________________
@@ -27,7 +27,7 @@ def modLatency(a, Lambda, NA):
 def insertionLoss(P0, P1):
     return -10 * numpy.log(P0 / P1)
 
-def reflectionnLoss(Pr, Pi):
+def reflectionLoss(Pr, Pi):
     return -10 * numpy.log(Pr / Pi)
 
 def diameterLoss(D1, D2):
@@ -52,7 +52,7 @@ def NALoss(NA1, NA2):
     if(NA2 >= NA1): return 0
     return 10 * numpy.log( (NA1/NA2)**2 )
 
-def profileLoss(g, g2):
+def profileLoss(g1, g2):
     if(g1 > g2): return 0
     return 10 * numpy.log( (g1*(g2+2)) / (g2*(g1+2)) )
 
@@ -79,4 +79,3 @@ def radialShift(R, y):
 
 def fresnelReflection(R):
     return - 10 * numpy.log(1 - R)
-
