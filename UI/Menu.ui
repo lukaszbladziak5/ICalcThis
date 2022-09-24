@@ -183,7 +183,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>Siatka Karnough</string>
+     <string>Zagadnienia logiczne</string>
     </property>
    </widget>
    <widget class="QPushButton" name="profil_menu">
