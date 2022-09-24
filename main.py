@@ -9,6 +9,8 @@ import modules.hata
 import modules.dB
 import modules.friis
 import modules.circuits
+import modules.mccluskey
+import modules.boolean
 import modules.radio
 import modules.fiber
 import modules.binary
@@ -143,7 +145,8 @@ class Profil(QDialog):
         pixmap = QPixmap(imagePath)
         self.label.setPixmap(pixmap)
     def ZapisProfilu(self):
-        Specializacja = str(self.wybor_specializacji.text())
+        Specjalizacja_index = self.wybor_specializacji.currentIndex()
+        Specializacja = str(self.wybor_specializacji.itemText(Specjalizacja_index))
         Pseudonim = str(self.pole_pseudonim.text())
         Imie = str(self.pole_imie.text())
         Nazwisko = str(self.pole_naziwsko.text())
@@ -170,6 +173,7 @@ class Menu(QDialog):
         self.radio_przycisk.clicked.connect(self.radio)
         self.fiber_przycisk.clicked.connect(self.fiber)
         self.binary_button.clicked.connect(self.binary)
+        self.mccluskey_przycisk.clicked.connect(self.mccluskey) # button 9
 
         self.profil_menu.setIcon(QtGui.QIcon('images/profilowe.jpg'))
         self.profil_menu.setIconSize(QtCore.QSize(140, 80))
@@ -178,6 +182,7 @@ class Menu(QDialog):
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
+         
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
         widget.addWidget(modelHaty_przycisk)
@@ -216,6 +221,11 @@ class Menu(QDialog):
     def binary(self):
         bin = Binary()
         widget.addWidget(bin)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+    
+    def mccluskey(self):
+        mccluskey = McCluskey()
+        widget.addWidget(mccluskey)
         widget.setCurrentIndex(widget.currentIndex() + 1)
     
     def Profil_edycja(self):
@@ -265,7 +275,7 @@ class Profil_edycja(QDialog):
         profil = Menu()
         widget.addWidget(profil)
         widget.setCurrentIndex(widget.currentIndex() + 1)
-        
+  
 class Model_Haty(QDialog):
 
     def __init__(self):
@@ -1039,6 +1049,393 @@ class Radio(QDialog):
         widget.addWidget(cofanie_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+
+class McCluskey(QDialog):
+
+    def __init__(self):
+        super(McCluskey, self).__init__()
+        loadUi("UI/mccluskey.ui", self)
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
+        self.oblicz_button_2.clicked.connect(self.go_to_save_data2)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+        self.reset_button_2.clicked.connect(self.go_to_clear_data2)
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.ilosc_zmiennych.currentIndexChanged.connect(self._update_conversion_method)
+        self._update_conversion_method()
+
+    def _set_two_variables(self):
+        self.a60.setText("1")
+        self.a61.setText("1")
+        self.a62.setText("0")
+        self.a63.setText("1")
+        self.a64.setText("1")
+
+    def _set_three_variables(self):
+        self.zmienna3.setText("C")
+        self.a51.setText("1")
+        self.a60.setText("0")
+        self.a62.setText("1")
+        self.a53.setText("0")
+        self.a61.setText("0")
+        self.a55.setText("1")
+        self.a64.setText("1")
+        self.a63.setText("0")
+        self.a1.setText("1")
+        self.a2.setText("0")
+        self.a6.setText("0")
+        self.a7.setText("1")
+        self.a5.setText("1")
+        self.a10.setText("1")
+        self.a11.setText("0")
+        self.a9.setText("1")
+        self.a13.setText("1")
+
+    def _set_four_variables(self):
+        self.zmienna3.setText("C")
+        self.zmienna4.setText("D")
+        self.a51.setText("0")
+        self.a60.setText("0")
+        self.a62.setText("0")
+        self.a53.setText("1")
+        self.a61.setText("0")
+        self.a55.setText("1")
+        self.a64.setText("0")
+        self.a63.setText("0")
+        self.a1.setText("0")
+        self.a2.setText("1")
+        self.a6.setText("1")
+        self.a7.setText("0")
+        self.a5.setText("0")
+        self.a10.setText("1")
+        self.a11.setText("1")
+        self.a9.setText("0")
+        self.a13.setText("0")
+
+    def _hide_labels(self):
+        self.line_4.hide()
+        self.line_5.hide()
+        self.line_10.hide()
+        self.line_11.hide()
+        self.line_12.hide()
+        self.line_13.hide()
+        self.line_14.hide()
+        self.line_15.hide()
+        self.line_16.hide()
+        self.line_17.hide()
+        self.line_18.hide()
+        self.line_19.hide()
+        self.line_20.hide()
+        self.line_21.hide()
+        self.l4.hide()
+        self.l5.hide()
+        self.l6.hide()
+        self.l7.hide()
+        self.l8.hide()
+        self.l9.hide()
+        self.l10.hide()
+        self.l11.hide()
+        self.l12.hide()
+        self.l13.hide()
+        self.l14.hide()
+        self.l15.hide()
+        self.a1.hide()
+        self.a2.hide()
+        self.a3.hide()
+        self.a4.hide()
+        self.a5.hide()
+        self.a6.hide()
+        self.a7.hide()
+        self.a8.hide()
+        self.a9.hide()
+        self.a10.hide()
+        self.a11.hide()
+        self.a12.hide()
+        self.a13.hide()
+        self.a14.hide()
+        self.a15.hide()
+        self.a16.hide()
+        self.a17.hide()
+        self.a18.hide()
+        self.a19.hide()
+        self.a20.hide()
+        self.a21.hide()
+        self.a22.hide()
+        self.a23.hide()
+        self.a24.hide()
+        self.a25.hide()
+        self.a26.hide()
+        self.a27.hide()
+        self.a28.hide()
+        self.a29.hide()
+        self.a30.hide()
+        self.a31.hide()
+        self.a32.hide()
+        self.a33.hide()
+        self.a34.hide()
+        self.a35.hide()
+        self.a36.hide()
+        self.a37.hide()
+        self.a38.hide()
+        self.a39.hide()
+        self.a40.hide()
+        self.a41.hide()
+        self.a42.hide()
+        self.a43.hide()
+        self.a44.hide()
+        self.a45.hide()
+        self.a46.hide()
+        self.a47.hide()
+        self.a48.hide()
+        self.a49.hide()
+        self.a50.hide()
+        self.a51.hide()
+        self.a52.hide()
+        self.a53.hide()
+        self.a54.hide()
+        self.a55.hide()
+        self.a56.hide()
+        self.zmienna4.hide()
+        self.zmienna3.hide()
+
+    def _show_labels(self):
+        self.line_4.show()
+        self.line_5.show()
+        self.line_10.show()
+        self.line_11.show()
+        self.line_12.show()
+        self.line_13.show()
+        self.line_14.show()
+        self.line_15.show()
+        self.line_16.show()
+        self.line_17.show()
+        self.line_18.show()
+        self.line_19.show()
+        self.line_20.show()
+        self.line_21.show()
+        self.l4.show()
+        self.l5.show()
+        self.l6.show()
+        self.l7.show()
+        self.l8.show()
+        self.l9.show()
+        self.l10.show()
+        self.l11.show()
+        self.l12.show()
+        self.l13.show()
+        self.l14.show()
+        self.l15.show()
+        self.a1.show()
+        self.a2.show()
+        self.a3.show()
+        self.a4.show()
+        self.a5.show()
+        self.a6.show()
+        self.a7.show()
+        self.a8.show()
+        self.a9.show()
+        self.a10.show()
+        self.a11.show()
+        self.a12.show()
+        self.a13.show()
+        self.a14.show()
+        self.a15.show()
+        self.a16.show()
+        self.a17.show()
+        self.a18.show()
+        self.a19.show()
+        self.a20.show()
+        self.a21.show()
+        self.a22.show()
+        self.a23.show()
+        self.a24.show()
+        self.a25.show()
+        self.a26.show()
+        self.a27.show()
+        self.a28.show()
+        self.a29.show()
+        self.a30.show()
+        self.a31.show()
+        self.a32.show()
+        self.a33.show()
+        self.a34.show()
+        self.a35.show()
+        self.a36.show()
+        self.a37.show()
+        self.a38.show()
+        self.a39.show()
+        self.a40.show()
+        self.a41.show()
+        self.a42.show()
+        self.a43.show()
+        self.a44.show()
+        self.a45.show()
+        self.a46.show()
+        self.a47.show()
+        self.a48.show()
+        self.a49.show()
+        self.a50.show()
+        self.a51.show()
+        self.a52.show()
+        self.a53.show()
+        self.a54.show()
+        self.a55.show()
+        self.a56.show()
+        self.zmienna4.show()
+        self.zmienna5.show()
+
+    def _update_conversion_method(self):
+        if self.ilosc_zmiennych.currentIndex() == 0:
+            self.go_to_clear_data2()
+            self._hide_labels()
+            self._set_two_variables()
+        elif self.ilosc_zmiennych.currentIndex() == 1:
+            self.go_to_clear_data2()
+            self._hide_labels()
+            self.line_4.show()
+            self.line_10.show()
+            self.line_11.show()
+            self.line_12.show()
+            self.line_13.show()
+            self.l4.show()
+            self.l5.show()
+            self.l6.show()
+            self.l7.show()
+            self.a1.show()
+            self.a2.show()
+            self.a3.show()
+            self.a5.show()
+            self.a6.show()
+            self.a7.show()
+            self.a9.show()
+            self.a10.show()
+            self.a11.show()
+            self.a13.show()
+            self.a14.show()
+            self.a15.show()
+            self.a49.show()
+            self.a51.show()
+            self.a53.show()
+            self.a55.show()
+            self.zmienna3.show()
+            self._set_three_variables()
+
+        elif self.ilosc_zmiennych.currentIndex() == 2:
+            self.go_to_clear_data2()
+            self._show_labels()
+            self._set_four_variables()
+
+
+    def go_to_clear_data(self):
+        self.karnough0.setCurrentIndex(0)
+        self.karnough1.setCurrentIndex(0)
+        self.karnough2.setCurrentIndex(0)
+        self.karnough3.setCurrentIndex(0)
+        self.karnough4.setCurrentIndex(0)
+        self.karnough5.setCurrentIndex(0)
+        self.karnough6.setCurrentIndex(0)
+        self.karnough7.setCurrentIndex(0)
+        self.karnough8.setCurrentIndex(0)
+        self.karnough9.setCurrentIndex(0)
+        self.karnough10.setCurrentIndex(0)
+        self.karnough11.setCurrentIndex(0)
+        self.karnough12.setCurrentIndex(0)
+        self.karnough13.setCurrentIndex(0)
+        self.karnough14.setCurrentIndex(0)
+        self.karnough15.setCurrentIndex(0)
+        self.wynik.setText("")
+
+    def go_to_clear_data2(self):
+        self.x0.setText("")
+        self.x1.setText("")
+        self.x2.setText("")
+        self.x3.setText("")
+        self.x4.setText("")
+        self.x5.setText("")
+        self.x6.setText("")
+        self.x7.setText("")
+        self.x8.setText("")
+        self.x9.setText("")
+        self.x10.setText("")
+        self.x11.setText("")
+        self.x12.setText("")
+        self.x13.setText("")
+        self.x14.setText("")
+        self.x15.setText("")
+
+    def go_to_save_data(self):
+        karnough = []
+        karnough.append( self.karnough0.currentIndex() )
+        karnough.append( self.karnough1.currentIndex() )
+        karnough.append( self.karnough2.currentIndex() )
+        karnough.append( self.karnough3.currentIndex() )
+        karnough.append( self.karnough4.currentIndex() )
+        karnough.append( self.karnough5.currentIndex() )
+        karnough.append( self.karnough6.currentIndex() )
+        karnough.append( self.karnough7.currentIndex() )
+        karnough.append( self.karnough8.currentIndex() )
+        karnough.append( self.karnough9.currentIndex() )
+        karnough.append( self.karnough10.currentIndex() )
+        karnough.append( self.karnough11.currentIndex() )
+        karnough.append( self.karnough12.currentIndex() )
+        karnough.append( self.karnough13.currentIndex() )
+        karnough.append( self.karnough14.currentIndex() )
+        karnough.append( self.karnough15.currentIndex() )
+        print(karnough)
+
+        minterns = []
+        dontcares = []
+        for i in range(0, 15):
+            if(karnough[i] == 1): minterns.append(i)
+            if(karnough[i] == 2): dontcares.append(i)
+        if(minterns.__len__() == 0 and dontcares.__len__() == 0): result = "F = 0"
+        else: result = modules.mccluskey.exec(minterns, dontcares)
+        print(result)
+        self.wynik.setText(result)
+
+    def go_to_save_data2(self):
+        input_data = self.funkcja_Tekst.text()
+        try:
+            array = modules.boolean.truthTable(input_data, self.ilosc_zmiennych.currentIndex() + 2)
+            if self.ilosc_zmiennych.currentIndex() == 0:
+                self.x0.setText(str(array[0]))
+                self.x1.setText(str(array[1]))
+                self.x2.setText(str(array[2]))
+                self.x3.setText(str(array[3]))
+            if self.ilosc_zmiennych.currentIndex() == 1:
+                self.x0.setText(str(array[0]))
+                self.x1.setText(str(array[1]))
+                self.x2.setText(str(array[2]))
+                self.x3.setText(str(array[3]))
+                self.x4.setText(str(array[4]))
+                self.x5.setText(str(array[5]))
+                self.x6.setText(str(array[6]))
+                self.x7.setText(str(array[7]))
+            if self.ilosc_zmiennych.currentIndex() == 2:
+                self.x0.setText(str(array[0]))
+                self.x1.setText(str(array[1]))
+                self.x2.setText(str(array[2]))
+                self.x3.setText(str(array[3]))
+                self.x4.setText(str(array[4]))
+                self.x5.setText(str(array[5]))
+                self.x6.setText(str(array[6]))
+                self.x7.setText(str(array[7]))
+                self.x8.setText(str(array[8]))
+                self.x9.setText(str(array[9]))
+                self.x10.setText(str(array[10]))
+                self.x11.setText(str(array[11]))
+                self.x12.setText(str(array[12]))
+                self.x13.setText(str(array[13]))
+                self.x14.setText(str(array[14]))
+                self.x15.setText(str(array[15]))
+        except:
+            dlg = ErrorDialog("Błąd danych")
+            if dlg.exec(): print("Error dialog prompted")
+    
+    def cofanie(self):
+        cofanie_przycisk = Menu()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
 class Fiber(QDialog):
 
     def __init__(self):
@@ -1229,6 +1626,7 @@ try:
 except:
     print("Exiting")
 
+
 # Zrobione:
 
 # circuits.py
@@ -1238,12 +1636,12 @@ except:
 # binary.py
 # fiber.py
 # radio.py
+# mccluskey.py (może poprawa)
+# boolean.py
 
 # Do zrobienia:
 
-# boolean.py
 # lineCodes.py (można odpuścić)
-# mccluskey.py (może poprawa)
 # media.py
 # plot.py (można odpuścić)
 # rpn.py

@@ -35,18 +35,20 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>MS Gothic</family>
+      <pointsize>21</pointsize>
+     </font>
+    </property>
     <property name="mouseTracking">
      <bool>true</bool>
     </property>
-    <property name="font">
-     <font>
-      <family>Candara</family>
-      <pointsize>14</pointsize>
-      <italic>true</italic>
-     </font>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; font-weight:700;&quot;&gt;Kalkulator systemów liczbowych&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;KALKULATOR SYSTEMÓW LICZBOWYCH&lt;/span&gt;&lt;/h3&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="binButton">

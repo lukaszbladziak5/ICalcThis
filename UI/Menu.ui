@@ -170,10 +170,10 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>Kalkulator binarny</string>
+     <string>Systemy liczbowe</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="operacja_9">
+   <widget class="QPushButton" name="mccluskey_przycisk">
     <property name="geometry">
      <rect>
       <x>830</x>
@@ -183,7 +183,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>Operacja9</string>
+     <string>Siatka Karnough</string>
     </property>
    </widget>
    <widget class="QPushButton" name="profil_menu">
@@ -191,6 +191,25 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      <rect>
       <x>1070</x>
       <y>10</y>
+      <width>80</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>90</width>
+      <height>90</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="profil_menu">
+    <property name="geometry">
+     <rect>
+      <x>1150</x>
+      <y>20</y>
       <width>80</width>
       <height>80</height>
      </rect>

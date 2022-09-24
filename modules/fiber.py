@@ -79,4 +79,3 @@ def radialShift(R, y):
 
 def fresnelReflection(R):
     return - 10 * numpy.log(1 - R)
-
