@@ -1323,6 +1323,7 @@ class McCluskey(QDialog):
         self.a54.show()
         self.a55.show()
         self.a56.show()
+        self.zmienna3.show()
         self.zmienna4.show()
         self.zmienna5.show()
 
