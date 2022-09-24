@@ -24,6 +24,7 @@ def setLogin(user):
 def getLogin(): return login
 
 class ErrorDialog(QDialog):
+
     def __init__(self, msg="Sorry, something went wrong"):
         super().__init__()
 
@@ -57,6 +58,7 @@ class Ekran_poczatkowy(QDialog):
         przycisk_logowania = Ekran_logowania()
         widget.addWidget(przycisk_logowania)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
@@ -66,26 +68,32 @@ class Ekran_logowania(QDialog):
     def __init__(self):
         super(Ekran_logowania, self).__init__()
         loadUi("UI/Logowanie.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
         self.pole_haslo.setEchoMode(QtWidgets.QLineEdit.Password)  # kropeczki wpisujac haslo
         self.login.clicked.connect(self.funkcja_logowania)
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
+
     def funkcja_logowania(self):
         nazwa_uzytkownika = self.pole_nazwa_uzytkownika.text()
         haslo = self.pole_haslo.text()
         setLogin(nazwa_uzytkownika)
-
-        if (len(nazwa_uzytkownika) == 0 or len(haslo) == 0):
-            self.blad.setText("Nieprawidłowa nazwa użytkownika lub hasło!")
-        else:
+        try:
             if sql.login(nazwa_uzytkownika, haslo):
                 print("Logowanie powiodło się!")
                 profil = Menu()
                 widget.addWidget(profil)
                 widget.setCurrentIndex(widget.currentIndex() + 1)
-            else:
-                self.blad.setText("Nieprawidłowa nazwa użytkownika lub hasło!")
+        except:
+            dlg = ErrorDialog("Podano nieprawidłowe dane logowania! Spróbuj ponownie.")
+            if dlg.exec(): print("Error dialog prompted")
+
+    def cofanie(self):
+        cofanie_przycisk = Ekran_poczatkowy()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
 class Ekran_rejestracji(QDialog):
@@ -93,6 +101,7 @@ class Ekran_rejestracji(QDialog):
     def __init__(self):
         super(Ekran_rejestracji, self).__init__()
         loadUi("UI/Rejestracja.ui", self)
+        self.commandLinkButton.clicked.connect(self.cofanie)
         self.pole_haslo2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.pole_haslo2_podtwierdzenie.setEchoMode(QtWidgets.QLineEdit.Password)
         self.przycisk_zarejestruj.clicked.connect(self.funkcja_rejestracji)
@@ -100,6 +109,7 @@ class Ekran_rejestracji(QDialog):
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
+
     def funkcja_rejestracji(self):
 
         nazwa_uzytkownika_rejestracja = str(self.pole_nazwa_uzytkownika2.text())
@@ -118,10 +128,16 @@ class Ekran_rejestracji(QDialog):
                 widget.addWidget(profil)
                 widget.setCurrentIndex(widget.currentIndex() + 1)
             except:
-                dlg = ErrorDialog("Błąd - prawdopodobnie taki uzytkownik juz istnieje")
+                dlg = ErrorDialog("Błąd - prawdopodobnie taki użytkownik już istnieje!")
                 if dlg.exec(): print("Error dialog prompted")
 
+    def cofanie(self):
+        cofanie_przycisk = Ekran_poczatkowy()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
 class Profil(QDialog):
+
     def __init__(self):
         super(Profil, self).__init__()
         loadUi("UI/Profil.ui", self)
@@ -129,6 +145,7 @@ class Profil(QDialog):
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.przycisk_zaladuj.clicked.connect(self.on_click)
         self.przycisk_kontynuuj.clicked.connect(self.ZapisProfilu)
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
@@ -144,6 +161,7 @@ class Profil(QDialog):
         imagePath = image[0]
         pixmap = QPixmap(imagePath)
         self.label.setPixmap(pixmap)
+
     def ZapisProfilu(self):
         Specjalizacja_index = self.wybor_specializacji.currentIndex()
         Specializacja = str(self.wybor_specializacji.itemText(Specjalizacja_index))
@@ -164,7 +182,8 @@ class Menu(QDialog):
     def __init__(self):
         super(Menu, self).__init__()
         loadUi("UI/Menu.ui", self)
-        self.wyborOperacjiTekst.setText( "Siemanko " + getLogin() + ", wybierz operację" )
+        self.commandLinkButton.clicked.connect(self.cofanie)
+        self.wyborOperacjiTekst.setText( "Witaj " + getLogin() + "! Wybierz operację." )
         self.modelHaty_przycisk.clicked.connect(self.model_Haty)  # menu główne, przycisk 1
         self.rachunek_db_przycisk.clicked.connect(self.rachunek_db)  # menu główne, przycisk 2
         self.obwodyElektryczne_przycisk.clicked.connect(self.obwody_elektryczne)
@@ -233,6 +252,11 @@ class Menu(QDialog):
         widget.addWidget(profil_ed)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+    def cofanie(self):
+        cofanie_przycisk = Ekran_poczatkowy()
+        widget.addWidget(cofanie_przycisk)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
 class Profil_edycja(QDialog):
 
     def __init__(self):
@@ -246,6 +270,7 @@ class Profil_edycja(QDialog):
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.przycisk_zaladuj.clicked.connect(self.on_click)
         self.przycisk_kontynuuj.clicked.connect(self.ZapisProfilu)
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
@@ -261,6 +286,7 @@ class Profil_edycja(QDialog):
         imagePath = image[0]
         pixmap = QPixmap(imagePath)
         self.label.setPixmap(pixmap)
+
     def ZapisProfilu(self):
         Specjalizacja_index = self.wybor_specializacji.currentIndex()
         Specializacja = str(self.wybor_specializacji.itemText(Specjalizacja_index))
@@ -284,9 +310,11 @@ class Model_Haty(QDialog):
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.reset_button.clicked.connect(self.go_to_clear_data)
         self.oblicz_button.clicked.connect(self.go_to_save_data)
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
+
     def go_to_clear_data(self):
         self.v_input_2.setValue(0)
         self.d_input_2.setValue(0)
@@ -340,9 +368,11 @@ class Rachunek_decybelowy(QDialog):
         self.jednostka_danych1.setText('dBW')
         self.druga_dana.hide()
         self.jednostka_danych2.hide()
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
+
     def _update_conversion_method(self):
         if self.wybor_konwersji.currentIndex() == 0:
             self.druga_dana.hide()
@@ -431,10 +461,6 @@ class Obwody_elektryczne(QDialog):
         super(Obwody_elektryczne, self).__init__()
         loadUi("UI/Prawo_Ohma.ui", self)
         self.commandLinkButton.clicked.connect(self.cofanie)
-    def keyPressEvent(self, event):
-        if event.key() == QtCore.Qt.Key_Escape:
-         app.quit()
-        
         self.reset_button.clicked.connect(self.go_to_clear_data)
         self.reset_button_2.clicked.connect(self.go_to_clear_data2)
         self.oblicz_button.clicked.connect(self.go_to_save_data)
@@ -448,6 +474,10 @@ class Obwody_elektryczne(QDialog):
         self.kondensatory.setStyleSheet("background-image : url(images/szeregowe_kondensator.png)")
         self.o1_tekst.setText('U =')
         self.o2_tekst.setText('I =')
+
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
 
     def _update_conversion_method(self):
         if self.wybor_polaczenia.currentIndex() == 0:
@@ -574,12 +604,12 @@ class Notacja_Polska(QDialog):
         self.wynik.setText("")
         self.wybor_notacji.setCurrentIndex(2)
         self.commandLinkButton.clicked.connect(self.cofanie)
-    
+        self.oblicz_button.clicked.connect(self.go_to_save_data)
+        self.reset_button.clicked.connect(self.go_to_clear_data)
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
-        self.oblicz_button.clicked.connect(self.go_to_save_data)
-        self.reset_button.clicked.connect(self.go_to_clear_data)
 
     def cofanie(self):
         cofanie_przycisk = Menu()
@@ -624,9 +654,11 @@ class Rownanie_Friisa(QDialog):
         self.pt_button.clicked.connect(self._button3Clicked)
         self.stosunek_button.setChecked(True)
         self._button1Clicked()
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
+
     def _button1Clicked(self):
         self.pr_tekst.hide()
         self.pr_input.hide()
@@ -822,7 +854,10 @@ class Binary(QDialog):
         except:
             dlg = ErrorDialog("Błąd danych")
             if dlg.exec(): print("Error dialog prompted")
-        
+
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
 
 class Radio(QDialog):
 
@@ -1049,6 +1084,10 @@ class Radio(QDialog):
         widget.addWidget(cofanie_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
+
 
 class McCluskey(QDialog):
 
@@ -1062,6 +1101,10 @@ class McCluskey(QDialog):
         self.commandLinkButton.clicked.connect(self.cofanie)
         self.ilosc_zmiennych.currentIndexChanged.connect(self._update_conversion_method)
         self._update_conversion_method()
+
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
 
     def _set_two_variables(self):
         self.a60.setText("1")
@@ -1612,6 +1655,10 @@ class Fiber(QDialog):
         widget.addWidget(cofanie_przycisk)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Escape:
+         app.quit()
+
 app = QApplication(sys.argv)
 widget = QtWidgets.QStackedWidget()
 welcome = Ekran_poczatkowy()
@@ -1625,24 +1672,3 @@ try:
     sys.exit(app.exec_())
 except:
     print("Exiting")
-
-
-# Zrobione:
-
-# circuits.py
-# dB.py
-# friis.py
-# hata.py
-# binary.py
-# fiber.py
-# radio.py
-# mccluskey.py (może poprawa)
-# boolean.py
-
-# Do zrobienia:
-
-# lineCodes.py (można odpuścić)
-# media.py
-# plot.py (można odpuścić)
-# rpn.py
-
