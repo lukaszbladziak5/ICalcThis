@@ -1668,6 +1668,7 @@ widget.setFixedWidth(1200)
 widget.setWindowTitle('ICalcThis')
 widget.setWindowIcon(QtGui.QIcon('images/calculator_image.png'))
 widget.show()
+
 try:
     sys.exit(app.exec_())
 except:
