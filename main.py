@@ -113,7 +113,7 @@ class Ekran_rejestracji(QDialog):
             self.blad2.setText("Hasła są różne.")
         else:
             try:
-                sql.register(nazwa_uzytkownika_rejestracja, haslo_rejestracja)
+                if(sql.register(nazwa_uzytkownika_rejestracja, haslo_rejestracja) == False): raise SystemError("User already exist!")
                 profil = Profil()
                 widget.addWidget(profil)
                 widget.setCurrentIndex(widget.currentIndex() + 1)
