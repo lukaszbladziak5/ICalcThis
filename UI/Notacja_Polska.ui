@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="Rachunek_dec" native="true">
+  <widget class="QWidget" name="Notacja_polska" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -23,34 +23,9 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QWidget#Rachunek_dec{
+    <string notr="true">QWidget#Notacja_polska{
 background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(179, 204, 117, 255), stop:1 rgba(255, 255, 255, 255))};</string>
    </property>
-   <widget class="QLabel" name="tekst_glowny">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>40</y>
-      <width>601</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>MS Gothic</family>
-      <pointsize>21</pointsize>
-     </font>
-    </property>
-    <property name="mouseTracking">
-     <bool>false</bool>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large;&quot;&gt;ODWROTNA NOTACJA POLSKA&lt;/span&gt;&lt;/h3&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="oblicz_button">
     <property name="geometry">
      <rect>
@@ -166,12 +141,12 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
     </property>
     <item>
      <property name="text">
-      <string>Zapis infiksowy / notacja zwykła</string>
+      <string>[WKRÓTCE] Zapis infiksowy / notacja zwykła</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Zapis prefiksowy / notacja polska</string>
+      <string>[WKRÓTCE] Zapis prefiksowy / notacja polska</string>
      </property>
     </item>
     <item>
@@ -190,7 +165,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
    </widget>
    <widget class="QTextEdit" name="ONP_wejscie">
@@ -201,6 +176,26 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
       <width>391</width>
       <height>31</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="tekstGlowny">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>30</y>
+      <width>641</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Candara</family>
+      <pointsize>14</pointsize>
+      <italic>true</italic>
+     </font>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; font-weight:700;&quot;&gt;Odwrotna Notacja Polska&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
   </widget>

@@ -187,5 +187,5 @@ def exec(mt, dc):
         final_result = [min(P[0],key=len)] # Choosing the term with minimum variables from P
         final_result.extend(findVariables(i) for i in EPI) # Adding the EPIs to final solution
     print('\n\nSolution: F = '+' + '.join(''.join(i) for i in final_result))
-
-    return final_result
+    return 'F = '+' + '.join(''.join(i) for i in final_result)
+    #return final_result

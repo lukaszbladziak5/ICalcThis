@@ -49,7 +49,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="wyborOperacjiTekst">
     <property name="geometry">
      <rect>
-      <x>470</x>
+      <x>510</x>
       <y>110</y>
       <width>251</width>
       <height>31</height>
@@ -90,7 +90,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      <string>Rachunek decybelowy</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="przycisk3_PrawoOhma">
+   <widget class="QPushButton" name="obwodyElektryczne_przycisk">
     <property name="geometry">
      <rect>
       <x>830</x>
@@ -107,7 +107,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>390</y>
+      <y>380</y>
       <width>161</width>
       <height>81</height>
      </rect>
@@ -120,7 +120,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
     <property name="geometry">
      <rect>
       <x>510</x>
-      <y>390</y>
+      <y>380</y>
       <width>161</width>
       <height>81</height>
      </rect>
@@ -129,20 +129,20 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      <string>Równanie Friisa</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="operacja_6">
+   <widget class="QPushButton" name="radio_przycisk">
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>390</y>
+      <y>380</y>
       <width>161</width>
       <height>81</height>
      </rect>
     </property>
     <property name="text">
-     <string>Operacja6</string>
+     <string>Zagadnienia radiowe</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="operacja_7">
+   <widget class="QPushButton" name="fiber_przycisk">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -151,11 +151,16 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
       <height>81</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>7</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Operacja7</string>
+     <string>Zagadnienia światłowodowe</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="operacja_8">
+   <widget class="QPushButton" name="binary_button">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -165,10 +170,10 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>Operacja8</string>
+     <string>Systemy liczbowe</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="operacja_9">
+   <widget class="QPushButton" name="mccluskey_przycisk">
     <property name="geometry">
      <rect>
       <x>830</x>
@@ -178,7 +183,48 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </rect>
     </property>
     <property name="text">
-     <string>Operacja9</string>
+     <string>Zagadnienia logiczne</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="profil_menu">
+    <property name="geometry">
+     <rect>
+      <x>1070</x>
+      <y>10</y>
+      <width>80</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>90</width>
+      <height>90</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QCommandLinkButton" name="commandLinkButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>201</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string>Wyloguj się</string>
     </property>
    </widget>
    <widget class="QLabel" name="menuQuote">

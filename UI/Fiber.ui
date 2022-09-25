@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="Rachunek_dec" native="true">
+  <widget class="QWidget" name="Fiber" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -23,14 +23,14 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QWidget#Rachunek_dec{
+    <string notr="true">QWidget#Fiber{
 background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(179, 204, 117, 255), stop:1 rgba(255, 255, 255, 255))};</string>
    </property>
    <widget class="QPushButton" name="oblicz_button">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>620</y>
+      <x>450</x>
+      <y>470</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -42,8 +42,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="tekst_wyniki">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>440</y>
+      <x>510</x>
+      <y>530</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -88,8 +88,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QPushButton" name="reset_button">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>620</y>
+      <x>580</x>
+      <y>470</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -102,7 +102,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>290</y>
+      <y>270</y>
       <width>361</width>
       <height>51</height>
      </rect>
@@ -127,69 +127,79 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      <string notr="true">font: 700 15pt &quot;Segoe Script&quot;;</string>
     </property>
     <property name="text">
-     <string>WYBIERZ RODZAJ KONWERSJI</string>
+     <string>WYBIERZ RODZAJ OBLICZEŃ</string>
     </property>
    </widget>
    <widget class="QComboBox" name="wybor_konwersji">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>490</x>
       <y>220</y>
-      <width>141</width>
+      <width>201</width>
       <height>41</height>
      </rect>
     </property>
     <item>
      <property name="text">
-      <string>dBW to dBm</string>
+      <string>Apertura numeryczna</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>dBm to dBW</string>
+      <string>Optyczna szerokość pasma</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>dBW to W</string>
+      <string>Opóźnienie modowe</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>dBm to W</string>
+      <string>Tłumienie wtrąceniowe</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>W to dBm</string>
+      <string>Tłumienie odbicia</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>dB to Ratio</string>
+      <string>Tłumienie średnicowe</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Ratio to dB</string>
+      <string>Tłumienie NA</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Loss to dB</string>
+      <string>Tłumienie profilu</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Voltage to dB</string>
+      <string>Przesunięcie osi</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Przesunięcie promieniowe</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Odbicie Fresnela</string>
      </property>
     </item>
    </widget>
    <widget class="QDoubleSpinBox" name="pierwsza_dana">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>360</y>
+      <x>530</x>
+      <y>330</y>
       <width>62</width>
       <height>22</height>
      </rect>
@@ -207,8 +217,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QDoubleSpinBox" name="druga_dana">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>400</y>
+      <x>530</x>
+      <y>370</y>
       <width>62</width>
       <height>22</height>
      </rect>
@@ -232,8 +242,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="jednostka_danych1">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>360</y>
+      <x>630</x>
+      <y>330</y>
       <width>49</width>
       <height>16</height>
      </rect>
@@ -245,8 +255,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="jednostka_danych2">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>400</y>
+      <x>630</x>
+      <y>370</y>
       <width>49</width>
       <height>16</height>
      </rect>
@@ -258,8 +268,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="jednostka_wyniku">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>490</y>
+      <x>610</x>
+      <y>580</y>
       <width>49</width>
       <height>16</height>
      </rect>
@@ -271,8 +281,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="wynik">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>490</y>
+      <x>450</x>
+      <y>580</y>
       <width>121</width>
       <height>20</height>
      </rect>
@@ -284,9 +294,9 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
    <widget class="QLabel" name="tekstGlowny">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>230</x>
       <y>30</y>
-      <width>561</width>
+      <width>741</width>
       <height>81</height>
      </rect>
     </property>
@@ -298,7 +308,78 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; font-weight:700;&quot;&gt;Rachunek decybelowy&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt; font-weight:700;&quot;&gt;Zagadnienia światłowodowe&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="jednostka_danych3">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>410</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="trzecia_dana">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>410</y>
+      <width>62</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>3</number>
+    </property>
+    <property name="minimum">
+     <double>-999999.998999999952503</double>
+    </property>
+    <property name="maximum">
+     <double>999999.998999999952503</double>
+    </property>
+   </widget>
+   <widget class="QLabel" name="dana1">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>330</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="dana2">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>370</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="dana3">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>410</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
     </property>
    </widget>
   </widget>
