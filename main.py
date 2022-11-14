@@ -5,6 +5,9 @@ from PyQt5.QtGui import QIcon, QPixmap
 
 import sys
 import sql
+import random
+import quotes
+
 import modules.hata
 import modules.dB
 import modules.friis
@@ -198,10 +201,15 @@ class Menu(QDialog):
         self.profil_menu.setIconSize(QtCore.QSize(140, 80))
         self.profil_menu.clicked.connect(self.Profil_edycja)
 
+        quoteID = random.randint(0, quotes.ammount - 1)
+        quote = quotes.quote[quoteID]
+        self.menuQuote.setText("\"" + quote[0] + "\"")
+        self.menuQuoteAuthor.setText("- " + quote[1])
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
          app.quit()
-         
+        
     def model_Haty(self):
         modelHaty_przycisk = Model_Haty()
         widget.addWidget(modelHaty_przycisk)
